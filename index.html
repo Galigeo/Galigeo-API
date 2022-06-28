@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo API</title>
+  </head>
+  <body>
+    <script src="dist/galigeo-api.js"></script>
+    <script>
+      const map = new Galigeo.Map({
+        mapId: 'MyMap',
+        apiKey: '0f9c09c1-7393-4015-a45c-cda686f6c7f3'
+      });
+      map.load().then((res)=>{
+        console.log('Map loaded');
+      });
+    </script>
+  </body>
+</html>
