@@ -1,9 +1,25 @@
-class MapParameters {
+export class MapParameters {
     mapId: string;
     location: string;
+    devMode: boolean;
 }
 
-class Message {
+export class Message {
+
+    constructor(json?: string) {
+        if (json) {
+            try {
+                const obj = JSON.parse(json);
+                this.source = obj.source;
+                this.type = obj.type;
+                this.action = obj.action;
+                this.value = obj.value;
+            } catch (error) {
+                console.error('Failed to parse', json, error);
+            }
+        }
+    }
+
     source: string;
     type: string;
     action: string;
