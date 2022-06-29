@@ -3,8 +3,8 @@ import { Message } from "./model";
 class Messenger {
 
     iframe: HTMLIFrameElement;
-    pendingMessages: Message[] = [];
     ready: boolean = false;
+    responses:Map<string, Message> = new Map<string, Message>();
 
     constructor(iframe: HTMLIFrameElement) {
         this.iframe = iframe;
@@ -21,40 +21,71 @@ class Messenger {
                 console.warn('API- Skip', evt);
                 return; // Skip message from other source
             }
-            if (evt.data === 'GaligeoMapLoaded' && !this.ready) {
-                console.log('API- Map is ready');
-                this.ready = true;
 
-                // send messages prior to map initialization
-                if (this.pendingMessages) {
-                    for (var pendingMessage of this.pendingMessages) {
-                        this.postMessage(pendingMessage.action, pendingMessage.value);
-                    }
-                    this.pendingMessages = [];
-                }
+            // skip case map loaded ; already handled by waitMapIsLoad()
+            if (evt.data === 'GaligeoMapLoaded') {
+               return;
             }
             const msg = new Message(evt.data);
-            if(msg.type === 'event' && msg.action === 'zoomend') {
+
+            // Handle messages of type 'response'
+            if (msg.type === 'response') {
+                console.log('API- receive response', msg);
+                const response:Message = this.responses.get(msg.id);
+                if(response) {
+                    console.log('API- resolve response', response);
+                    this.responses.delete(msg.id);
+                    response.resolve(msg.value);
+                }
+            }
+
+            // Handle events
+            if (msg.type === 'event' && msg.action === 'zoomend') {
                 console.log('Zoom end');
             }
 
         });
     }
-    postMessage(action: string, value: any) {
-        const message = new Message();
-        message.source = 'api';
-        message.type = 'function';
-        message.action = action;
-        message.value = value;
-
-        if (!this.ready) {
-            this.pendingMessages.push(message);
-        } else {
-            console.log('API- action =', action, message);
-            this.iframe.contentWindow.postMessage(JSON.stringify(message), "*");
-        }
+    /**
+     * Wait for the message 'GaligeoMapLoaded' from the iframe
+     * @returns a Promise
+     */
+    waitMapIsLoad():Promise<string> {
+        return new Promise((resolve, reject) => {
+            window.addEventListener('message', (evt: MessageEvent) => {
+                if (evt.data === 'GaligeoMapLoaded') {
+                    this.ready = true;
+                    resolve('map loaded');
+                }
+            });
+            setTimeout(() => {
+                if (!this.ready) {
+                    reject('Timeout excedeed, failed to load map');
+                }
+            }, 5000);
+        });
     }
-
+    postMessage(action: string, value: any) {
+        return new Promise<any>((resolve:Function, reject:Function)=>{
+            const message = new Message();
+            message.source = 'api';
+            message.type = 'function';
+            message.action = action;
+            message.value = value;
+            message.id = Date.now()+'';
+    
+            if (!this.ready) {
+                throw new Error('Map not ready, unable to send messages');
+            } else {
+                console.log('API- action =', action, message);
+                const response = new Message();
+                response.resolve = resolve;
+                this.responses.set(message.id, response);
+                this.iframe.contentWindow.postMessage(JSON.stringify(message), "*");
+            }
+        });
+        
+    }
 
 }
 export default Messenger;

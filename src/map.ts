@@ -9,10 +9,10 @@ import { MapParameters } from "./model";
 class Map {
 
     element: string;
-    layers: Layer[];
-    options: MapParameters;
-    iframe: HTMLIFrameElement;
-    messenger: Messenger;
+    private options: MapParameters;
+    private iframe: HTMLIFrameElement;
+    private messenger: Messenger;
+    private loaded: boolean = false;
 
     constructor(element: string, options: MapParameters) {
         console.log('Welcome to Galigeo');
@@ -32,40 +32,63 @@ class Map {
      */
     async load() {
         console.log('Loading Map');
-        const response = await fetch(this.options.location + '/api/openMap/encoded', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-            body: 'data=' + encodeURIComponent(JSON.stringify(this.options))
+        return new Promise((resolve, reject) => {
+            fetch(this.options.location + '/api/openMap/encoded', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                },
+                body: 'data=' + encodeURIComponent(JSON.stringify(this.options))
+            }).then(res => res.json())
+            .then(json => {
+                
+                const mapDiv = document.getElementById(this.element);
+                const indexPage = this.options.devMode ? 'indexdev.jsp' : 'index.html';
+                this.iframe = this.createIframe(this.element, json);
+                this.messenger = new Messenger(this.iframe);
+                console.log('API- after fetch json', json);
+                this.messenger.waitMapIsLoad().then(res=>{
+                    console.log('API- Map loaded', json);
+                    this.loaded = true;
+                    resolve(json);
+                });  
+            })
+            .catch(err => reject(err));;
+            
         });
-        const json = await response.json();
-        console.log(response, json);
-        if (response.ok) {
-            const mapDiv = document.getElementById(this.element);
-            const indexPage = this.options.devMode ? 'indexdev.jsp' : 'index.html';
-            this.iframe = this.createIframe(this.element, json);
-            this.messenger = new Messenger(this.iframe);
-            return json;
-        } else {
-            throw new Error('Failed to load map');
-        }
     }
     /**
      * 
      * @returns true if the map is ready to use
      */
     isLoaded(): boolean {
-        return this.iframe !== undefined;
+        return this.loaded;
     }
     /**
      * Set the extent of the map
      * @param extent The extent to set
      */
     setExtent(extent: Extent) {
-        this.messenger.postMessage('setExtent', extent);
+        return this.messenger.postMessage('setExtent', extent);
     }
-    private createIframe(element:string, json: any): HTMLIFrameElement {
+    /**
+     * Get the list of layers
+     * @returns Promise<Layer[]>
+     */
+    getLayers():Promise<Layer[]> {
+        return new Promise((resolve, reject) => {
+            this.messenger.postMessage('getLayers', null).then(messageLayers=>{
+                const layers:Layer[] = [];
+                for(const l of messageLayers) {
+                    const layer = new Layer(l.id, l.name, this.messenger);
+                    layers.push(layer);
+                }
+                resolve(layers);
+            });
+        });
+    }
+
+    private createIframe(element: string, json: any): HTMLIFrameElement {
         const mapDiv = document.getElementById(element);
         const indexPage = this.options.devMode ? 'indexdev.jsp' : 'index.html';
         const iframe: HTMLIFrameElement = document.createElement('iframe');

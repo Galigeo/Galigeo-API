@@ -10,12 +10,13 @@ export class Message {
         if (json) {
             try {
                 const obj = JSON.parse(json);
+                this.id = obj.id;
                 this.source = obj.source;
                 this.type = obj.type;
                 this.action = obj.action;
                 this.value = obj.value;
             } catch (error) {
-                console.error('Failed to parse', json, error);
+                console.debug('Skip message', json, error);
             }
         }
     }
@@ -24,4 +25,6 @@ export class Message {
     type: string;
     action: string;
     value: any;
+    id: string;
+    resolve: Function;
 }

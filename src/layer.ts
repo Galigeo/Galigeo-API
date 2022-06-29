@@ -1,9 +1,13 @@
+import Messenger from "./messenger";
+
 class Layer {
-    private id: String;
-    private name: String;
+    private id: string;
+    private name: string;
+    private messenger: Messenger;
 
-    constructor() {
-
+    constructor(id: string, name: string, messenger: Messenger) {
+        this.id = id;
+        this.name = name;
     }
 
     getId():String {
