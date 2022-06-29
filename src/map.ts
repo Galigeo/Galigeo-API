@@ -8,7 +8,7 @@ import { MapParameters } from "./model";
  */
 class Map {
 
-    element: string;
+    private element: string;
     private options: MapParameters;
     private iframe: HTMLIFrameElement;
     private messenger: Messenger;
@@ -40,21 +40,18 @@ class Map {
                 },
                 body: 'data=' + encodeURIComponent(JSON.stringify(this.options))
             }).then(res => res.json())
-            .then(json => {
-                
-                const mapDiv = document.getElementById(this.element);
-                const indexPage = this.options.devMode ? 'indexdev.jsp' : 'index.html';
-                this.iframe = this.createIframe(this.element, json);
-                this.messenger = new Messenger(this.iframe);
-                console.log('API- after fetch json', json);
-                this.messenger.waitMapIsLoad().then(res=>{
-                    console.log('API- Map loaded', json);
-                    this.loaded = true;
-                    resolve(json);
-                });  
-            })
-            .catch(err => reject(err));;
-            
+                .then(json => {
+                    this.iframe = this.createIframe(this.element, json);
+                    this.messenger = new Messenger(this.iframe);
+                    console.log('API- after fetch json', json);
+                    this.messenger.waitMapIsLoad().then(res => {
+                        console.log('API- Map loaded', json);
+                        this.loaded = true;
+                        resolve(json);
+                    });
+                })
+                .catch(err => reject(err));;
+
         });
     }
     /**
@@ -75,11 +72,11 @@ class Map {
      * Get the list of layers
      * @returns Promise<Layer[]>
      */
-    getLayers():Promise<Layer[]> {
+    getLayers(): Promise<Layer[]> {
         return new Promise((resolve, reject) => {
-            this.messenger.postMessage('getLayers', null).then(messageLayers=>{
-                const layers:Layer[] = [];
-                for(const l of messageLayers) {
+            this.messenger.postMessage('getLayers', null).then(messageLayers => {
+                const layers: Layer[] = [];
+                for (const l of messageLayers) {
                     const layer = new Layer(l.id, l.name, this.messenger);
                     layers.push(layer);
                 }
@@ -92,7 +89,7 @@ class Map {
         const mapDiv = document.getElementById(element);
         const indexPage = this.options.devMode ? 'indexdev.jsp' : 'index.html';
         const iframe: HTMLIFrameElement = document.createElement('iframe');
-        iframe.src = `${this.options.location}/viewer/${indexPage}?url=../${json.relativeUrlServiceUrl}`;
+        iframe.src = `${this.options.location}/viewer/${indexPage}?listenMessages=true&url=../${json.relativeUrlServiceUrl}`;
         iframe.width = '100%';
         iframe.height = '100%';
         iframe.title = 'Galigeo Map';
