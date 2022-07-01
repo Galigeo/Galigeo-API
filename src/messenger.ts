@@ -1,12 +1,14 @@
+import Listener from "./listener";
 import { Message } from "./model";
 
-class Messenger {
+class Messenger extends Listener {
 
     iframe: HTMLIFrameElement;
     ready: boolean = false;
     responses:Map<string, Message> = new Map<string, Message>();
-
+    
     constructor(iframe: HTMLIFrameElement) {
+        super();
         this.iframe = iframe;
         this.registerEvents();
     }
@@ -40,8 +42,8 @@ class Messenger {
             }
 
             // Handle events
-            if (msg.type === 'event' && msg.action === 'zoomend') {
-                console.log('Zoom end');
+            if (msg.type === 'event') {
+                this.fireEvent(msg.source, msg);
             }
 
         });

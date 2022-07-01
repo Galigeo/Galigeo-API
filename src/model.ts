@@ -1,7 +1,13 @@
+import Layer from "./layer";
+
+/**
+ * This file is used to store various POJO
+ */
 export class MapParameters {
     mapId: string;
     location: string;
     devMode: boolean;
+    crossDomain: boolean
 }
 
 export class Message {
@@ -15,6 +21,9 @@ export class Message {
                 this.type = obj.type;
                 this.action = obj.action;
                 this.value = obj.value;
+                if(obj.layer) {
+                    this.layer = new Layer(obj.layer.id, obj.layer.name, undefined);
+                }
             } catch (error) {
                 console.debug('Skip message', json, error);
             }
@@ -25,6 +34,8 @@ export class Message {
     type: string;
     action: string;
     value: any;
+    layer: Layer;
     id: string;
     resolve: Function;
 }
+

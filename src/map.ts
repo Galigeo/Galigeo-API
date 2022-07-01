@@ -1,12 +1,13 @@
 import Extent from "./extent";
 import Layer from "./layer";
 import Messenger from "./messenger";
-import { MapParameters } from "./model";
+import Listener from "./listener";
+import { MapParameters, Message } from "./model";
 
 /**
  * The Map class contains properties and methods for storing and managing layers
  */
-class Map {
+class Map extends Listener {
 
     private element: string;
     private options: MapParameters;
@@ -15,11 +16,12 @@ class Map {
     private loaded: boolean = false;
 
     constructor(element: string, options: MapParameters) {
+        super();
         console.log('Welcome to Galigeo');
         this.options = options;
         this.element = element;
 
-        if (!options.location) options.location = 'http://localhost:8088/Galigeo';
+        if (!options.location) options.location = 'https://sandbox.galigeo.com/Galigeo';
 
         if (this.options.location.endsWith('/')) {
             this.options.location = this.options.location.slice(0, -1);
@@ -43,6 +45,7 @@ class Map {
                 .then(json => {
                     this.iframe = this.createIframe(this.element, json);
                     this.messenger = new Messenger(this.iframe);
+                    this.registerEvents();
                     console.log('API- after fetch json', json);
                     this.messenger.waitMapIsLoad().then(res => {
                         console.log('API- Map loaded', json);
@@ -85,11 +88,30 @@ class Map {
         });
     }
 
+    /**
+     * Listen the events received from the messenger then propagate
+     */
+    private registerEvents() {
+        this.messenger.addEventListener('map', (msg:Message)=>{
+            // adapt the object passed through the event to match API objects
+            let value:any;
+            if(msg.action === 'zoomend') {
+                value = new Extent(msg.value.minX, msg.value.minY, msg.value.maxX, msg.value.maxY);
+            } else {
+                value = msg.value;
+            }
+            this.fireEvent(msg.action, value);    
+        });
+        
+    }
+
     private createIframe(element: string, json: any): HTMLIFrameElement {
         const mapDiv = document.getElementById(element);
         const indexPage = this.options.devMode ? 'indexdev.jsp' : 'index.html';
         const iframe: HTMLIFrameElement = document.createElement('iframe');
-        iframe.src = `${this.options.location}/viewer/${indexPage}?listenMessages=true&url=../${json.relativeUrlServiceUrl}`;
+        let urlOptions = 'listenMessages=true';
+        if(this.options.crossDomain) urlOptions += '&crossDomain=true'
+        iframe.src = `${this.options.location}/viewer/${indexPage}?${urlOptions}&url=../${json.relativeUrlServiceUrl}`;
         iframe.width = '100%';
         iframe.height = '100%';
         iframe.title = 'Galigeo Map';
