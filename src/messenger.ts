@@ -1,3 +1,4 @@
+import Layer from "./layer";
 import Listener from "./listener";
 import { Message } from "./model";
 
@@ -5,7 +6,8 @@ class Messenger extends Listener {
 
     iframe: HTMLIFrameElement;
     ready: boolean = false;
-    responses:Map<string, Message> = new Map<string, Message>();
+    private responses:Map<string, Message> = new Map<string, Message>();
+    private idCounter:number = 1;
     
     constructor(iframe: HTMLIFrameElement) {
         super();
@@ -38,7 +40,7 @@ class Messenger extends Listener {
                     console.log('API- resolve response', response);
                     this.responses.delete(msg.id);
                     response.resolve(msg.value);
-                }
+                } else console.warn('API- Missing response handler for message ', msg);
             }
 
             // Handle events
@@ -67,14 +69,15 @@ class Messenger extends Listener {
             }, 5000);
         });
     }
-    postMessage(action: string, value: any) {
+    postMessage(action: string, value: any, layer?:Layer) {
         return new Promise<any>((resolve:Function, reject:Function)=>{
             const message = new Message();
             message.source = 'api';
             message.type = 'function';
             message.action = action;
             message.value = value;
-            message.id = Date.now()+'';
+            message.id = '' + this.idCounter++;
+            message.layer = layer;
     
             if (!this.ready) {
                 throw new Error('Map not ready, unable to send messages');

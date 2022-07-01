@@ -22,7 +22,7 @@ export class Message {
                 this.action = obj.action;
                 this.value = obj.value;
                 if(obj.layer) {
-                    this.layer = new Layer(obj.layer.id, obj.layer.name, undefined);
+                    this.layer = new Layer(obj.layer.id, {name: obj.layer.name});
                 }
             } catch (error) {
                 console.debug('Skip message', json, error);

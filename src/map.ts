@@ -71,6 +71,12 @@ class Map extends Listener {
     setExtent(extent: Extent) {
         return this.messenger.postMessage('setExtent', extent);
     }
+    setMenuVisible(visible: boolean) {
+        return this.messenger.postMessage('setMenuVisible', visible);
+    }
+    filter(datasourceId:string, datasetId:String) {
+        return this.messenger.postMessage('filter', { datasourceId, datasetId });
+    }
     /**
      * Get the list of layers
      * @returns Promise<Layer[]>
@@ -80,7 +86,7 @@ class Map extends Listener {
             this.messenger.postMessage('getLayers', null).then(messageLayers => {
                 const layers: Layer[] = [];
                 for (const l of messageLayers) {
-                    const layer = new Layer(l.id, l.name, this.messenger);
+                    const layer = new Layer(l.id, {name: l.name, datasetId: l.datasetId, datasourceId: l.datasourceId, visible: l.visible, messenger: this.messenger});
                     layers.push(layer);
                 }
                 resolve(layers);

@@ -7,14 +7,18 @@ class Layer extends Listener {
     private name: string;
     private datasourceId: string;
     private datasetId: string;
+    private visible: boolean;
     private messenger: Messenger;
 
-    constructor(id: string, name: string, messenger?: Messenger) {
+    constructor(id: string, options: {name?: string, datasourceId?:string, datasetId?:string,  visible?: boolean, messenger?: Messenger}) {
         super();
         this.id = id;
-        this.name = name;
-        this.messenger = messenger;
-        if(messenger) {
+        this.name = options.name ? options.name : id;
+        this.datasourceId = options.datasourceId;
+        this.datasetId = options.datasetId;
+        this.visible = options.visible;
+        this.messenger = options.messenger;
+        if(this.messenger) {
             this.registerEvents();
         }
     }
@@ -25,6 +29,18 @@ class Layer extends Listener {
 
     getName():String {
         return this.name;
+    }
+    
+    setVisible(visible:boolean) {
+        return this.messenger.postMessage('setVisible', visible, this);
+    }
+
+    disableInfoWindow() {
+        return this.messenger.postMessage('disableInfoWindow', '', this);
+    }
+
+    filter(where:string) {
+        return this.messenger.postMessage('filter', where, this);
     }
 
     /**
