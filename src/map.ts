@@ -21,10 +21,11 @@ class Map extends Listener {
         this.options = options;
         this.element = element;
 
-        if (!options.location) options.location = 'https://sandbox.galigeo.com/Galigeo';
+        if (!options.url) options.url = 'https://sandbox.galigeo.com/Galigeo';
+        if(options.id && !options.mapId) options.mapId = options.id; // handle legacy parameter
 
-        if (this.options.location.endsWith('/')) {
-            this.options.location = this.options.location.slice(0, -1);
+        if (this.options.url.endsWith('/')) {
+            this.options.url = this.options.url.slice(0, -1);
         }
     }
 
@@ -35,7 +36,7 @@ class Map extends Listener {
     async load() {
         console.log('Loading Map');
         return new Promise((resolve, reject) => {
-            fetch(this.options.location + '/api/openMap/encoded', {
+            fetch(this.options.url + '/api/openMap/encoded', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -74,9 +75,27 @@ class Map extends Listener {
     setMenuVisible(visible: boolean) {
         return this.messenger.postMessage('setMenuVisible', visible);
     }
+    setBasemap(basemap: string) {
+        return this.messenger.postMessage('setBasemap', basemap);
+    }
     filter(datasourceId:string, datasetId:String) {
         return this.messenger.postMessage('filter', { datasourceId, datasetId });
     }
+    addDataUrl(url:string, name:string) {
+        if(this.isLoaded()) throw new Error('Cannot add new data once the map is loaded');
+        var httpIdx = url.toLowerCase().indexOf('http');
+		if (httpIdx !== 0) {
+			// in case of relative path, build the full url
+			var baseIdx = window.location.href.lastIndexOf('/');
+			url = window.location.href.substring(0, baseIdx + 1) + url;
+		}
+		this.options.data.push({
+			format: 'link',
+			url: url,
+			name: name
+		});
+    }
+    
     /**
      * Get the list of layers
      * @returns Promise<Layer[]>
@@ -117,7 +136,7 @@ class Map extends Listener {
         const iframe: HTMLIFrameElement = document.createElement('iframe');
         let urlOptions = 'listenMessages=true';
         if(this.options.crossDomain) urlOptions += '&crossDomain=true'
-        iframe.src = `${this.options.location}/viewer/${indexPage}?${urlOptions}&url=../${json.relativeUrlServiceUrl}`;
+        iframe.src = `${this.options.url}/viewer/${indexPage}?${urlOptions}&url=../${json.relativeUrlServiceUrl}`;
         iframe.width = '100%';
         iframe.height = '100%';
         iframe.title = 'Galigeo Map';

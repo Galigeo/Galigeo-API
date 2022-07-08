@@ -4,10 +4,15 @@ import Layer from "./layer";
  * This file is used to store various POJO
  */
 export class MapParameters {
+    /**
+     * Legacy parameter for mapId
+     */
+    id: string; 
     mapId: string;
-    location: string;
+    url: string;
     devMode: boolean;
-    crossDomain: boolean
+    crossDomain: boolean;
+    data: any[];
 }
 
 export class Message {
