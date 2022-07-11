@@ -1,0 +1,58 @@
+
+<div class="nav-wrapper">
+	<a style="padding-left: 10px" target="galigeo"
+		href="https://www.galigeo.com" class="brand-logo"> <img
+		src="../ui/img/logogaligeo.png" /></a>
+	<ul id="nav-mobile" class="right hide-on-med-and-down grey">
+		<li><a href="index.html">Samples</a></li>
+		<li><a target="doc" href="https://download.galigeo.com">Downloads</a></li>
+		<li><a target="doc" href="js/out/Galigeo.Map.html">Documentation</a></li>
+		<li id="loginButton"><a href="../login.html?redirect=api">Login</a></li>
+		<li id="loginDropdown"><a class="dropdown-button" href="#!"
+			data-activates="dropdown1"> <span id="login">Anonymous</span> <i
+				class="material-icons right">arrow_drop_down</i></a></li>
+	</ul>
+	<ul id="dropdown1" class="dropdown-content">
+		<li class="divider"></li>
+		<li><a onclick="logOut()" href="#!">Logout</a></li>
+		<li class="divider"></li>
+	</ul>
+	<ul class="side-nav" id="mobile-demo">
+		<li><a href="#" onclick="hideMap();"><i
+				class="material-icons">explore</i></a></li>
+		<li><a href="../admin/index.jsp"><i class="material-icons">settings_input_component</i></a></li>
+	</ul>
+
+</div>
+
+<script>
+
+function logOut()
+{
+    $.ajax({
+        url: '../../feature/portal/logout',
+        dataType: "json",
+        success: function(result)
+        {
+            window.location = '../login.html?redirect='+encodeURIComponent(window.location.href);
+        }
+    });
+}
+
+$.ajax({
+    url: '../../feature/portal/login',
+    dataType: "json",
+    success: function(result)
+    {
+    	$('#loginButton').hide();
+    	$('#loginDropdown').show();
+    	$('#login').html(result.userName);
+        setTimeout(function(){
+            console.log('RIGGER');
+        	//$('.dropdown-trigger').dropdown({ hover: false, belowOrigin: true, constrain_width: false, alignment: 'rg' });
+            $('.dropdown-button').dropdown();
+        },1000);
+
+    }
+});
+</script>

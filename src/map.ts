@@ -27,6 +27,7 @@ class Map extends Listener {
         if (this.options.url.endsWith('/')) {
             this.options.url = this.options.url.slice(0, -1);
         }
+        if(!this.options.data) this.options.data = [];
     }
 
     /**
@@ -41,7 +42,7 @@ class Map extends Listener {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
                 },
-                body: 'data=' + encodeURIComponent(JSON.stringify(this.options))
+                body: 'status=200&data=' + encodeURIComponent(JSON.stringify(this.options))
             }).then(res => res.json())
                 .then(json => {
                     this.iframe = this.createIframe(this.element, json);
@@ -51,10 +52,15 @@ class Map extends Listener {
                     this.messenger.waitMapIsLoad().then(res => {
                         console.log('API- Map loaded', json);
                         this.loaded = true;
-                        resolve(json);
+                        this.setMapControlsVisible(false);
+                        resolve(this);
                     });
                 })
-                .catch(err => reject(err));;
+                .catch(err => {
+                    console.error('Failed to load map', err);
+                    document.getElementById(this.element).innerHTML = `<span>${err.message}</span>`;
+                    reject(err)
+                });
 
         });
     }
@@ -72,8 +78,14 @@ class Map extends Listener {
     setExtent(extent: Extent) {
         return this.messenger.postMessage('setExtent', extent);
     }
+    flyTo(x:number, y: number, zoom: number) {
+        return this.messenger.postMessage('flyTo', {x, y, zoom});
+    }
     setMenuVisible(visible: boolean) {
         return this.messenger.postMessage('setMenuVisible', visible);
+    }
+    setMapControlsVisible(visible: boolean) {
+        return this.messenger.postMessage('setMapControlsVisible', visible);
     }
     setBasemap(basemap: string) {
         return this.messenger.postMessage('setBasemap', basemap);

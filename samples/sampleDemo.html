@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="cache-control" content="no-cache">
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/design-system/2.17.5/styles/salesforce-lightning-design-system.min.css">
+<link rel="stylesheet" href="style.css">
+      <script
+         src="https://code.jquery.com/jquery-3.6.0.min.js"
+         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+         crossorigin="anonymous"></script>
+
+<title>Galigeo API Sample</title>
+</head>
+<body>
+
+  <div id="navBar"></div>
+  <script src="common.js"></script>
+
+  <div id="container" style="margin-left: 50px">
+
+    <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+               <div class="slds-text-heading_large" id="title"></div>
+            </div>
+         </div>
+    <div class="slds-grid slds-gutters slds-p-top_medium">
+            <div class="slds-col ">
+               <div  class="slds-text-heading_small" id="description"></div>
+            </div>
+         </div>
+    <div class="slds-grid slds-gutters slds-p-top_medium">
+      <a  class="slds-p-left_large slds-p-bottom_large" id="demoLink">Source code</a>
+      <a class="slds-p-left_large slds-p-bottom_large" target="_blank" id="demoLinkNew">Open in new window</a>
+    </div>
+    <div class="row">
+      <div id="demoFrame" style="width:100%"></ifranme>
+    </div>
+    
+
+  </div>
+  
+  <script>
+  
+  $( document ).ready(function() {
+      
+      var sample = getUrlParam('url');
+      
+      $.ajax({
+        url: "samples.json", 
+        dataType: "json",
+        cache: false,
+        success: function(result)
+        {
+            var meta = undefined;
+            for(var i in result) if(result[i].url.endsWith(sample)) meta = result[i];
+            document.title = meta.title;
+            $('#demoLink').attr('href',"sample.html?url="+meta.url);
+            $('#demoLinkNew').attr('href',meta.url);
+            $('#title').text(meta.title);
+            $('#description').text(meta.description);
+            setBanner();
+            $.ajax({
+                url: meta.url, 
+                cache: false,
+                success: function(content)
+                {
+                    $('#demoFrame').html(content);
+                    setTimeout(function(){
+                     var conTainerWidth = parseInt($("#container").css('width').replace('px',''))-50;
+                     var mapWidth = parseInt($('#demoFrame iframe').css('width').replace('px',''));
+                     if(mapWidth > conTainerWidth)
+                     {
+                    	// $('#ggoMapId').css('width', conTainerWidth+'px');
+                         $('#ggoMapId iframe').css('width', conTainerWidth+'px');
+                     }
+                    },1000);
+                }
+            });
+            
+        }
+    });
+  });
+  
+  </script>
+
+  
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+[
+
+{ "title":"CSV data load", "url": "sampleCSV.html", "description": "Upload a CSV directly to a map. This sample illustrates an easy way to load data to the map a CSV file. The CSV format has many advantages: standard, simple and fast efficient." },
+{ "title":"REST API", "url": "sampleRestServer.jsp", "description": "This example shows how to initiate a map from a server process." },
+{ "title":"Go to locations", "url": "sampleMapZoom.html", "description": "Simple example that shows how to control the location of the map." },
+{ "title":"Filter map from portal", "url": "sampleOutFilter.html", "description": "An example that shows how to filter the data on the map from an external component" },
+{ "title":"Map Events", "url": "sampleEvents.html", "description": "An example that shows how to listen events of the map" },
+{ "title":"Select Events", "url": "sampleInfoWindow.html", "description": "An example that shows how to listen selection on layer and show features selected" },
+{ "title":"Basemap Control", "url": "sampleBasemapControl.html", "description": "An example that shows how to change the basemap of the map" }
+
+]

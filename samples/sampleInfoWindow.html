@@ -1,0 +1,58 @@
+
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="cache-control" content="no-cache">
+  <script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+  <script type="text/javascript" src="galigeo-api.js"></script>
+
+  <title>Event demo</title>
+</head>
+
+<body>
+
+      <div id="mapId" style="height:50vh;width:100%;max-width:500px"></div>
+      <div>
+        <table id="table"></table>
+      </div>
+    
+  
+
+
+  <script type="text/javascript">
+    $(document).ready(async function () {
+      var map = new Galigeo.Map('mapId', {
+        id: 'eventDemo',
+        name: 'Infowindow Demo',
+        apiKey: 'api_demo',
+        url: 'https://sandbox.galigeo.com/Galigeo'
+      }); 
+      map.addDataUrl('fr_cities.csv', 'FrCities');
+      map.load().then(()=>{
+        map.getLayers().then((layers)=>{
+          for(var l of layers) {
+            l.disableInfoWindow();
+        		l.addEventListener('click', (evt)=>{
+                var html = '';
+                for(var f in evt) {
+                   for(var prop in evt[f].properties) {
+                    console.log(evt[f].properties[prop]);
+                    html += `<tr><td>${prop}</td><td>${evt[f].properties[prop]}</td></tr>`;
+                   }
+                }
+                $('#table').html(html);
+            });
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>

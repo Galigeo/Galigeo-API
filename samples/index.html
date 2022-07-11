@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="cache-control" content="no-cache">
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/design-system/2.17.5/styles/salesforce-lightning-design-system.min.css">
+<link rel="stylesheet" href="style.css"> 
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+
+<title>Galigeo API Samples</title>
+</head>
+<body>
+<div id="navBar"></div>
+	<script src="common.js"></script>
+
+
+
+  <div class="container" style="margin-left: 50px">
+
+    <div class="slds-grid slds-gutters slds-p-top_large">
+		<div class="slds-col">
+      <div class="slds-text-heading_large">Welcome to our test sample page – Discover how easy it is to play with your data</div>
+	  </div>
+    </div>
+    
+	<div class="slds-grid slds-gutters slds-p-top_large">
+		<div class="slds-col">
+      <div class="slds-text-heading_medium">This page illustrates how to use the Galigeo API through various samples.</div>
+	  </div>
+    </div>
+    
+	<div class="slds-grid slds-gutters slds-p-top_large slds-p-left_small">
+	  <div class="slds-col">
+      <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-labelledby="element-with-table-label other-element-with-table-label">
+        <thead>
+          <tr>
+              <th>Sample</th>
+              <th>Description</th>
+          </tr>
+        </thead>
+        <tbody id="samples">
+        </tbody>
+      </table>
+    </div>
+	</div>
+  </div>
+  
+  
+  <script>
+  function resetSamples()
+  {
+	  GaligeoUI.common.confirm("This action will reset all the documents used by the samples. Are you sure you want to continue?", function(){
+	  $.ajax({
+          url: 'reset_samples.jsp',
+          dataType: "json",
+          success: function(result)
+          {
+        	  GaligeoUI.common.alert("Done");
+          }
+        });
+	  });
+  }
+  
+  $( document ).ready(function() {
+	  
+	  setBanner();
+	  //$('.dropdown-trigger').dropdown({ hover: false, belowOrigin: true, constrain_width: false, alignment: 'rg' });
+	  $.ajax({
+        url: "samples.json", 
+        dataType: "json",
+        cache: false,
+        success: function(result)
+        {
+            for(var i in result)
+			{
+				var sample = result[i];
+				var html = "<tr><td><a href=\"sample.html?url="+sample.url+"\" class=\"collection-item\">"+sample.title+"</a></td><td>"+sample.description+"</td></tr>";
+				$('#samples').append(html);
+			}
+        }
+    });
+  });
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+:root {
+
+  --green-09: rgba(75, 192, 192, 0.9);
+  --green-05: rgba(75, 192, 192, 0.5);
+  --green-01: rgba(75, 192, 192, 0.1);
+  --green-galigeo-01: #2ecc71;
+  --stats-table-header-background: var(--green-galigeo-01);
+  --stats-table-border: var(--green-galigeo-01);
+  --stats-table-body-border: var(--green-galigeo-01);
+  --stats-table-stripe: var(--green-01);
+  --selected-transport-mode-color-background: #2ecc71;
+  --selected-transport-mode-color-border: #2ecc71;
+  --sds-c-button-text-color: #2ecc71;
+  --sds-c-button-text-color-hover: #26a469;
+  --sds-c-button-text-color-active: #26a469;
+  --sds-c-button-shadow-focus: 0 0 3px #26a469;
+  --sds-c-button-brand-color-background: #2ecc71;
+  --sds-c-button-brand-color-border: #2ecc71;
+  --sds-c-button-brand-color-background-hover: #26a469;
+  --sds-c-button-brand-color-border-hover: #239a62;
+  --sds-c-button-brand-color-background-active: #239a62;
+  --sds-c-button-brand-color-border-active: #239a62;
+  --sds-c-button-neutral-color-background: #ffffff;
+  --sds-c-button-neutral-color-border: #2ecc71;
+  --sds-c-button-neutral-color-background-hover: #2ecc71;
+  --sds-c-button-neutral-color-border-hover: #2ecc71;
+  --sds-c-button-destructive-color-background: #ff9800;
+  --sds-c-button-destructive-color-border: #ff9800;
+  --sds-c-button-destructive-color-background-hover: #ff7600;
+  --sds-c-button-destructive-color-border-hover: #ff7600;
+  --sds-c-modal-header-color-background-warning: #ff9800;
+  --sds-c-input-color-border-focus: #26a469;
+  --sds-c-textarea-color-border-focus: #26a469;
+  --sds-c-tabs-item-color-border-active: #2ecc71;
+  --sds-c-tabs-item-color-background-active: rgb(45 195 125 / 10%);
+  --sds-c-card-radius-border: 0.75rem;
+  --sds-c-modal-color-background: #fff;
+  --sds-c-modal-sizing-border: 1px;
+  --sds-c-modal-content-color-background: #f8f9fa;
+}
+
+body {
+  background-color: white;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+.slds-box {
+  background-color: var(--green-05);
+}

@@ -1,0 +1,46 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="cache-control" content="no-cache">
+  <script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+  <script type="text/javascript" src="galigeo-api.js"></script>
+
+	<title>Set locations Demo</title>
+</head>
+
+<body>
+
+	<div class="container">
+		<h5>Select a basemap</h5>
+				<button class="slds-button" onclick="map.setBasemap('satellite')" class="slds-p-left_small">Sattelte</button>
+				<button class="slds-button" onclick="map.setBasemap('osm')" class="slds-p-left_small">Open Street Map</button>
+			</div>
+			<div>
+				<div id="ggoMapId" style="height:400px;width:100%"></div>
+			</div>
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+		
+    map = new Galigeo.Map('ggoMapId',
+      {
+        id: 'sampleBasemapControl',
+        name: 'Basemap Control',
+        apiKey: 'api_demo',
+        //url: 'https://sandbox.galigeo.com/Galigeo'
+        url: 'http://localhost:8088/Galigeo'
+      });
+    map.load();
+		
+	</script>
+
+</body>
+
+</html>

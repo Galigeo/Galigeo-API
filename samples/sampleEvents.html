@@ -1,0 +1,54 @@
+
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="cache-control" content="no-cache">
+  <script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+  <script type="text/javascript" src="galigeo-api.js"></script>
+
+  <title>Event demo</title>
+</head>
+
+<body>
+
+  
+    <div>
+      <div>
+        <p>Extent : <span id="extent"></span></p>
+        <p>Click : <span id="click"></span></p>
+      </div>
+    </div>
+    <div>
+      <div id="mapId" style="height:50vh;width:100%;max-width:500px"></div>
+    </div>
+  
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      var map = new Galigeo.Map('mapId', {
+        id: 'eventDemo',
+        name: 'Event Demo',
+        apiKey: 'api_demo',
+        url: 'https://sandbox.galigeo.com/Galigeo'
+      }); 
+      map.addDataUrl('fr_cities.csv', 'FrCities');
+      map.load().then(()=>{
+        map.addEventListener('click', (evt)=> {
+        	$('#click').html(`x: ${evt.lng}, y: ${evt.lat}`);
+        });
+        map.addEventListener('zoomend', (evt)=> {
+        	$('#extent').html(`${evt.xmin}, ${evt.ymin}, ${evt.xmax}, ${evt.ymax}`);
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>
