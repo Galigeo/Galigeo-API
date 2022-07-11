@@ -1,80 +1,80 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <meta http-equiv="cache-control" content="no-cache">
-      <link rel="shortcut icon" href="../favicon.ico" />
-      <link rel="shortcut icon" href="../../favicon.ico" />
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/design-system/2.17.5/styles/salesforce-lightning-design-system.min.css">
-      <link rel="stylesheet" href="style.css">
-      <script
-         src="https://code.jquery.com/jquery-3.6.0.min.js"
-         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-         crossorigin="anonymous"></script>
-      <title>Galigeo API Sample</title>
-   </head>
-   <body>
-      <div id="navBar"></div>
-      <script src="common.js"></script>
-      <div style="margin-left: 50px">
-         <div class="slds-grid slds-gutters">
-            <div class="slds-col">
-               <div class="slds-text-heading_large" id="title"></div>
-            </div>
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="cache-control" content="no-cache">
+   <link rel="shortcut icon" href="../favicon.ico" />
+   <link rel="shortcut icon" href="../../favicon.ico" />
+   <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/design-system/2.17.5/styles/salesforce-lightning-design-system.min.css">
+   <link rel="stylesheet" href="style.css">
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+   <title>Galigeo API Sample</title>
+</head>
+
+<body>
+   <div id="navBar"></div>
+   <script src="common.js"></script>
+   <div style="margin-left: 50px">
+      <div class="slds-grid slds-gutters">
+         <div class="slds-col">
+            <div class="slds-text-heading_large" id="title"></div>
          </div>
-         <div class="slds-grid slds-gutters slds-p-top_medium">
-            <div class="slds-col ">
-               <div  class="slds-text-heading_small" id="description"></div>
-            </div>
+      </div>
+      <div class="slds-grid slds-gutters slds-p-top_medium">
+         <div class="slds-col ">
+            <div class="slds-text-heading_small" id="description"></div>
          </div>
-         <div class="slds-grid slds-gutters slds-p-top_medium">
-            <div class="slds-col">
-              <button class="slds-button slds-button_neutral" id="demoLink">Open demo</button>
-            </div>
+      </div>
+      <div class="slds-grid slds-gutters slds-p-top_medium">
+         <div class="slds-col">
+            <button class="slds-button slds-button_neutral" id="demoLink">Open demo</button>
          </div>
-         <div class="slds-grid slds-gutters slds-p-top_medium">
-            <div class="slds-col">
-				<div class="slds-box">
+      </div>
+      <div class="slds-grid slds-gutters slds-p-top_medium">
+         <div class="slds-col">
+            <div class="slds-box">
                <pre><code class="html" id="code">...</code></pre>
-			   </div>
             </div>
          </div>
       </div>
-      <script>
-         $( document ).ready(function() {
-          
-          
-          var sample = getUrlParam('url');
-          
-          $.ajax({
-               url: "samples.json", 
-               dataType: "json",
-               cache: false,
-               success: function(result)
-               {
-                   var meta = undefined;
-                   for(var i in result) if(result[i].url.endsWith(sample)) meta = result[i];
-               	document.title = meta.title;
-               	$('#demoLink').click(evt=>{window.location.href="sampleDemo.html?url="+meta.url;});
-                   $('#title').text(meta.title);
-                   $('#description').text(meta.description);
-                   setBanner();                   
-                   $.ajax({
-                       url: meta.url, 
-                       cache: false,
-                       success: function(content)
-                       {
-                           $('#code').text(content);
-                           
-                       }
-                   });
-                   
-               }
-           });
+   </div>
+   <script>
+      $(document).ready(function () {
+
+
+         var sample = getUrlParam('url');
+
+         $.ajax({
+            url: "samples.json",
+            dataType: "json",
+            cache: false,
+            success: function (result) {
+               var meta = undefined;
+               for (var i in result) if (result[i].url.endsWith(sample)) meta = result[i];
+               document.title = meta.title;
+               $('#demoLink').click(evt => { window.location.href = "sampleDemo.html?url=" + meta.url; });
+               $('#title').text(meta.title);
+               $('#description').text(meta.description);
+               setBanner();
+               $.ajax({
+                  url: meta.url,
+                  cache: false,
+                  success: function (content) {
+                     $('#code').text(content);
+
+                  }
+               });
+
+            }
          });
-         
-      </script>
-      </main>
-   </body>
+      });
+
+   </script>
+   </main>
+</body>
+
 </html>

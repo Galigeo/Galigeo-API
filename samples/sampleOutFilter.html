@@ -1,14 +1,11 @@
-
 <html>
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="cache-control" content="no-cache">
-  <script
-  src="https://code.jquery.com/jquery-3.6.0.min.js"
-  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-  crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script type="text/javascript" src="galigeo-api.js"></script>
 
   <title>Filter demo</title>
@@ -50,11 +47,11 @@
         apiKey: 'api_demo',
         url: location,
         data: []
-      }); 
+      });
       map.addDataUrl('fr_cities.csv', 'FrCities');
-      map.load().then(()=>{
-        map.getLayers().then((layers)=>{
-           if(layers.length>0) layer = layers[0];
+      map.load().then(() => {
+        map.getLayers().then((layers) => {
+          if (layers.length > 0) layer = layers[0];
         });
       });
     });

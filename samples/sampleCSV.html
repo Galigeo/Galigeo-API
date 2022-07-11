@@ -5,10 +5,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="cache-control" content="no-cache">
-  <script
-  src="https://code.jquery.com/jquery-3.6.0.min.js"
-  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-  crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script type="text/javascript" src="galigeo-api.js"></script>
 
   <title>Map from CSV</title>
@@ -24,8 +22,8 @@
 
     $(document).ready(function () {
       var location = 'https://sandbox.galigeo.com/Galigeo';
-      location = 'http://localhost:8088/Galigeo'; 
-      
+      location = 'http://localhost:8088/Galigeo';
+
       var ggoMap = new Galigeo.Map('ggoMapId',
         {
           id: 'sampleFilterCSV',
