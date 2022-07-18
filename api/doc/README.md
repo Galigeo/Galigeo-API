@@ -14,14 +14,16 @@ This API provides a set of functions to embed Galigeo Maps into a web page.
 ```javascript
 var ggoMap = new Galigeo.Map('ggoMapId',
 {
-    id: 'MyMap',
+    mapId: 'MyMap',
     name: 'Map label',
     url: 'https://location/Galigeo'
 });
-ggoMap.load();
+ggoMap.load().then(()=>{
+    // work with the map
+});
 ```
 
-[Check our API samples](https://showroom.galigeo.com/Galigeo/viewer/api)
+[Check our API samples](https://api.galigeo.com/showcase)
 
 
 ### REST API documentation

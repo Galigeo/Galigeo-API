@@ -2,6 +2,16 @@ import Layer from "./layer";
 import Listener from "./listener";
 import { Message } from "./model";
 
+/**
+ * The Messenger handles the communication with the Galigeo
+ * viewer through messages.
+ * 
+ * Each message is sent with an ID. The viewer sends back
+ * responses with the same ID. These responses are wrapped
+ * in a Promise to handle return types transparently.
+ * 
+ * @ignore
+ */
 class Messenger extends Listener {
 
     iframe: HTMLIFrameElement;

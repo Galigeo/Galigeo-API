@@ -1,3 +1,3 @@
 npm install -g typedoc
 npm i -g typescript
-typedoc --readme README.md --out doc/out src/index.ts
+typedoc --options typedoc.json --readme README.md --out out ../src/index.ts --excludePrivate --name "Galigeo API"

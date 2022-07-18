@@ -1,5 +1,8 @@
 import { Message } from "./model";
 
+/**
+ * @ignore
+ */
 class Listener {
     
     private _listeners: Map<string, Function[]> = new Map<string, Function[]>();
