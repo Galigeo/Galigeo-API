@@ -30,7 +30,7 @@
 	</div>
 	<script type="text/javascript">
 		var ggoMap;
-		var markerLayerId;
+		var markerLayer;
 		var color = "blue";
 		function addMarker(event) {
 			if (event) {
@@ -44,7 +44,7 @@
 						'#', '%23');
 				ggoMap.addMarker(coordinates, undefined,
 						iconSvgOptions, url).then(res => {
-							markerLayerId = res.layer_id;
+							markerLayer = res;
 						});
 			} else {
 				alert("click in the map");
@@ -52,8 +52,8 @@
 		}
 		
 		function deleteMarker() {
-			if (markerLayerId) {
-				ggoMap.removeLayerById(markerLayerId).then(res => {
+			if (markerLayer) {
+				ggoMap.removeLayer(markerLayer).then(res => {
 					console.log(res)
 				  });
 			}
