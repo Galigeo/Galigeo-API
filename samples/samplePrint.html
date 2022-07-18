@@ -4,15 +4,11 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="cache-control" content="no-cache">
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="assets/js/galigeo-api.js"></script>
-
-	<title>print Demo</title>
+	<title>Print Demo</title>
 </head>
 
 <body>
-
 	<div class="container">
 		<h5>Click on the location where you want to go</h5>
 		<button class="slds-button" onclick="print()" class="slds-p-left_small">screenShot</button>
@@ -21,9 +17,7 @@
 	<div>
 		<div id="ggoMapId" style="height:400px;width:100%"></div>
 	</div>
-	</div>
-	</div>
-
+	
 
 	<script type="text/javascript">
 		var ggoMap;
@@ -33,13 +27,11 @@
 			});
 		}
 		$(document).ready(function () {
-			var location = 'http://localhost:8080/Galigeo';
 			ggoMap = new Galigeo.Map('ggoMapId',
 				{
-					id: 'sampleFilterCSV',
+					id: 'samplePrint',
 					name: 'Capitals',
-					apiKey: 'api_demo',
-					url: location
+					apiKey: 'e1f2db79-1f1f-40ec-9fcd-2de460d35513'
 				});
 				ggoMap.addDataUrl('assets/data/fr_cities.csv', 'FrCities');
 			ggoMap.load();
@@ -47,5 +39,4 @@
 	</script>
 
 </body>
-
 </html>

@@ -1,3 +1,4 @@
+
 /**
  * Get an url parameter
  * 
@@ -11,7 +12,11 @@ function getUrlParam(key, byDefault) {
 	for (var j = 0; j < split.length; j++) { var pair=split[j].split('=' ); if (pair.length !==2) continue; if (pair[0]===key) { var result=pair[1]; if (!String.prototype.endsWith) { String.prototype.endsWith=function(suffix) { return this.indexOf(suffix, this.length - suffix.length) !==-1; }; } if (result.endsWith('#!')) result=result.substring(0, result.length - 2); return result; } } return byDefault; } function getUrlParams() { var params=location.search; if (location.hash && location.hash !=="" ) { params=params + location.hash; } if (params.indexOf('?')===0) params=params.substring(1); return params; } 
   
   
-  function setBanner() { $('#navBar').html(`
+  function setBanner() { 
+    let breadcumb = document.title === 'Galigeo API Samples'?'':`<li class="slds-breadcrumb__item">
+    <a href="${window.location.href}">${document.title}</a>
+  </li>`;
+    $('#navBar').html(`
 <div class="slds-tabs_card">
   <div class="slds-page-header">
     <div class="slds-page-header__row">
@@ -30,23 +35,12 @@ function getUrlParam(key, byDefault) {
                   <span>Version 2.0.0</span>
                 </h1>
               </div>
-              <div class="slds-page-header__name-switcher">
-                <div class="slds-dropdown-trigger slds-dropdown-trigger_click">
-                  <button class="slds-button slds-button_icon slds-button_icon-small" aria-haspopup="true" title="Switch list view">
-                    <svg class="slds-button__icon slds-icon_x-small" aria-hidden="true">
-                      <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"/>
-                    </svg>
-                    <span class="slds-assistive-text">Switch list view</span>
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="slds-page-header__col-actions"> 
         <div class="slds-page-header__controls">
-          
         </div>
       </div>
     </div>
@@ -57,9 +51,7 @@ function getUrlParam(key, byDefault) {
             <li class="slds-breadcrumb__item">
               <a href="index.html">API Samples</a>
             </li>
-            <li class="slds-breadcrumb__item">
-              <a href="${window.location.href}">${document.title}</a>
-            </li>
+            ${breadcumb}
           </ol>
         </nav>
       </div>
@@ -67,12 +59,7 @@ function getUrlParam(key, byDefault) {
         <div class="slds-page-header__controls">
           <div class="slds-page-header__control">
             <div class="slds-dropdown-trigger slds-dropdown-trigger_click">
-              <button class="slds-button slds-button_neutral" onclick="window.location.href='https://doc.galigeo.com'">Documentation</button>
-            </div>
-          </div>
-          <div class="slds-page-header__control">
-            <div class="slds-dropdown-trigger slds-dropdown-trigger_click">
-              <button class="slds-button slds-button_neutral" onclick="window.location.href='https://github.com/Galigeo/Galigeo-API'">GitHub</button>
+              <button class="slds-button slds-button_neutral" onclick="window.location.href='doc'">Documentation</button>
             </div>
           </div>
         </div>
