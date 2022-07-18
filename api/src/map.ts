@@ -228,10 +228,11 @@ class Map extends Listener {
       }
 	 * @returns layerId of the object in the map
 	 */
-    createGeojsonLayer(features: any [], style: any): Promise<string> {
+    createGeojsonLayer(features: any [], style: any): Promise<Layer> {
         return new Promise((resolve, reject) => {
             this.messenger.postMessage('createGeojsonLayer', { features, style }).then(res => {
-                resolve(res);
+                const layer = new Layer(res.layer_id, {name: res.layer_id, isApiLayer: true, datasetId: undefined, datasourceId: undefined, visible: true, messenger: this.messenger});
+                resolve(layer);
             });
         });
     }
@@ -251,21 +252,22 @@ class Map extends Listener {
     
 	 * @returns layerLeaflet the marker object leaflet in the map
 	 */
-    addMarker(coordinates: number [], style: any, iconSvgOptions: any, urlSvg: any) {
+    addMarker(coordinates: number [], style: any, iconSvgOptions: any, urlSvg: any): Promise<Layer> {
         return new Promise((resolve, reject) => {
             this.messenger.postMessage('addMarker', { coordinates, style, iconSvgOptions, urlSvg }).then(res => {
-                resolve(res);
+                const layer = new Layer(res.layer_id, {name: res.layer_id, isApiLayer: true, datasetId: undefined, datasourceId: undefined, visible: true, messenger: this.messenger});
+                resolve(layer);
             });
         });
     }
     /**
-	 * Remove marker or any leafletLayer (geojson ...) from the map
-	 * @param {String} layer_id of the layer leaflet in the map
+	 * Remove marker or Layer (geojson ...) from the map
+	 * @param {String} Layer 
 	 */
-    removeLayerById(layer_id: string): Promise<any> {
+    removeLayer(layer: Layer): Promise<string> {
         return new Promise((resolve, reject) => {
-            this.messenger.postMessage('removeLayerById', { layer_id }).then(res => {
-                resolve(res);
+            this.messenger.postMessage('removeLayerById', { layer }).then(res => {
+                 resolve(res);
             });
         });
     }

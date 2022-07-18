@@ -8,15 +8,17 @@ class Layer extends Listener {
     private datasourceId: string;
     private datasetId: string;
     private visible: boolean;
+    private isApiLayer: boolean;
     private messenger: Messenger;
 
-    constructor(id: string, options: {name?: string, datasourceId?:string, datasetId?:string,  visible?: boolean, messenger?: Messenger}) {
+    constructor(id: string, options: {name?: string, datasourceId?:string, datasetId?:string,  visible?: boolean, messenger?: Messenger, isApiLayer?: boolean}) {
         super();
         this.id = id;
         this.name = options.name ? options.name : id;
         this.datasourceId = options.datasourceId;
         this.datasetId = options.datasetId;
         this.visible = options.visible;
+        this.isApiLayer = options.isApiLayer;
         this.messenger = options.messenger;
         if(this.messenger) {
             this.registerEvents();
