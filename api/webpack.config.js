@@ -5,8 +5,8 @@ const isProduction = process.env.NODE_ENV == 'production';
 const config = {
   entry: path.resolve(__dirname, "src/index.ts"),
   output: {
-    //path: path.resolve(__dirname, "dist"),
-    path: "C:/dev/svn/galigeo/trunk/Galigeo-maven-main/ggo_web/src/main/webapp/viewer/api",
+    path: path.resolve(__dirname, "../samples/assets/js"),
+    //path: "C:/dev/svn/galigeo/trunk/Galigeo-maven-main/ggo_web/src/main/webapp/viewer/api",
     filename: "galigeo-api.js",
     library: "Galigeo",
     libraryTarget: "umd",

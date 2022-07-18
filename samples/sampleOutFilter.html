@@ -6,7 +6,7 @@
   <meta http-equiv="cache-control" content="no-cache">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="galigeo-api.js"></script>
+  <script type="text/javascript" src="assets/js/galigeo-api.js"></script>
 
   <title>Filter demo</title>
 </head>
@@ -40,7 +40,7 @@
     }
 
     $(document).ready(function () {
-      var location = "https://sandbox.galigeo.com/Galigeo";
+      var location = "http://localhost:8080/Galigeo";
       var map = new Galigeo.Map('mapId', {
         id: 'filterDemo',
         name: 'Cities',

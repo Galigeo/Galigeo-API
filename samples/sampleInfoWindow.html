@@ -6,7 +6,7 @@
   <meta http-equiv="cache-control" content="no-cache">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="galigeo-api.js"></script>
+  <script type="text/javascript" src="assets/js/galigeo-api.js"></script>
 
   <title>Event demo</title>
 </head>
@@ -27,7 +27,7 @@
         id: 'eventDemo',
         name: 'Infowindow Demo',
         apiKey: 'api_demo',
-        url: 'https://sandbox.galigeo.com/Galigeo'
+        url: 'http://localhost:8080/Galigeo'
       });
       map.addDataUrl('fr_cities.csv', 'FrCities');
       map.load().then(() => {

@@ -8,16 +8,15 @@
 		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="assets/js/galigeo-api.js"></script>
 
-	<title>Set locations Demo</title>
+	<title>print Demo</title>
 </head>
 
 <body>
 
 	<div class="container">
 		<h5>Click on the location where you want to go</h5>
-		<button class="slds-button" onclick="goTo('New York')" class="slds-p-left_small">New York</button>
-		<button class="slds-button" onclick="goTo('Paris')" class="slds-p-left_small">Paris</button>
-		<button class="slds-button" onclick="goTo('Tokyo')" class="slds-p-left_small">Tokyo</button>
+		<button class="slds-button" onclick="print()" class="slds-p-left_small">screenShot</button>
+		<button class="slds-button" onclick="print(true)" class="slds-p-left_small">screenShotWithLegend</button>
 	</div>
 	<div>
 		<div id="ggoMapId" style="height:400px;width:100%"></div>
@@ -28,24 +27,21 @@
 
 	<script type="text/javascript">
 		var ggoMap;
-		function goTo(location) {
-			ggoMap.setBasemap('satellite');
-			var extent;
-			if (location === 'New York') extent = new Galigeo.Extent(-74.19101715087892, 40.62098882953798, -74.05506134033205, 40.72410403167144);
-			else if (location === 'Paris') extent = new Galigeo.Extent(2.215805053710938, 48.77972266402538, 2.487716674804688, 48.95858066440977);
-			else if (location === 'Tokyo') extent = new Galigeo.Extent(140.60852050781253, 36.876325055012344, 141.15234375000003, 37.3101063519868);
-
-			ggoMap.setExtent(extent);
+		function print(withLegend) {
+			ggoMap.print(withLegend, true, 'new name').then((res)=> {
+				console.log(res);
+			});
 		}
 		$(document).ready(function () {
 			var location = 'http://localhost:8080/Galigeo';
 			ggoMap = new Galigeo.Map('ggoMapId',
 				{
-					id: 'sampleMapZoom',
+					id: 'sampleFilterCSV',
 					name: 'Capitals',
 					apiKey: 'api_demo',
 					url: location
 				});
+				ggoMap.addDataUrl('assets/data/fr_cities.csv', 'FrCities');
 			ggoMap.load();
 		});
 	</script>

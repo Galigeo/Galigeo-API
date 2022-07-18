@@ -3,8 +3,7 @@ Javascript API to embed Galigeo maps
 
 ## Build the project
 
-npm install -g http-server
+npm install
+npm run build
 
 
-# for run
-http-server -p 3000

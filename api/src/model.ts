@@ -14,6 +14,13 @@ export class MapParameters {
     crossDomain: boolean;
     data: any[];
 }
+export class Style {
+        fillColor: string;
+        color: string;
+        fillOpacity: number;
+        radius: number;
+        weight: number;
+}
 
 export class Message {
 

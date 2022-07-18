@@ -6,6 +6,8 @@
 { "title":"Filter map from portal", "url": "sampleOutFilter.html", "description": "An example that shows how to filter the data on the map from an external component" },
 { "title":"Map Events", "url": "sampleEvents.html", "description": "An example that shows how to listen events of the map" },
 { "title":"Select Events", "url": "sampleInfoWindow.html", "description": "An example that shows how to listen selection on layer and show features selected" },
-{ "title":"Basemap Control", "url": "sampleBasemapControl.html", "description": "An example that shows how to change the basemap of the map" }
-
+{ "title":"Basemap Control", "url": "sampleBasemapControl.html", "description": "An example that shows how to change the basemap of the map" },
+{ "title":"print Control", "url": "samplePrint.html", "description": "An example that shows how to print the map" },
+{ "title":"Create Marker", "url": "createMarker.html", "description": "An example that shows how to Create a marker with svg" },
+{ "title":"Create line/polygon", "url": "createGeoJson.html", "description": "An example that shows how to Create line/polygon" }
 ]

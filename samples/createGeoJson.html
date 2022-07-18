@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="cache-control" content="no-cache">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="assets/js/galigeo-api.js"></script>
+
+  <title>Add GeoJson</title>
+</head>
+
+<body>
+
+  <div class="row">
+    <div class="col s9" >
+      <div class= 'row'>
+        <div class='col s6 m4 l3'><input type='button' value='lines' onClick="addGeoJson('lines')"/></div>
+        <div class='col s6 m4 l3'><input type='button' value='polygons' onClick="addGeoJson('polygons')"/></div>
+        <div class='col s6 m4 l3'><input type='button' value='points' onClick="addGeoJson('points')"/></div>
+        </div>
+        <div class= 'row'><input type='button' value='Delete' onClick='deleteGeojson()'/></div>`
+    </div>
+    <div class="col s9">
+      <div id="mapId" style="position:absolute; height:100%;width:600px"></div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    var ggoMap;
+    var geoJsonLayerId;
+    var points = [{
+      "type": "Feature",
+      "properties": {
+        "name": "Coors Field",
+        "amenity": "Baseball Stadium",
+        "popupContent": "popupContent !!!!!!!"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-104.99404, 39.75621]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Coors Field",
+        "amenity": "Baseball Stadium",
+        "popupContent": "popupContent !!!!!!!"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [42, 2]
+      }
+    }];
+    var polygons = [{
+      "type": "Feature",
+      "properties": {
+        "party": "Republican",
+        "popupContent": "popupContent !!!!!!!"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-104.05, 48.99],
+          [-97.22, 48.98],
+          [-96.58, 45.94],
+          [-104.03, 45.94],
+          [-104.05, 48.99]
+        ]]
+      }
+    }, {
+      "type": "Feature",
+      "properties": {
+        "party": "Democrat",
+        "popupContent": "popupContent !!!!!!!"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-109.05, 41.00],
+          [-102.06, 40.99],
+          [-102.03, 36.99],
+          [-109.04, 36.99],
+          [-109.05, 41.00]
+        ]]
+      }
+    }];
+    var lines = [{
+      "type": "Feature",
+      "properties": {
+        "party": "abc",
+        "popupContent": "popupContent !!!!!!!"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[-105, 40], [-110, 45], [-115, 55]]
+      }
+    }, {
+      "type": "Feature",
+      "properties": {
+        "party": "abc",
+        "popupContent": "popupContent !!!!!!!"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[-100, 40], [-105, 45], [-110, 55]]
+      }
+    }];
+    var symbols = {
+      points: {
+        fillColor: "#74D76F",
+        color: "#74D76F",
+        fillOpacity: 1,
+        radius: 8,
+        weight: 1
+      },
+      polyline: {
+        fillColor: '#9bcc01',
+        color: '#92bd11',
+        weight: 2,
+        opacity: 0.8,
+        fillOpacity: 0.4
+      }
+    }
+    function addGeoJson(action) {
+      deleteGeojson();
+      switch (action) {
+        case 'lines':
+          ggoMap.createGeojsonLayer(lines, symbols.polyline).then(res => {
+            geoJsonLayerId = res.layer_id;
+          });
+          break;
+        case 'polygons':
+          ggoMap.createGeojsonLayer(polygons).then(res => {
+            geoJsonLayerId = res.layer_id;
+          });
+          break;
+        case 'points':
+         ggoMap.createGeojsonLayer(points, symbols.points).then(res => {
+            geoJsonLayerId = res.layer_id;
+          });
+          break;
+      }
+
+
+    }
+    function deleteGeojson() {
+      
+      if (geoJsonLayerId) {
+          ggoMap.removeLayerById(geoJsonLayerId).then(res => {
+            console.log(res)
+          });
+        }
+    }
+    $(document).ready(function () {
+      var location = 'http://localhost:8080/Galigeo';
+      var msg;
+      ggoMap = new Galigeo.Map('mapId',
+        {
+          id: 'createGeojson',
+          name: 'Geojson',
+          apiKey: 'api_demo',
+          url: location
+        });
+      ggoMap.load();
+    });
+  </script>
+
+</body>
+
+</html>
