@@ -2,10 +2,6 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta http-equiv="cache-control" content="no-cache">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script type="text/javascript" src="assets/js/galigeo-api.js"></script>
 
   <title>Filter demo</title>
@@ -13,46 +9,40 @@
 
 <body>
 
-  <div class="container">
-    <div class="row">
-      <h5>Type a city name</h5>
-    </div>
-    <div class="row">
-      <div class="input-field col s6">
-        <input placeholder="Paris" onChange="filter()" id="name" type="text" class="validate">
-        <label for="name">Name</label>
-      </div>
-    </div>
-    <div class="row">
-      <div id="mapId" style="height:50vh;width:100%;max-width:500px"></div>
+
+  <div class="row">
+    <h5>Type a city name</h5>
+  </div>
+  <div>
+    <div>
+      <input placeholder="Paris" onChange="filter()" id="name" type="text" class="validate">
     </div>
   </div>
-
-
+  <div>
+    <div id="mapId" style="height:50vh;width:100%;max-width:500px"></div>
+  </div>
+  
   <script type="text/javascript">
     var layer;
 
     function filter() {
       var where = $('#name').val() === "" ? "1=1" : "city='" + $('#name').val() + "'";
       layer.filter(where, function () {
-        console.log("end filter");
+        console.log("Filter done");
       });
     }
 
-    $(document).ready(function () {
-      var map = new Galigeo.Map('mapId', {
-        id: 'filterDemo',
-        name: 'Cities',
-        apiKey: 'api_demo',
-        data: []
-      });
-      map.addDataUrl('fr_cities.csv', 'FrCities');
-      map.load().then(() => {
-        map.getLayers().then((layers) => {
-          if (layers.length > 0) layer = layers[0];
-        });
+    var map = new Galigeo.Map('mapId', {
+      name: 'Sample API filter',
+      apiKey: 'e1f2db79-1f1f-40ec-9fcd-2de460d35513',
+      data: [{ format: 'link', url: 'assets/data/fr_cities.csv', name: 'French cities' }]
+    });
+    map.load().then(() => {
+      map.getLayers().then((layers) => {
+        if (layers.length > 0) layer = layers[0];
       });
     });
+
   </script>
 
 </body>

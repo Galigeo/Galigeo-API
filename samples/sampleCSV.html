@@ -1,37 +1,20 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta http-equiv="cache-control" content="no-cache">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script type="text/javascript" src="assets/js/galigeo-api.js"></script>
-
   <title>Map from CSV</title>
 </head>
-
 <body>
-
-
   <div id="ggoMapId" style="position:absolute; height:100%;width:100%"></div>
-
-
   <script type="text/javascript">
-
-    $(document).ready(function () {
-      var ggoMap = new Galigeo.Map('ggoMapId',
-        {
-          id: 'sampleFilterCSV',
-          name: 'FrCities',
-          apiKey: 'e1f2db79-1f1f-40ec-9fcd-2de460d35513',
-          user: 'Administrator',
-          data: []
-        });
-        ggoMap.addDataUrl('assets/data/fr_cities.csv', 'FrCities');
-      ggoMap.load();
-    });
+    var ggoMap = new Galigeo.Map('ggoMapId',
+      {
+        name: 'Sample Load CSV File',
+        apiKey: 'e1f2db79-1f1f-40ec-9fcd-2de460d35513'
+      });
+    ggoMap.addDataUrl('assets/data/fr_cities.csv', 'FrCities');
+    ggoMap.load();
   </script>
 
 </body>
