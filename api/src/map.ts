@@ -274,7 +274,7 @@ class Map extends Listener {
 	 */
     removeLayer(layer: Layer): Promise<string> {
         return new Promise((resolve, reject) => {
-            this.messenger.postMessage('removeLayerById', { layer }).then(res => {
+            this.messenger.postMessage('removeLayer', { layer }).then(res => {
                  resolve(res);
             });
         });

@@ -29,7 +29,7 @@
   </div>
   <script type="text/javascript">
     var ggoMap;
-    var geoJsonLayerId;
+    var geoJsonLayer;
     var points = [{
       "type": "Feature",
       "properties": {
@@ -129,17 +129,17 @@
       switch (action) {
         case 'lines':
           ggoMap.createGeojsonLayer(lines, symbols.polyline).then(res => {
-            geoJsonLayerId = res.layer_id;
+            geoJsonLayer = res;
           });
           break;
         case 'polygons':
           ggoMap.createGeojsonLayer(polygons).then(res => {
-            geoJsonLayerId = res.layer_id;
+            geoJsonLayer = res;
           });
           break;
         case 'points':
          ggoMap.createGeojsonLayer(points, symbols.points).then(res => {
-            geoJsonLayerId = res.layer_id;
+            geoJsonLayer = res;
           });
           break;
       }
@@ -148,8 +148,8 @@
     }
     function deleteGeojson() {
       
-      if (geoJsonLayerId) {
-          ggoMap.removeLayerById(geoJsonLayerId).then(res => {
+      if (geoJsonLayer) {
+          ggoMap.removeLayer(geoJsonLayer).then(res => {
             console.log(res)
           });
         }
