@@ -34,12 +34,7 @@ class Map extends Listener {
 
         for(let dataset of this.options.data) {
             if(dataset.url) {
-                var httpIdx = dataset.url.toLowerCase().indexOf('http');
-                if (httpIdx !== 0) {
-                    // in case of relative path, build the full url
-                    var baseIdx = window.location.href.lastIndexOf('/');
-                    dataset.url = window.location.href.substring(0, baseIdx + 1) + dataset.url;
-                }
+                dataset.url = this.fixRelativeUrl(dataset.url);
             }
         }
     }
@@ -164,7 +159,7 @@ class Map extends Listener {
         if(this.isLoaded()) throw new Error('Cannot add new data once the map is loaded');
         this.options.data.push({
 			format: 'link',
-			url: url,
+			url: this.fixRelativeUrl(url),
 			name: name
 		});
     }
@@ -327,6 +322,16 @@ class Map extends Listener {
         iframe.id = this.options.mapId;
         mapDiv.appendChild(iframe);
         return iframe;
+    }
+
+    private fixRelativeUrl(url:string): string {
+        var httpIdx = url.toLowerCase().indexOf('http');
+        if (httpIdx !== 0) {
+            // in case of relative path, build the full url
+            var baseIdx = window.location.href.lastIndexOf('/');
+            return window.location.href.substring(0, baseIdx + 1) + url;
+        }
+        return url;
     }
 }
 
