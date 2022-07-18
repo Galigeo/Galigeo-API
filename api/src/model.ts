@@ -14,6 +14,16 @@ export class MapParameters {
      */
     public mapId: string;
     /**
+     * Name of the map. If a name is specified but not
+     * a mapId, then the mapId is generated from the name.
+     */
+    public name: string;
+    /**
+     * Optionally specify the language.
+     * By default the browser language is used
+     */
+    public lang: string;
+    /**
      * URL of Galigeo. When not defined, the url
      * is https://go.galigeo.com
      */
@@ -24,17 +34,26 @@ export class MapParameters {
     public devMode: boolean;
     /**
      * Set crossdomain=true when the map
-     * is sandboxed.
+     * is sandboxed (optional).
      */
     public crossDomain: boolean;
     /**
      * An array of data that will be loaded
-     * dynamically with map. Two types of data are supported:
+     * dynamically with map (optional). 
+     * Two types of data are supported:
      * - inline json features
      * - link to a csv file
      * Please see our sample page for more details how to specify the data
      */
     public data: any[];
+    /**
+     * Used to force the user profile (optional)
+     */
+    public profile: string;
+    /**
+     * used to force the username (optional)
+     */
+    public user: string;
 }
 export class Style {
     fillColor: string;

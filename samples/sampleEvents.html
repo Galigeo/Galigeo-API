@@ -24,15 +24,12 @@
     <div id="mapId" style="height:50vh;width:100%;max-width:500px"></div>
   </div>
 
-
-
   <script type="text/javascript">
     $(document).ready(function () {
       var map = new Galigeo.Map('mapId', {
         id: 'eventDemo',
         name: 'Event Demo',
-        apiKey: 'api_demo',
-        url: 'http://localhost:8080/Galigeo'
+        apiKey: 'api_demo'
       });
       map.addDataUrl('fr_cities.csv', 'FrCities');
       map.load().then(() => {

@@ -38,13 +38,11 @@
 			ggoMap.setExtent(extent);
 		}
 		$(document).ready(function () {
-			var location = 'http://localhost:8080/Galigeo';
 			ggoMap = new Galigeo.Map('ggoMapId',
 				{
 					id: 'sampleMapZoom',
 					name: 'Capitals',
-					apiKey: 'api_demo',
-					url: location
+					apiKey: 'api_demo'
 				});
 			ggoMap.load();
 		});

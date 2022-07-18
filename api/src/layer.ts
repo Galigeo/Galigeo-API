@@ -2,6 +2,9 @@ import Listener from "./listener";
 import Messenger from "./messenger";
 import { Message } from "./model";
 
+/**
+ * A map layer defined by an ID and a name
+ */
 class Layer extends Listener {
     private id: string;
     private name: string;
@@ -11,6 +14,12 @@ class Layer extends Listener {
     private isApiLayer: boolean;
     private messenger: Messenger;
 
+    /**
+     * 
+     * @param id 
+     * @param options
+     * @ignore 
+     */
     constructor(id: string, options: {name?: string, datasourceId?:string, datasetId?:string,  visible?: boolean, messenger?: Messenger, isApiLayer?: boolean}) {
         super();
         this.id = id;

@@ -6,7 +6,7 @@ This API provides a set of functions to embed Galigeo Maps into a web page.
 
 ### Getting started
 
-1. Download the JS API from https://showroom.galigeo.com/Galigeo/viewer/api/js/galigeo-api-0.1.js
+1. Download the JS API from https://api.galigeo.com/showcase/assets/js/galigeo-api.js
 2. Add it to your web page `<script type="text/javascript" src="js/galigeo-api-0.1.js"></script>`
 3. Add a map div  `<div id="ggoMapId"></div>`
 4. Start the map 

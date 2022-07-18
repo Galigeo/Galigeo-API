@@ -21,15 +21,12 @@
   <script type="text/javascript">
 
     $(document).ready(function () {
-      var location = 'http://localhost:8080/Galigeo';
-
       var ggoMap = new Galigeo.Map('ggoMapId',
         {
           id: 'sampleFilterCSV',
           name: 'FrCities',
-          apiKey: 'api_demo',
+          apiKey: 'e1f2db79-1f1f-40ec-9fcd-2de460d35513',
           user: 'Administrator',
-          url: location,
           data: []
         });
         ggoMap.addDataUrl('assets/data/fr_cities.csv', 'FrCities');

@@ -21,13 +21,27 @@ class Map extends Listener {
         this.options = options;
         this.element = element;
 
-        if (!options.url) options.url = 'https://sandbox.galigeo.com/Galigeo';
+        if(!options.lang) options.lang = navigator.language;
+
+        if (!options.url) options.url = 'https://showroow.galigeo.com/Galigeo';
         if(options.id && !options.mapId) options.mapId = options.id; // handle legacy parameter
+        if(options.name && !options.mapId) options.mapId = options.name.toUpperCase().toLowerCase().replace(/[^a-z0-9]/gi, '');
 
         if (this.options.url.endsWith('/')) {
             this.options.url = this.options.url.slice(0, -1);
         }
         if(!this.options.data) this.options.data = [];
+
+        for(let dataset of this.options.data) {
+            if(dataset.url) {
+                var httpIdx = dataset.url.toLowerCase().indexOf('http');
+                if (httpIdx !== 0) {
+                    // in case of relative path, build the full url
+                    var baseIdx = window.location.href.lastIndexOf('/');
+                    dataset.url = window.location.href.substring(0, baseIdx + 1) + dataset.url;
+                }
+            }
+        }
     }
 
     /**
@@ -58,7 +72,7 @@ class Map extends Listener {
                 })
                 .catch(err => {
                     console.error('Failed to load map', err);
-                    document.getElementById(this.element).innerHTML = `<span>${err.message}</span>`;
+                    document.getElementById(this.element).innerHTML = `<span>${err.toLocaleString()}</span>`;
                     reject(err)
                 });
 
@@ -148,13 +162,7 @@ class Map extends Listener {
     }
     addDataUrl(url:string, name:string) {
         if(this.isLoaded()) throw new Error('Cannot add new data once the map is loaded');
-        var httpIdx = url.toLowerCase().indexOf('http');
-		if (httpIdx !== 0) {
-			// in case of relative path, build the full url
-			var baseIdx = window.location.href.lastIndexOf('/');
-			url = window.location.href.substring(0, baseIdx + 1) + url;
-		}
-		this.options.data.push({
+        this.options.data.push({
 			format: 'link',
 			url: url,
 			name: name

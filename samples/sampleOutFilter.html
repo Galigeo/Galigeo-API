@@ -40,12 +40,10 @@
     }
 
     $(document).ready(function () {
-      var location = "http://localhost:8080/Galigeo";
       var map = new Galigeo.Map('mapId', {
         id: 'filterDemo',
         name: 'Cities',
         apiKey: 'api_demo',
-        url: location,
         data: []
       });
       map.addDataUrl('fr_cities.csv', 'FrCities');
