@@ -14,8 +14,10 @@
 		<button class="slds-button" onclick="print()" class="slds-p-left_small">screenShot</button>
 		<button class="slds-button" onclick="print(true)" class="slds-p-left_small">screenShotWithLegend</button>
 	</div>
-	<div>
-		<div id="ggoMapId" style="height:400px;width:100%"></div>
+	<div style="display: flex;">
+		<div style="white-space: nowrap;height:400px;width:60%" id="ggoMapId" ></div>
+		<div style="white-space: nowrap;height:400px;width:30%; margin-left:5%;" id="printedImg" >
+		</div>
 	</div>
 	
 
@@ -23,7 +25,12 @@
 		var ggoMap;
 		function print(withLegend) {
 			ggoMap.print(withLegend, true, 'new name').then((res)=> {
-				console.log(res);
+				// console.log(res);
+				//let objectURL = URL.createObjectURL(res);
+				let myImage = new Image();
+				myImage.src = res;
+				document.getElementById('printedImg').innerHTML = ''
+				document.getElementById('printedImg').appendChild(myImage)
 			});
 		}
 		$(document).ready(function () {
@@ -31,7 +38,8 @@
 				{
 					id: 'samplePrint',
 					name: 'Capitals',
-					apiKey: 'e1f2db79-1f1f-40ec-9fcd-2de460d35513'
+					apiKey: 'api_demo',
+					url: 'http://localhost:8080/Galigeo'
 				});
 				ggoMap.addDataUrl('assets/data/fr_cities.csv', 'FrCities');
 			ggoMap.load();
