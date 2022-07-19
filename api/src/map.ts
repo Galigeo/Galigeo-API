@@ -24,6 +24,7 @@ class Map extends Listener {
         if(!options.lang) options.lang = navigator.language;
 
         if (!options.url) options.url = 'https://sandbox.galigeo.com/Galigeo';
+        //options.url = 'http://localhost:8088/Galigeo';
         if(options.id && !options.mapId) options.mapId = options.id; // handle legacy parameter
         if(options.name && !options.mapId) options.mapId = options.name.toUpperCase().toLowerCase().replace(/[^a-z0-9]/gi, '');
 
@@ -37,6 +38,7 @@ class Map extends Listener {
                 dataset.url = this.fixRelativeUrl(dataset.url);
             }
         }
+        return this;
     }
 
     /**
