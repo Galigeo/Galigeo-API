@@ -6,8 +6,8 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="cache-control" content="no-cache">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-	<script type="text/javascript" src="assets/js/galigeo-api.js"></script>
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="assets/js/galigeo-api.js"></script>
 
   <title>Add GeoJson</title>
 </head>
@@ -15,14 +15,14 @@
 <body>
 
   <div class="container">
-        <button class="slds-button" value='lines' onClick="addGeoJson('lines')">lines</button>
-        <button class="slds-button" value='polygons' onClick="addGeoJson('polygons')">polygons</button>
-        <button class="slds-button" value='points' onClick="addGeoJson('points')">points</button>
-        <button class="slds-button" value='Delete' onClick='deleteGeojson()'>Delete</button>`
+    <button class="slds-button" value='lines' onClick="addGeoJson('lines')">lines</button>
+    <button class="slds-button" value='polygons' onClick="addGeoJson('polygons')">polygons</button>
+    <button class="slds-button" value='points' onClick="addGeoJson('points')">points</button>
+    <button class="slds-button" value='Delete' onClick='deleteGeojson()'>Delete</button>`
   </div>
-     <div>
-      <div id="mapId" style="height:400px;width:90%"></div>
-    </div> 
+  <div>
+    <div id="mapId" style="height:400px;width:90%"></div>
+  </div>
   <script type="text/javascript">
     var ggoMap;
     var geoJsonLayer;
@@ -124,17 +124,17 @@
       deleteGeojson();
       switch (action) {
         case 'lines':
-          ggoMap.createGeojsonLayer(lines, symbols.polyline).then(res => {
+          ggoMap.createGeojsonFeatures(lines, symbols.polyline).then(res => {
             geoJsonLayer = res;
           });
           break;
         case 'polygons':
-          ggoMap.createGeojsonLayer(polygons).then(res => {
+          ggoMap.createGeojsonFeatures(polygons).then(res => {
             geoJsonLayer = res;
           });
           break;
         case 'points':
-         ggoMap.createGeojsonLayer(points, symbols.points).then(res => {
+          ggoMap.createGeojsonFeatures(points, symbols.points).then(res => {
             geoJsonLayer = res;
           });
           break;
@@ -143,12 +143,12 @@
 
     }
     function deleteGeojson() {
-      
+
       if (geoJsonLayer) {
-          ggoMap.removeLayer(geoJsonLayer).then(res => {
-            console.log(res)
-          });
-        }
+        ggoMap.removeLayer(geoJsonLayer).then(res => {
+          console.log(res)
+        });
+      }
     }
     $(document).ready(function () {
       var msg;

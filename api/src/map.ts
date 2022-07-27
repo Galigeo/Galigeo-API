@@ -2,10 +2,12 @@ import Extent from "./extent";
 import Layer from "./layer";
 import Messenger from "./messenger";
 import Listener from "./listener";
-import { MapParameters, Message } from "./model";
+import { MapParameters, Message, Style } from "./model";
 
 /**
- * The Map class contains properties and methods for storing and managing layers
+ * Map is the root object of the API. To get started, you need
+ * to create a instance of Map then call map.load() to link it with
+ * the map viewer.
  */
 class Map extends Listener {
 
@@ -15,6 +17,12 @@ class Map extends Listener {
     private messenger: Messenger;
     private loaded: boolean = false;
 
+    /**
+     * Creates the main Map and define its parameters.
+     * 
+     * @param element ID of the div that will contain the map
+     * @param options See {@link MapParameters} for the map parameters
+     */
     constructor(element: string, options: MapParameters) {
         super();
         console.log('Welcome to Galigeo');
@@ -23,7 +31,7 @@ class Map extends Listener {
 
         if(!options.lang) options.lang = navigator.language;
 
-        if (!options.url) options.url = 'https://sandbox.galigeo.com/Galigeo';
+        if (!options.url) options.url = 'https://showroom.galigeo.com/Galigeo';
         //options.url = 'http://localhost:8088/Galigeo';
         if(options.id && !options.mapId) options.mapId = options.id; // handle legacy parameter
         if(options.name && !options.mapId) options.mapId = options.name.toUpperCase().toLowerCase().replace(/[^a-z0-9]/gi, '');
@@ -42,7 +50,10 @@ class Map extends Listener {
     }
 
     /**
-     * Create an instance of Galigeo Map
+     * Link the map with an instance of the map viewer.
+     * The map cannot be used until the load is not
+     * terminated.
+     * 
      * @returns a promise when the map is loaded
      */
     async load() {
@@ -69,7 +80,7 @@ class Map extends Listener {
                 })
                 .catch(err => {
                     console.error('Failed to load map', err);
-                    document.getElementById(this.element).innerHTML = `<span>${err.toLocaleString()}</span>`;
+                    document.getElementById(this.element).innerHTML = `<span>Unable to access Galigeo from ${this.options.url}: ${err.toLocaleString()}</span>`;
                     reject(err)
                 });
 
@@ -132,9 +143,20 @@ class Map extends Listener {
 	disableMapNavigation() {
 		return this.messenger.postMessage('disableMapNavigation', {});
 	}
+    /**
+     * Define the visibility of the vertical menu (top left of the viewer).
+     * This option is useful to display a "minimal" embeded map.
+     * @param visible Set to false to hide the menu (default true)
+     */
     setMenuVisible(visible: boolean) {
         return this.messenger.postMessage('setMenuVisible', visible);
     }
+    /**
+     * Define the visibility for the buttons at the bottom rights on the map.
+     * Note that the zoom in/out buttons and the 3D button are always visible.
+     * 
+     * @param visible Set to true to show all controls (default false)
+     */
     setMapControlsVisible(visible: boolean) {
         return this.messenger.postMessage('setMapControlsVisible', visible);
     }
@@ -146,17 +168,6 @@ class Map extends Listener {
     setBasemap(basemap: string) {
         return this.messenger.postMessage('setBasemap', basemap);
     }
-    /**
-	 * Filter a dataset using a condition 
-	 * @example map.filter('cities', 'city=Paris', ()=> {
-     *   console.log("end filter");
-     * });
-	 * @param {String} datasetId dataset name
-	 * @param {String} query The condition used to filter 
-	 */
-    filter(datasourceId:string, datasetId:String) {
-        return this.messenger.postMessage('filter', { datasourceId, datasetId });
-    }
     addDataUrl(url:string, name:string) {
         if(this.isLoaded()) throw new Error('Cannot add new data once the map is loaded');
         this.options.data.push({
@@ -166,7 +177,7 @@ class Map extends Listener {
 		});
     }
     /**
-	 * Add a array of features to the map. This function adds a new layer on the map.
+	 * Add a array of geojson features to the map. This function adds a new layer on the map.
 	 * @param {Object[]} features 
 	 * - ex: lines [{
       "type": "Feature",
@@ -222,20 +233,12 @@ class Map extends Listener {
         ]]
       }
     }]
-	 * @param {Style | undefined} symbols a style of features
-	- ex: 
-      style: {
-        fillColor: "#74D76F",
-        color: "#74D76F",
-        fillOpacity: 1,
-        radius: 8,
-        weight: 1
-      }
+	 * @param {Style | undefined} style a style of features
 	 * @returns layerId of the object in the map
 	 */
-    createGeojsonLayer(features: any [], style: any): Promise<Layer> {
+    createGeojsonFeatures(features: any [], style: Style): Promise<Layer> {
         return new Promise((resolve, reject) => {
-            this.messenger.postMessage('createGeojsonLayer', { features, style }).then(res => {
+            this.messenger.postMessage('createGeojsonFeatures', { features, style }).then(res => {
                 const layer = new Layer(res.layer_id, {name: res.layer_id, isApiLayer: true, datasetId: undefined, datasourceId: undefined, visible: true, messenger: this.messenger});
                 resolve(layer);
             });
@@ -317,6 +320,7 @@ class Map extends Listener {
         const iframe: HTMLIFrameElement = document.createElement('iframe');
         let urlOptions = 'listenMessages=true';
         if(this.options.crossDomain) urlOptions += '&crossDomain=true'
+        if(this.options.lang) urlOptions += '&lang=' + this.options.lang;
         iframe.src = `${this.options.url}/viewer/${indexPage}?${urlOptions}&url=../${json.relativeUrlServiceUrl}`;
         iframe.width = '100%';
         iframe.height = '100%';

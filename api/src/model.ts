@@ -1,15 +1,20 @@
 import Layer from "./layer";
 
 /**
- * This file is used to store various POJO
+ * MapParameters defines all the properties of the map (name, rights, data, etc..).
+ * Only the name is mandatory.
+ * 
  */
 export class MapParameters {
     /**
-     * Legacy parameter for mapId
+     * Legacy parameter for mapId (please do not use)
+     * @ignore
      */
     public id: string;
     /**
-     * This ID is used to identify the map.
+     * This ID is used to identify the map. When this property is
+     * not defined, then the ID is generated based on the name of
+     * the map.
      * 
      */
     public mapId: string;
@@ -25,11 +30,12 @@ export class MapParameters {
     public lang: string;
     /**
      * URL of Galigeo. When not defined, the url
-     * is https://go.galigeo.com
+     * is https://showcase.galigeo.com
      */
     public url: string;
     /**
      * For internal use only
+     * @ignore
      */
     public devMode: boolean;
     /**
@@ -55,6 +61,17 @@ export class MapParameters {
      */
     public user: string;
 }
+/**
+ * Define the style for a map feature
+ * ex: 
+      style: {
+        fillColor: "#74D76F",
+        color: "#74D76F",
+        fillOpacity: 1,
+        radius: 8,
+        weight: 1
+      }
+ */
 export class Style {
     fillColor: string;
     color: string;
