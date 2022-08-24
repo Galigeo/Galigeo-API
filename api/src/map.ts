@@ -94,6 +94,13 @@ class Map extends Listener {
         return this.loaded;
     }
     /**
+     * Refresh the map. This function is useful to see data updated on the map.
+     * 
+     */
+     refresh() {
+		return this.messenger.postMessage('refresh', {});
+	}
+    /**
      * Set the extent of the map
      * @param extent The extent to set
      */
@@ -132,14 +139,14 @@ class Map extends Listener {
     });
     }
     /**
-	 	* enable navigation like zoom & pan ... when it's disabled 
-	 	*/
+    * enable navigation like zoom & pan ... when it's disabled 
+    */
 	enableMapNavigation() {
 		return this.messenger.postMessage('enableMapNavigation', {});
 	}
-	  	/**
-	 	* disable navigation like zoom & pan ... when it's enabled 
-		*/
+    /**
+    * disable navigation like zoom & pan ... when it's enabled 
+    */
 	disableMapNavigation() {
 		return this.messenger.postMessage('disableMapNavigation', {});
 	}
