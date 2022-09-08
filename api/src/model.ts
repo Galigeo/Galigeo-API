@@ -60,6 +60,11 @@ export class MapParameters {
      * used to force the username (optional)
      */
     public user: string;
+
+    /**
+     * You can get the api key from the licence page of Galigeo
+     */
+    public apiKey: string;
 }
 /**
  * Define the style for a map feature

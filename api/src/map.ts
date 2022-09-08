@@ -67,6 +67,7 @@ class Map extends Listener {
                 body: 'status=200&data=' + encodeURIComponent(JSON.stringify(this.options))
             }).then(res => res.json())
                 .then(json => {
+                    if(!json.message) {
                     this.iframe = this.createIframe(this.element, json);
                     this.messenger = new Messenger(this.iframe);
                     this.registerEvents();
@@ -77,14 +78,24 @@ class Map extends Listener {
                         this.setMapControlsVisible(false);
                         resolve(this);
                     });
+                    } else {
+                        this.showError(json.message, null);
+                    }
                 })
                 .catch(err => {
-                    console.error('Failed to load map', err);
+                    this.showError('Unable to access Galigeo', err);
                     document.getElementById(this.element).innerHTML = `<span>Unable to access Galigeo from ${this.options.url}: ${err.toLocaleString()}</span>`;
                     reject(err)
                 });
 
         });
+    }
+    private showError(msg : string, err: any) {
+        console.error('Failed to load map', msg, err);
+        document.getElementById(this.element).innerHTML = `<div style="height:100%;text-align: center;background-color: #4cc74c; color:white;font-size: x-large;">
+            <h4>Unable to access Galigeo from ${this.options.url}</h4> 
+            <p>${msg}</p>
+            <p>${err?err.toLocaleString():''}</p></div>`;
     }
     /**
      * 

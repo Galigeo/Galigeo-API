@@ -1,6 +1,6 @@
 {
-  "name": "Galigeo_API",
-  "version": "1.0.0",
+  "name": "@galigeo-store/api",
+  "version": "1.0.0-beta3",
   "description": "",
   "main": "index.js",
   "scripts": {
