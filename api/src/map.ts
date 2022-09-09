@@ -335,17 +335,30 @@ class Map extends Listener {
     private createIframe(element: string, json: any): HTMLIFrameElement {
         const mapDiv = document.getElementById(element);
         const indexPage = this.options.devMode ? 'indexdev.jsp' : 'index.html';
-        const iframe: HTMLIFrameElement = document.createElement('iframe');
+                
         let urlOptions = 'listenMessages=true';
         if(this.options.crossDomain) urlOptions += '&crossDomain=true'
         if(this.options.lang) urlOptions += '&lang=' + this.options.lang;
-        iframe.src = `${this.options.url}/viewer/${indexPage}?${urlOptions}&url=../${json.relativeUrlServiceUrl}`;
-        iframe.width = '100%';
-        iframe.height = '100%';
-        iframe.title = 'Galigeo Map';
-        iframe.id = this.options.mapId;
-        mapDiv.appendChild(iframe);
+        const src = `${this.options.url}/viewer/${indexPage}?${urlOptions}&url=../${json.relativeUrlServiceUrl}`;
+        
+        let iframe: HTMLIFrameElement = document.getElementById(this.options.mapId) as HTMLIFrameElement;
+        if(iframe) {
+            iframe.src = src;
+        } else {
+            iframe = document.createElement('iframe');
+            iframe.src = src;
+            iframe.width = '100%';
+            iframe.height = '100%';
+            iframe.title = 'Galigeo Map';
+            iframe.id = this.options.mapId;
+            mapDiv.appendChild(iframe);
+        }
         return iframe;
+    }
+
+    private hasIframe(): boolean {
+        let iframe: HTMLIFrameElement = document.getElementById(this.options.mapId) as HTMLIFrameElement;
+        return iframe !== null;
     }
 
     private fixRelativeUrl(url:string): string {

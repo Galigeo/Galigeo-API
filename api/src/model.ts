@@ -65,6 +65,8 @@ export class MapParameters {
      * You can get the api key from the licence page of Galigeo
      */
     public apiKey: string;
+
+    
 }
 /**
  * Define the style for a map feature
