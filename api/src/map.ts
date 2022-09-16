@@ -179,6 +179,15 @@ class Map extends Listener {
         return this.messenger.postMessage('setMapControlsVisible', visible);
     }
     /**
+     * Define the visibility of the open in new tab button at
+     * the bottom right.
+     * 
+     * @param visible Set to true to display the control
+     */
+    setOpenNewTabVisible(visible: boolean) {
+        return this.messenger.postMessage('setOpenNewTabVisible', visible);
+    }
+    /**
 	 * Set the basemap on the map. The list of basemap parameters is described on the
 	 * main product {@link https://doc.galigeo.com/G21_0/GGO/USER_GUIDE/en/#t=Basemaps_Configuration.htm&rhsearch=basemap&rhhlterm=basemap&rhsyns=%20|documentation}.
 	 * @param {String}  basemap name of the basemap
@@ -339,7 +348,7 @@ class Map extends Listener {
         let urlOptions = 'listenMessages=true';
         if(this.options.crossDomain) urlOptions += '&crossDomain=true'
         if(this.options.lang) urlOptions += '&lang=' + this.options.lang;
-        const src = `${this.options.url}/viewer/${indexPage}?${urlOptions}&url=../${json.relativeUrlServiceUrl}`;
+        const src = `${this.options.url}/viewer/${indexPage}?${urlOptions}&url=${this.options.url}/${json.relativeUrlServiceUrl}`;
         
         let iframe: HTMLIFrameElement = document.getElementById(this.options.mapId) as HTMLIFrameElement;
         if(iframe) {
