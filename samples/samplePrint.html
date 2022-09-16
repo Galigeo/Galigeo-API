@@ -15,16 +15,16 @@
 		<button class="slds-button" onclick="print(true)" class="slds-p-left_small">screenShotWithLegend</button>
 	</div>
 	<div style="display: flex;">
-		<div style="white-space: nowrap;height:400px;width:60%" id="ggoMapId" ></div>
-		<div style="white-space: nowrap;height:400px;width:30%; margin-left:5%;" id="printedImg" >
+		<div style="white-space: nowrap;height:400px;width:60%" id="ggoMapId"></div>
+		<div style="white-space: nowrap;height:400px;width:30%; margin-left:5%;" id="printedImg">
 		</div>
 	</div>
-	
+
 
 	<script type="text/javascript">
 		var ggoMap;
 		function print(withLegend) {
-			ggoMap.print(withLegend, true, 'new name').then((res)=> {
+			ggoMap.print(withLegend, true, 'new name').then((res) => {
 				// console.log(res);
 				//let objectURL = URL.createObjectURL(res);
 				let myImage = new Image();
@@ -40,10 +40,11 @@
 					name: 'Capitals',
 					apiKey: 'e1f2db79-1f1f-40ec-9fcd-2de460d35513'
 				});
-				ggoMap.addDataUrl('assets/data/fr_cities.csv', 'FrCities');
+			ggoMap.addDataUrl('assets/data/fr_cities.csv', 'FrCities');
 			ggoMap.load();
 		});
 	</script>
 
 </body>
+
 </html>
