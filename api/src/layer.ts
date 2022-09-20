@@ -34,12 +34,40 @@ class Layer extends Listener {
         }
     }
 
+    /**
+     * 
+     * @returns the unique ID of the layer
+     */    
     getId():String {
         return this.id;
     }
 
+    /**
+     * 
+     * @returns the name of the layer
+     */
     getName():String {
         return this.name;
+    }
+
+    /**
+     * 
+     * @returns the dataset ID used by this layer
+     */
+    getDatasetId():String {
+        return this.datasetId;
+    }
+
+    /**
+     * 
+     * @returns true is the layer's dataset is provided directly through the API
+     */
+    isIssuedFromAPIData():boolean {
+        return this.datasourceId && this.datasourceId === 'CE';
+    }
+
+    getDatasourceId():String {
+        return this.datasourceId;
     }
     
     setVisible(visible:boolean) {
