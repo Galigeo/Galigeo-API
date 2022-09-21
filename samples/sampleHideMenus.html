@@ -1,0 +1,47 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="cache-control" content="no-cache">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="assets/js/galigeo-api.js"></script>
+
+  <title>Hide menus</title>
+</head>
+
+<body>
+
+  <div class="container">
+    <h5>Select a basemap</h5>
+    <input type="checkbox" id="menuCheck" checked="true" onChange="map.setMenuVisible(this.checked)" />
+    <label for="menuCheck">Toggle menu</label>
+    <input type="checkbox" id="mapControlsCheck" onChange="map.setMapControlsVisible(this.checked)" />
+    <label for="mapControlsCheck">Map controls</label>
+    <input type="checkbox" id="newTabCheck" checked="true" onChange="map.setOpenNewTabVisible(this.checked)" />
+    <label for="newTabCheck">Open in new tab</label>
+  </div>
+  <div>
+    <div id="ggoMapId" style="height:400px;width:100%"></div>
+  </div>
+  </div>
+  </div>
+
+
+  <script type="text/javascript">
+
+    const map = new Galigeo.Map('ggoMapId',
+      {
+        id: 'sampleHideMenus',
+        name: 'Hide Menus',
+        url: 'https://showroom.galigeo.com/Galigeo-alpha', // will be G22SP1 soon
+        apiKey: 'e1f2db79-1f1f-40ec-9fcd-2de460d35513'
+      });
+    map.load();
+
+  </script>
+
+</body>
+
+</html>
