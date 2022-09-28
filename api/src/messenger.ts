@@ -32,7 +32,6 @@ class Messenger extends Listener {
         console.log('API - Listen for messages', childWindow.contentWindow);
         window.addEventListener('message', (evt: MessageEvent) => {
             if (evt.source !== childWindow.contentWindow) {
-                console.warn('API- Skip', evt);
                 return; // Skip message from other source
             }
 

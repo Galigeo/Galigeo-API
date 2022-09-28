@@ -64,7 +64,7 @@ class Map extends Listener {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
                 },
-                body: 'status=200&data=' + encodeURIComponent(JSON.stringify(this.options))
+                body: `status=200&lang=${navigator.language}&data=${encodeURIComponent(JSON.stringify(this.options))}`
             }).then(res => res.json())
                 .then(json => {
                     if(!json.message) {
@@ -84,7 +84,6 @@ class Map extends Listener {
                 })
                 .catch(err => {
                     this.showError('Unable to access Galigeo', err);
-                    document.getElementById(this.element).innerHTML = `<span>Unable to access Galigeo from ${this.options.url}: ${err.toLocaleString()}</span>`;
                     reject(err)
                 });
 
@@ -92,10 +91,20 @@ class Map extends Listener {
     }
     private showError(msg : string, err: any) {
         console.error('Failed to load map', msg, err);
-        document.getElementById(this.element).innerHTML = `<div style="height:100%;text-align: center;background-color: #4cc74c; color:white;font-size: x-large;">
+        // clean up dom when showing error
+        const root:HTMLElement = document.getElementById(this.element);
+        while(root.firstChild){
+            root.removeChild(root.firstChild);
+        }
+        root.insertAdjacentHTML('beforeend', `<div id="galigeoError" style="height:100%;
+               text-align: center;
+               padding: 30px;
+               background-image: linear-gradient(135deg, #2ecc71 0%, #27a0ad 100%) !important; 
+               color:white;
+               font-size: x-large;">
             <h4>Unable to access Galigeo from ${this.options.url}</h4> 
             <p>${msg}</p>
-            <p>${err?err.toLocaleString():''}</p></div>`;
+            <p>${err?err.toLocaleString():''}</p></div>`);
     }
     /**
      * 
@@ -344,13 +353,20 @@ class Map extends Listener {
     private createIframe(element: string, json: any): HTMLIFrameElement {
         const mapDiv = document.getElementById(element);
         const indexPage = this.options.devMode ? 'indexdev.jsp' : 'index.html';
-                
+        
+        // eventually remove the error page
+        const errorDiv:HTMLElement = document.getElementById("galigeoError");
+        if(errorDiv) {
+            errorDiv.remove();
+        }
+
         let urlOptions = 'listenMessages=true';
         if(this.options.crossDomain) urlOptions += '&crossDomain=true'
         if(this.options.lang) urlOptions += '&lang=' + this.options.lang;
-        const src = `${this.options.url}/viewer/${indexPage}?${urlOptions}&url=${this.options.url}/${json.relativeUrlServiceUrl}`;
+        const serviceUrl = this.options.url + '/' + json.relativeUrlServiceUrl;
+        const src = `${this.options.url}/viewer/${indexPage}?${urlOptions}&url=${encodeURIComponent(serviceUrl)}&lang=${navigator.language}`;
         
-        let iframe: HTMLIFrameElement = document.getElementById(this.options.mapId) as HTMLIFrameElement;
+        let iframe: HTMLIFrameElement = document.getElementById('galigeoMap') as HTMLIFrameElement;
         if(iframe) {
             iframe.src = src;
         } else {
@@ -359,7 +375,7 @@ class Map extends Listener {
             iframe.width = '100%';
             iframe.height = '100%';
             iframe.title = 'Galigeo Map';
-            iframe.id = this.options.mapId;
+            iframe.id = 'galigeoMap';
             mapDiv.appendChild(iframe);
         }
         return iframe;
