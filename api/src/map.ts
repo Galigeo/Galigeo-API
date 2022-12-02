@@ -364,8 +364,13 @@ class Map extends Listener {
         if(this.options.crossDomain) urlOptions += '&crossDomain=true'
         if(this.options.lang) urlOptions += '&lang=' + this.options.lang;
         const serviceUrl = this.options.url + '/' + json.relativeUrlServiceUrl;
-        const src = `${this.options.url}/viewer/${indexPage}?${urlOptions}&url=${serviceUrl}&lang=${navigator.language}`;
+        let src = `${this.options.url}/viewer/${indexPage}?${urlOptions}&url=${serviceUrl}&lang=${navigator.language}`;
         
+        // sso ?
+        if(json.sso) {
+            src = `${this.options.url}/oauth/login.html?orgId=${json.orgId}&service=${json.service}&redirect=${encodeURIComponent(src)}`
+        }
+
         let iframe: HTMLIFrameElement = document.getElementById('galigeoMap') as HTMLIFrameElement;
         if(iframe) {
             iframe.src = src;
