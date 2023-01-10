@@ -66,6 +66,12 @@ export class MapParameters {
      */
     public apiKey: string;
 
+    /**
+     * When true, redirect to the map url instead of using
+     * an iframe (optional, default=false).
+     */
+    public redirect: boolean;
+
     
 }
 /**

@@ -360,6 +360,7 @@ class Map extends Listener {
             errorDiv.remove();
         }
 
+        // build the map url
         let urlOptions = 'listenMessages=true';
         if(this.options.crossDomain) urlOptions += '&crossDomain=true'
         if(this.options.lang) urlOptions += '&lang=' + this.options.lang;
@@ -369,6 +370,12 @@ class Map extends Listener {
         // sso ?
         if(json.sso) {
             src = `${this.options.url}/oauth/login.html?orgId=${json.orgId}&service=${json.service}&redirect=${encodeURIComponent(src)}`
+        }
+
+        // If redirect=true, then skip iframe creation
+        if(this.options.redirect) {
+            window.location.href = src;
+            return null;
         }
 
         let iframe: HTMLIFrameElement = document.getElementById('galigeoMap') as HTMLIFrameElement;
