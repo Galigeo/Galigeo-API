@@ -66,18 +66,32 @@ class Layer extends Listener {
         return this.datasourceId && this.datasourceId === 'CE';
     }
 
+    /**
+     * The datasource ID can be: Datahub, CSV, Excel, Shape, GeoJSON, catalog, sql.
+     * A datasourceId=CE means the dataset is dynamically loaded by the API.
+     * @returns the datasource ID of the layer.
+     */
     getDatasourceId():String {
         return this.datasourceId;
     }
-    
+    /**
+     * 
+     * @param visible true to set visible, false to hide the layer
+     */
     setVisible(visible:boolean) {
         return this.messenger.postMessage('setVisible', visible, this);
     }
-
+    /**
+     * Disable the infowindow on this layer. This method is useful if you
+     * want to implement your own infowindow outside of the map.
+     */
     disableInfoWindow() {
         return this.messenger.postMessage('disableInfoWindow', '', this);
     }
-
+    /**
+     * Filter the layer with a where clause. For example 'pop>2000'
+     * @param where The where clause
+     */
     filter(where:string) {
         return this.messenger.postMessage('filter', where, this);
     }

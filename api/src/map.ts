@@ -388,6 +388,7 @@ class Map extends Listener {
             iframe.height = '100%';
             iframe.title = 'Galigeo Map';
             iframe.id = 'galigeoMap';
+            iframe.setAttribute("style", "border: 0px");
             mapDiv.appendChild(iframe);
         }
         return iframe;

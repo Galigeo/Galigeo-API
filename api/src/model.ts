@@ -53,22 +53,30 @@ export class MapParameters {
      */
     public data: any[];
     /**
-     * Used to force the user profile (optional)
+     * Used to force the user profile (optional).
+     * Default profiles are Viewer, Explorer, Creator and Designer. It is possible
+     * to add custom profiles in the user management of the Galigeo admin page.
      */
     public profile: string;
     /**
-     * used to force the username (optional)
+     * Used to force the username (optional).
+     * If the username is not defined, then currently logged used will be used. This is
+     * done by checking the cookie "GaligeoToken". If no active session is detected and the
+     * user property is not defined, then the default value is anonymous.
      */
     public user: string;
 
     /**
-     * You can get the api key from the licence page of Galigeo
+     * You can get the api key from the licence page of Galigeo. A valid API
+     * key is required to get a map instance.
      */
     public apiKey: string;
 
     /**
      * When true, redirect to the map url instead of using
      * an iframe (optional, default=false).
+     * This option is useful in some specific sandbox environment where
+     * the creation of an iframe is forbidden.
      */
     public redirect: boolean;
 
