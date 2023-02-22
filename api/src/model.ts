@@ -44,6 +44,11 @@ export class MapParameters {
      */
     public crossDomain: boolean;
     /**
+     * When true, no layer is created by default on an
+     * empty maps (defaut false)
+     */
+    public skipAutoCreateLayer: boolean;
+    /**
      * An array of data that will be loaded
      * dynamically with map (optional). 
      * Two types of data are supported:
