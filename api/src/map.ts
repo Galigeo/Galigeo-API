@@ -305,7 +305,8 @@ class Map extends Listener {
         });
     }
     /**
-	 * Remove marker or Layer (geojson ...) from the map
+	 * Remove a layer on the map. This method works on marker/geojson layers created with the API,
+     * as well with standard Galigeo layers created from the map itself.
 	 * @param {String} Layer 
 	 */
     removeLayer(layer: Layer): Promise<string> {
