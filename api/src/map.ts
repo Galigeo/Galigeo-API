@@ -29,7 +29,7 @@ class Map extends Listener {
         this.options = options;
         this.element = element;
 
-        if(!options.lang) options.lang = navigator.language;
+        if(!options.lang) options.lang = navigator.language.split('-')[0];
 
         if (!options.url) options.url = 'https://showroom.galigeo.com/Galigeo';
         //options.url = 'http://localhost:8088/Galigeo';
