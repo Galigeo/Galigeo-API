@@ -65,6 +65,7 @@ class Map extends Listener {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
                 },
+                mode:"cors",
                 body: `status=200&lang=${navigator.language}&data=${encodeURIComponent(JSON.stringify(this.options))}`
             }).then(res => res.json())
                 .then(json => {
