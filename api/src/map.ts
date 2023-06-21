@@ -11,13 +11,17 @@ import { MapParameters, Message, Style } from "./model";
  */
 class Map extends Listener {
 
+    /**
+     * The refresh ID is used to update the map data.
+     */
+    public refreshId:string;
+
     private element: string;
     private options: MapParameters;
     private iframe: HTMLIFrameElement;
     private messenger: Messenger;
     private loaded: boolean = false;
-    private refreshId:string;
-
+    
     /**
      * Creates the main Map and define its parameters.
      * 
@@ -93,9 +97,9 @@ class Map extends Listener {
         });
     }
     /**
-     * Update the current map.
-     * Currently, only the data from MapParameters can
-     * be updated.
+     * Update the current map without having to reload it.
+     * When this method is used to update the map data, the layers
+     * are updated without having to reload the map.
      * 
      * @param mapParameters 
      */
