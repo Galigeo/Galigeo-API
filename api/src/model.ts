@@ -89,6 +89,11 @@ export class MapParameters {
      */
     public redirect: boolean;
 
+    /**
+     * When true, the oauth2 of the organization is applied (optional, default=true).
+     * This option is useful only if oauth2 is enabled on the organization.
+     */
+    public oauth2Enabled: boolean;
     
 }
 /**

@@ -406,7 +406,7 @@ class Map extends Listener {
         let src = `${this.options.url}/viewer/${indexPage}?${urlOptions}&url=${serviceUrl}&lang=${navigator.language.split('-')[0]}`;
 
         // sso ?
-        if (json.sso) {
+        if (json.sso && this.options.oauth2Enabled) {
             src = `${this.options.url}/oauth/login.html?orgId=${json.orgId}&service=${json.service}&redirect=${encodeURIComponent(src)}`
         }
 
