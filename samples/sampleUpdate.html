@@ -6,6 +6,7 @@
   <title>Map from CSV</title>
 </head>
 <body>
+  <div id="text">Set the population to 10000 in 2 sec...</div>
   <div id="ggoMapId" style="position:absolute; height:100%;width:100%"></div>
   <script type="text/javascript">
     const data = {name:"Iris from API",
@@ -19,12 +20,14 @@
         data: [data]
       });
     ggoMap.load().then(()=>{
-      setTimeout(()=>{
+      setTimeout(async ()=>{
         // now update the data
         for(let f of data.features) {
           f.attributes.p_pop = 10000;
         }
-        ggoMap.update({data: [data]});
+        await ggoMap.update({data: [data]});
+        ggoMap.refresh();
+        document.getElementById('text').innerHTML = 'Population updated';
       }, 2000);
       
     });

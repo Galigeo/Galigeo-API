@@ -44,6 +44,10 @@ export class MapParameters {
      */
     public crossDomain: boolean;
     /**
+     * Specify the entity using the API (optional).
+     */
+    public parent: string;
+    /**
      * When true, no layer is created by default on an
      * empty maps (defaut false)
      */

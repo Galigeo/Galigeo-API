@@ -11,5 +11,6 @@
 { "title":"Print Control", "url": "samplePrint.html", "description": "An example that shows how to print the map" },
 { "title":"Create Marker", "url": "createMarker.html", "description": "An example that shows how to Create a marker with svg" },
 { "title":"Create line/polygon", "url": "createGeoJson.html", "description": "An example that shows how to Create line/polygon" },
-{ "title":"Predefined mapper", "url": "sampleMapper.html", "description": "This example shows how to specify a mapper for force the join on specific layer. If you edit the dataset 'Iris from API', you will see that the mapper corresponds to the one specified with the JSON data." }
+{ "title":"Predefined mapper", "url": "sampleMapper.html", "description": "This example shows how to specify a mapper for force the join on specific layer. If you edit the dataset 'Iris from API', you will see that the mapper corresponds to the one specified with the JSON data." },
+{ "title":"Update data on the fly", "url": "sampleUpdate.html", "description": "Shows how to update the data without having to reload the map." }
 ]

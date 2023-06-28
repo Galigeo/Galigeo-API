@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script type="text/javascript" src="assets/js/galigeo-api.js"></script>
+  <title>Map from CSV</title>
+</head>
+<body>
+  <div id="ggoMapId" style="position:absolute; height:100%;width:100%"></div>
+  <script type="text/javascript">
+    var ggoMap = new Galigeo.Map('ggoMapId',
+      {
+        user: "MILLETDA",
+    data: [{
+            "fields": [{
+                    "name": "Bureau",
+                    "type": "esriFieldTypeString",
+                    "alias": "Bureau",
+                    "dimension": false,
+                    "visible": true,
+                    "geodim": false
+                }, {
+                    "name": "Iris",
+                    "type": "esriFieldTypeString",
+                    "alias": "Iris",
+                    "dimension": false,
+                    "visible": true,
+                    "geodim": true
+                }, {
+                    "name": "LibelleCommune",
+                    "type": "esriFieldTypeString",
+                    "alias": "Libellé Commune",
+                    "dimension": false,
+                    "visible": true,
+                    "geodim": false
+                }, {
+                    "name": "LibelleIris",
+                    "type": "esriFieldTypeString",
+                    "alias": "Libellé Iris",
+                    "dimension": false,
+                    "visible": true,
+                    "geodim": false
+                }, {
+                    "name": "Population",
+                    "type": "esriFieldTypeDouble",
+                    "alias": "Population",
+                    "dimension": false,
+                    "visible": true,
+                    "geodim": false
+                }
+            ],
+            "features": [{
+                    "attributes": {
+                        "Bureau": "0100100",
+                        "Iris": "674820101",
+                        "Libellé Commune": "Strasbourg",
+                        "Libellé Iris": "Mairie Nord",
+                        "Population": 2516.0
+                    }
+                }
+            ],
+            "name": "Carte vierge à l'IRIS",
+            "mapper": {
+                "name": "Join from API",
+                "type": "join",
+                "biField": "iris",
+                "gisUrl": "sql://query/iris_2015",
+                "gisField": "code_iris"
+            }
+        }
+    ],
+    url: "http://localhost:8080/Galigeo",
+    mapId: "Carte vierge IRIS",
+    isMenuVisible: true,
+    isMapControlsVisible: false,
+    profile: "Creator",
+    apiKey: 'e1f2db79-1f1f-40ec-9fcd-2de460d35513',
+    $C: "root",
+        
+      });
+    ggoMap.load();
+  </script>
+
+</body>
+
+</html>

@@ -32,7 +32,7 @@ function getUrlParam(key, byDefault) {
               <div class="slds-page-header__name-title">
                 <h1 class="slds-p-left_medium slds-p-top_x_small">
                   <span class="slds-page-header__title slds-truncate" title="Galigeo API">Galigeo API</span>
-                  <span>Version 2.0.0</span>
+                  <span>Version 2.1.0</span>
                 </h1>
               </div>
             </div>
