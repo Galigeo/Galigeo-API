@@ -95,6 +95,9 @@ class Messenger extends Listener {
                 const response = new Message();
                 response.resolve = resolve;
                 this.responses.set(message.id, response);
+                if(!this.iframe || !this.iframe.contentWindow) {
+                    throw new Error('Map iframe not ready, unable to send message ' + action);
+                }
                 this.iframe.contentWindow.postMessage(JSON.stringify(message), "*");
             }
         });
