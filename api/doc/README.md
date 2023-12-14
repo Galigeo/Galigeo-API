@@ -7,7 +7,7 @@ This API provides a set of functions to embed Galigeo Maps into a web page.
 ### Getting started
 
 1. Download the JS API from https://api.galigeo.com/showcase/assets/js/galigeo-api.js
-2. Add it to your web page `<script type="text/javascript" src="js/galigeo-api-0.1.js"></script>`
+2. Add it to your web page `<script type="text/javascript" src="js/galigeo-api.js"></script>`
 3. Add a div to the web page that will contain the map  `<div id="ggoMapId"></div>`
 4. Init the map with Javascript: 
 
@@ -16,6 +16,7 @@ var ggoMap = new Galigeo.Map('ggoMapId',
 {
     mapId: 'MyMap',
     name: 'Map label',
+    apiKey: 'Your API key',
     url: 'https://location/Galigeo'
 });
 ggoMap.load().then(()=>{
@@ -25,17 +26,9 @@ ggoMap.load().then(()=>{
 
 [Check our API samples](https://api.galigeo.com/showcase)
 
-
-### REST API documentation
-
-This document describes the basic usages of the API, REST calls and rights management.
-
-* [Documentation EN](https://doc.galigeo.com/G22_0/Galigeo_OpenMap_REST-API_en.pdf)
-* [Documentation FR](https://doc.galigeo.com/G22_0/Galigeo_OpenMap_REST-API_fr.pdf)
-
 ### Product documentation
 
 Main product documentation.
 
-* [Documentation EN](https://doc.galigeo.com/G22_0/GGO/USER_GUIDE/en)
-* [Documentation FR](https://doc.galigeo.com/G22_0/GGO/USER_GUIDE/fr)
+* [Documentation EN](https://doc.galigeo.com/G23_0/GGO/USER_GUIDE/en)
+* [Documentation FR](https://doc.galigeo.com/G23_0/GGO/USER_GUIDE/fr)
