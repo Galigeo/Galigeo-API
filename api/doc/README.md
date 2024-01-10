@@ -30,5 +30,5 @@ ggoMap.load().then(()=>{
 
 Main product documentation.
 
-* [Documentation EN](https://doc.galigeo.com/G23_0/GGO/USER_GUIDE/en)
-* [Documentation FR](https://doc.galigeo.com/G23_0/GGO/USER_GUIDE/fr)
+* [Documentation EN](https://doc.galigeo.com/latest/GGO/USER_GUIDE/en)
+* [Documentation FR](https://doc.galigeo.com/latest/GGO/USER_GUIDE/fr)
