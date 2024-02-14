@@ -16,7 +16,7 @@ class Map extends Listener {
      */
     public refreshId:string;
 
-    private element: string;
+    private element: HTMLElement;
     private options: MapParameters;
     private iframe: HTMLIFrameElement;
     private messenger: Messenger;
@@ -28,11 +28,12 @@ class Map extends Listener {
      * @param element ID of the div that will contain the map
      * @param options See {@link MapParameters} for the map parameters
      */
-    constructor(element: string, options: MapParameters) {
+    constructor(element: string | HTMLElement, options: MapParameters) {
         super();
         console.log('Welcome to Galigeo');
         this.options = options;
-        this.element = element;
+        if(typeof(element) === 'string') this.element = document.getElementById(element);
+        else this.element = element;
 
         if (!options.lang) options.lang = navigator.language.split('-')[0];
 
@@ -128,7 +129,7 @@ class Map extends Listener {
     private showError(msg: string, err: any) {
         console.error('Failed to load map', msg, err);
         // clean up dom when showing error
-        const root: HTMLElement = document.getElementById(this.element);
+        const root: HTMLElement = this.element;
         while (root.firstChild) {
             root.removeChild(root.firstChild);
         }
@@ -387,8 +388,8 @@ class Map extends Listener {
 
     }
 
-    private createIframe(element: string, json: any): HTMLIFrameElement {
-        const mapDiv = document.getElementById(element);
+    private createIframe(element: HTMLElement, json: any): HTMLIFrameElement {
+        const mapDiv = element;
         const indexPage = this.options.devMode ? 'indexdev.jsp' : 'index.html';
 
         // eventually remove the error page
@@ -408,6 +409,7 @@ class Map extends Listener {
         // sso ?
         if (json.sso && this.options.oauth2Enabled) {
             src = `${this.options.url}/oauth/login.html?orgId=${json.orgId}&service=${json.service}&redirect=${encodeURIComponent(src)}`
+            console.log('SSO enabled, redirect to', src);
         }
 
         // If redirect=true, then skip iframe creation
@@ -416,7 +418,7 @@ class Map extends Listener {
             return null;
         }
 
-        let iframe: HTMLIFrameElement = document.getElementById('galigeoMap') as HTMLIFrameElement;
+        let iframe: HTMLIFrameElement = element.querySelector('#galigeoMap') as HTMLIFrameElement;
         if (iframe) {
             iframe.src = src;
         } else {
@@ -430,11 +432,6 @@ class Map extends Listener {
             mapDiv.appendChild(iframe);
         }
         return iframe;
-    }
-
-    private hasIframe(): boolean {
-        let iframe: HTMLIFrameElement = document.getElementById(this.options.mapId) as HTMLIFrameElement;
-        return iframe !== null;
     }
 
     private fixRelativeUrl(url: string): string {
