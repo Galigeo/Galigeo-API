@@ -94,6 +94,13 @@ export class MapParameters {
      * This option is useful only if oauth2 is enabled on the organization.
      */
     public oauth2Enabled: boolean;
+
+    /**
+     * When true, the oauth2 is opened in a popup (optional, default=false).
+     * This option is useful only if oauth2 is enabled on the organization and the
+     * parameter oauth2Enabled is set to true.
+     */
+    public oauth2Popup: boolean;
     
 }
 /**

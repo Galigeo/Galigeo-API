@@ -409,7 +409,10 @@ class Map extends Listener {
         // sso ?
         if (json.sso && this.options.oauth2Enabled) {
             src = `${this.options.url}/oauth/login.html?orgId=${json.orgId}&service=${json.service}&redirect=${encodeURIComponent(src)}`
-            console.log('SSO enabled, redirect to', src);
+            if(this.options.oauth2Popup) {
+                src += '&popup=true';
+            }
+            console.log('sso', src);
         }
 
         // If redirect=true, then skip iframe creation
