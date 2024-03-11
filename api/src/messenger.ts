@@ -75,7 +75,7 @@ class Messenger extends Listener {
                 if (!this.ready) {
                     reject('Timeout excedeed, failed to load map');
                 }
-            }, 20000);
+            }, 30000);
         });
     }
     postMessage(action: string, value: any, layer?:Layer) {

@@ -14,14 +14,14 @@ class Map extends Listener {
     /**
      * The refresh ID is used to update the map data.
      */
-    public refreshId:string;
+    public refreshId: string;
 
     private element: HTMLElement;
     private options: MapParameters;
     private iframe: HTMLIFrameElement;
     private messenger: Messenger;
     private loaded: boolean = false;
-    
+
     /**
      * Creates the main Map and define its parameters.
      * 
@@ -32,7 +32,7 @@ class Map extends Listener {
         super();
         console.log('Welcome to Galigeo');
         this.options = options;
-        if(typeof(element) === 'string') this.element = document.getElementById(element);
+        if (typeof (element) === 'string') this.element = document.getElementById(element);
         else this.element = element;
 
         if (!options.lang) options.lang = navigator.language.split('-')[0];
@@ -70,7 +70,7 @@ class Map extends Listener {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
                 },
-                mode:"cors",
+                mode: "cors",
                 body: `status=200&lang=${navigator.language}&data=${encodeURIComponent(JSON.stringify(this.options))}`
             }).then(res => res.json())
                 .then(json => {
@@ -105,7 +105,7 @@ class Map extends Listener {
      * @param mapParameters 
      */
     public update(mapParameters: MapParameters) {
-        if(!this.refreshId || !this.loaded) throw new Error('Data update not available');
+        if (!this.refreshId || !this.loaded) throw new Error('Data update not available');
         return new Promise((resolve, reject) => {
             fetch(this.options.url + '/api/openMap/encoded?refreshId=' + this.refreshId, {
                 method: 'POST',
@@ -409,7 +409,7 @@ class Map extends Listener {
         // sso ?
         if (json.sso && this.options.oauth2Enabled) {
             src = `${this.options.url}/oauth/login.html?orgId=${json.orgId}&service=${json.service}&redirect=${encodeURIComponent(src)}`
-            if(this.options.oauth2Popup) {
+            if (this.options.oauth2Popup) {
                 src += '&popup=true';
             }
             console.log('sso', src);
@@ -432,6 +432,25 @@ class Map extends Listener {
             iframe.title = 'Galigeo Map';
             iframe.id = 'galigeoMap';
             iframe.setAttribute("style", "border: 0px");
+            iframe.addEventListener('error', function (event) {
+                console.log('Failed to load iframe : ', event);
+            });
+            
+            if (navigator.platform === 'iPhone' || navigator.platform === 'iPad') {
+                // Workaround for iOS : reload the iframe if it's empty
+                setTimeout(() => {
+                    try {
+                        const bodyContent = iframe.contentWindow.document.querySelector('body').innerHTML;
+                        if (bodyContent === '') {
+                            iframe.focus();
+                            // set the src again
+                            iframe.src = src;
+                        }
+                    } catch (e) {
+                        console.log('Failed to load iframe : ', e);
+                    }
+                }, 2000);
+            }
             mapDiv.appendChild(iframe);
         }
         return iframe;
