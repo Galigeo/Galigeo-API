@@ -101,6 +101,11 @@ export class MapParameters {
      * parameter oauth2Enabled is set to true.
      */
     public oauth2Popup: boolean;
+
+    /**
+     * Define the timeout for the map to be loaded (optional, default=30000).
+     */
+    public timeout: number;
     
 }
 /**

@@ -76,7 +76,7 @@ class Map extends Listener {
                 .then(json => {
                     if (!json.message) {
                         this.iframe = this.createIframe(this.element, json);
-                        this.messenger = new Messenger(this.iframe);
+                        this.messenger = new Messenger(this.iframe, this.options.timeout);
                         this.refreshId = json.refreshId;
                         this.registerEvents();
                         console.log('API- after fetch json', json);

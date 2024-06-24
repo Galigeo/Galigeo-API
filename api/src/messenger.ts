@@ -15,13 +15,15 @@ import { Message } from "./model";
 class Messenger extends Listener {
 
     iframe: HTMLIFrameElement;
+    timeout: number;
     ready: boolean = false;
     private responses:Map<string, Message> = new Map<string, Message>();
     private idCounter:number = 1;
     
-    constructor(iframe: HTMLIFrameElement) {
+    constructor(iframe: HTMLIFrameElement, timeout: number = 30000) {
         super();
         this.iframe = iframe;
+        this.timeout = timeout;
         this.registerEvents();
     }
     /**
@@ -75,7 +77,7 @@ class Messenger extends Listener {
                 if (!this.ready) {
                     reject('Timeout excedeed, failed to load map');
                 }
-            }, 30000);
+            }, this.timeout);
         });
     }
     postMessage(action: string, value: any, layer?:Layer) {
