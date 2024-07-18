@@ -403,6 +403,7 @@ class Map extends Listener {
         if (this.options.crossDomain) urlOptions += '&crossDomain=true'
         if (this.options.parent) urlOptions += '&parent=' + this.options.parent;
         if (this.options.lang) urlOptions += '&lang=' + this.options.lang;
+        if (this.options.listenExternalLinks) urlOptions += '&listenExternalLinks=' + this.options.listenExternalLinks;
         const serviceUrl = this.options.url + '/' + json.relativeUrlServiceUrl;
         let src = `${this.options.url}/viewer/${indexPage}?${urlOptions}&url=${serviceUrl}&lang=${navigator.language.split('-')[0]}`;
 

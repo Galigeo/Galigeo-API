@@ -106,6 +106,8 @@ export class MapParameters {
      * Define the timeout for the map to be loaded (optional, default=30000).
      */
     public timeout: number;
+
+    public listenExternalLinks: boolean;
     
 }
 /**
