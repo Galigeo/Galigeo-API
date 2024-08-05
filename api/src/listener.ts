@@ -30,7 +30,7 @@ class Listener {
     fireEvent(event:string, value?:any) {
         let funcs:Function[] = this._listeners.get(event);
         if(funcs) {
-            for(let f of funcs) {
+            for(const f of funcs) {
                 f(value);
             }
         }

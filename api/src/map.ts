@@ -47,7 +47,7 @@ class Map extends Listener {
         }
         if (!this.options.data) this.options.data = [];
 
-        for (let dataset of this.options.data) {
+        for (const dataset of this.options.data) {
             if (dataset.url) {
                 dataset.url = this.fixRelativeUrl(dataset.url);
             }
@@ -241,6 +241,11 @@ class Map extends Listener {
     setBasemap(basemap: string) {
         return this.messenger.postMessage('setBasemap', basemap);
     }
+    /**
+     * This function is used to add a CSV dataset.
+     * @param url URL to the CSV file
+     * @param name Name of the dataset
+     */
     addDataUrl(url: string, name: string) {
         if (this.isLoaded()) throw new Error('Cannot add new data once the map is loaded');
         this.options.data.push({
@@ -458,10 +463,10 @@ class Map extends Listener {
     }
 
     private fixRelativeUrl(url: string): string {
-        var httpIdx = url.toLowerCase().indexOf('http');
+        const httpIdx = url.toLowerCase().indexOf('http');
         if (httpIdx !== 0) {
             // in case of relative path, build the full url
-            var baseIdx = window.location.href.lastIndexOf('/');
+            const baseIdx = window.location.href.lastIndexOf('/');
             return window.location.href.substring(0, baseIdx + 1) + url;
         }
         return url;

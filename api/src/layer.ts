@@ -38,7 +38,7 @@ class Layer extends Listener {
      * 
      * @returns the unique ID of the layer
      */    
-    getId():String {
+    getId():string {
         return this.id;
     }
 
@@ -46,7 +46,7 @@ class Layer extends Listener {
      * 
      * @returns the name of the layer
      */
-    getName():String {
+    getName():string {
         return this.name;
     }
 
@@ -54,7 +54,7 @@ class Layer extends Listener {
      * 
      * @returns the dataset ID used by this layer
      */
-    getDatasetId():String {
+    getDatasetId():string {
         return this.datasetId;
     }
 
@@ -71,7 +71,7 @@ class Layer extends Listener {
      * A datasourceId=CE means the dataset is dynamically loaded by the API.
      * @returns the datasource ID of the layer.
      */
-    getDatasourceId():String {
+    getDatasourceId():string {
         return this.datasourceId;
     }
     /**

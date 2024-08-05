@@ -1,5 +1,10 @@
 {
     "visibilityFilters": {
         
+    },
+    "templates": {
+        "default": {
+            "outputSourceFiles": false
+        }
     }
 }
