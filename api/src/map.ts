@@ -241,11 +241,6 @@ class Map extends Listener {
     setBasemap(basemap: string) {
         return this.messenger.postMessage('setBasemap', basemap);
     }
-    /**
-     * This function is used to add a CSV dataset.
-     * @param url URL to the CSV file
-     * @param name Name of the dataset
-     */
     addDataUrl(url: string, name: string) {
         if (this.isLoaded()) throw new Error('Cannot add new data once the map is loaded');
         this.options.data.push({
@@ -395,7 +390,9 @@ class Map extends Listener {
 
     private createIframe(element: HTMLElement, json: any): HTMLIFrameElement {
         const mapDiv = element;
-        const indexPage = this.options.devMode ? 'indexdev.jsp' : 'index.html';
+        let indexPage = 'index.html';
+        if(this.options.devMode) indexPage = 'indexdev.jsp';
+        if(this.options.viewerGL) indexPage = 'indexgl.html';
 
         // eventually remove the error page
         const errorDiv: HTMLElement = document.getElementById("galigeoError");
@@ -409,6 +406,7 @@ class Map extends Listener {
         if (this.options.parent) urlOptions += '&parent=' + this.options.parent;
         if (this.options.lang) urlOptions += '&lang=' + this.options.lang;
         if (this.options.listenExternalLinks) urlOptions += '&listenExternalLinks=' + this.options.listenExternalLinks;
+        if (this.options.showLoginButton) urlOptions += '&showLoginButton=' + this.options.showLoginButton;
         const serviceUrl = this.options.url + '/' + json.relativeUrlServiceUrl;
         let src = `${this.options.url}/viewer/${indexPage}?${urlOptions}&url=${serviceUrl}&lang=${navigator.language.split('-')[0]}`;
 

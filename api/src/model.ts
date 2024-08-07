@@ -107,8 +107,25 @@ export class MapParameters {
      */
     public timeout: number;
 
+    /**
+     * When true, the login button is displayed (optional, default=true).
+     */
+    public showLoginButton: boolean = true;
+
+    /**
+     * For internal use only
+     * @ignore
+     */
     public listenExternalLinks: boolean;
     
+    /**
+     * For internal use only
+     * @ignore
+     */
+    public viewerGL: boolean;
+    
+
+
 }
 /**
  * Define the style for a map feature
