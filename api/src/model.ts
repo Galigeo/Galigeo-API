@@ -113,6 +113,12 @@ export class MapParameters {
     public showLoginButton: boolean = true;
 
     /**
+     * When true, the field names are cleaned up from any special characters and set to lower case (optional, default=true).
+     * This option can be set to false when field names are used in the API to avoid any case sensitive behavior.
+     */
+    public encodeFields: boolean = true;
+
+    /**
      * For internal use only
      * @ignore
      */

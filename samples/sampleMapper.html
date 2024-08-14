@@ -10,13 +10,22 @@
   <script type="text/javascript">
     var ggoMap = new Galigeo.Map('ggoMapId',
       {
-        url: 'https://showroom.galigeo.com/Galigeo-rc', // Pre release
         name: 'Predefined mapper',
         apiKey: 'e1f2db79-1f1f-40ec-9fcd-2de460d35513',
-        profile: 'Creator',
-        data: [{name:"Iris from API",
-        "mapper": {name: "Join from API", type:"join", biField: "code_iris", gisUrl:"datahub://predefinedmapper_Iris", gisField: "code_iris"},
-        "fields":[{"name":"code_iris","type":"esriFieldTypeString","alias":"Code Iris","alias2":"Code Iris","visible":true,"geodim":true},{"name":"p_pop","type":"esriFieldTypeDouble","alias":"Population","alias2":"Population","visible":true,"aggregation":"sum"}],"features":[{"attributes":{"p_pop":220,"code_iris":"213870000"}},{"attributes":{"p_pop":381,"code_iris":"911740102"}},{"attributes":{"p_pop":2551,"code_iris":"381850501"}},{"attributes":{"p_pop":7595,"code_iris":"910450000"}},{"attributes":{"p_pop":210,"code_iris":"216300000"}},{"attributes":{"p_pop":3786,"code_iris":"720080102"}},{"attributes":{"p_pop":32,"code_iris":"180710000"}},{"attributes":{"p_pop":223,"code_iris":"216190000"}},{"attributes":{"p_pop":164,"code_iris":"861430000"}},{"attributes":{"p_pop":1944,"code_iris":"012500000"}}],"count":10,"rawCount":10}]
+        data: [
+          {
+            name:"Iris from API",
+            mapper: {name: "Join from API", type:"join", biField: "code_iris", gisUrl:"datahub://predefinedmapper_Iris", gisField: "code_iris"},
+            fields:[{"name":"code_iris","type":"esriFieldTypeString","alias":"Code Iris","alias2":"Code Iris","visible":true,"geodim":true},{"name":"p_pop","type":"esriFieldTypeDouble","alias":"Population","alias2":"Population","visible":true,"aggregation":"sum"}],
+            features:[{"attributes":{"p_pop":220,"code_iris":"213870000"}},{"attributes":{"p_pop":381,"code_iris":"911740102"}},{"attributes":{"p_pop":2551,"code_iris":"381850501"}},{"attributes":{"p_pop":7595,"code_iris":"910450000"}},{"attributes":{"p_pop":210,"code_iris":"216300000"}},{"attributes":{"p_pop":3786,"code_iris":"720080102"}},{"attributes":{"p_pop":32,"code_iris":"180710000"}},{"attributes":{"p_pop":223,"code_iris":"216190000"}},{"attributes":{"p_pop":164,"code_iris":"861430000"}},{"attributes":{"p_pop":1944,"code_iris":"012500000"}}]
+          },
+          {
+            name:"Location",
+            mapper: {name: "XY from API", type:"xy", longColumn: "x", latColumn:"y"},
+            fields:[{"name":"center_id","type":"esriFieldTypeString","alias":"My location"},{"name":"x","type":"esriFieldTypeDouble"},{"name":"y","type":"esriFieldTypeDouble"}],
+            features:[{"attributes":{center_id:"My location",x:0.1,y:48.0}}]
+          }
+      ]
       });
     ggoMap.load();
   </script>
