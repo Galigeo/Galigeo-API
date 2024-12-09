@@ -8,17 +8,16 @@
 <body>
   <div id="ggoMapId" style="position:absolute; height:100%;width:100%"></div>
   <script type="text/javascript">
-    fetch('https://earthquake.usgs.gov/arcgis/rest/services/eq/Recent_Earthquakes/MapServer/0/query?where=1%3D1&outFields=id,depth,latitude,longitude&f=json').then(async (response)=>{
-        const json = await response.json();
-        var ggoMap = await new Galigeo.Map('ggoMapId', {
+    async function load() {
+      var ggoMap = await new Galigeo.Map('ggoMapId', {
             url: 'http://localhost:8088/Galigeo',
             name: 'Dynamic JSON data',
-            apiKey: 'e1f2db79-1f1f-40ec-9fcd-2de460d35513',
+            apiKey: '1e2ec83c-0f5c-4e5a-ac1d-c98363aa1ca0',
             viewerGL: true,
-            data: [json]
+            data : await (await fetch('data.json')).json()
         }).load();
-        
-      });
+    }
+    load();
   </script>
 
 </body>

@@ -1,0 +1,65 @@
+[{
+    "name": "Population by departement",
+    "fields": [
+        {
+            "name": "dept",
+            "type": "esriFieldTypeString",
+            "alias": "Code Dep"
+        },
+        {
+            "name": "pop",
+            "type": "esriFieldTypeDouble",
+            "alias": "Population"
+        }
+    ],
+    "features": [
+        {
+            "attributes": {
+                "dept": "75",
+                "pop": 100024
+            }
+        },
+        {
+            "attributes": {
+                "dept": "77",
+                "pop": 47104
+            }
+        },
+        {
+            "attributes": {
+                "dept": "78",
+                "pop": 52012
+            }
+        },
+        {
+            "attributes": {
+                "dept": "91",
+                "pop": 45060
+            }
+        },
+        {
+            "attributes": {
+                "dept": "92",
+                "pop": 66023
+            }
+        },
+        {
+            "attributes": {
+                "dept": "93",
+                "pop": 56905
+            }
+        },
+        {
+            "attributes": {
+                "dept": "94",
+                "pop": 52718
+            }
+        },
+        {
+            "attributes": {
+                "dept": "95",
+                "pop": 42862
+            }
+        }
+    ]
+  }]

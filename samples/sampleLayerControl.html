@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script type="text/javascript" src="assets/js/galigeo-api.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+  <title>Layer control</title>
+</head>
+<body>
+  <div id="toggles"></div>
+  <div id="ggoMapId" style="position:absolute; height:calc(100vh - 200px);width:100%"></div>
+  <script type="text/javascript">
+    (async () => {
+      var ggoMap = new Galigeo.Map('ggoMapId',
+        {
+          name: 'Sample layer control',
+          apiKey: 'e1f2db79-1f1f-40ec-9fcd-2de460d35513',
+          data: await (await fetch('data.json')).json(),
+          showLoginButton: true,
+        });
+      
+      await ggoMap.load();
+      const layers = await ggoMap.getLayers();
+      for(let layer of layers) {
+        $('#toggles').append(`<input type="checkbox" id="${layer.id}" checked><label for="${layer.id}">${layer.name}</label><br>`);
+        $(`#${layer.id}`).change(() => {
+          layer.setVisible($(`#${layer.id}`).prop('checked'));
+        });
+      }
+    })();
+  </script>
+
+</body>
+
+</html>
