@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="assets/js/galigeo-api.js"></script>
+    <title>Dynamic JSON</title>
+</head>
+
+<body>
+    <div id="ggoMapId" style="position:absolute; height:100%;width:100%"></div>
+    <script type="text/javascript">
+        /**
+         * Create a separate instance of the map. Here you can use a custom service
+         * to handle this job.
+         * In this example, we call directly the Galigeo REST API. But you could replace the
+         * url by your own service.
+         * 
+         *  @returns {Promise}
+         */
+        const createMapInstance = async () => {
+            const formBody = 'data=' + JSON.stringify({
+                mapId: 'externalServerRequest',
+                apiKey: 'e1f2db79-1f1f-40ec-9fcd-2de460d35513'});
+            return await (await fetch('https://showroom.galigeo.com/Galigeo/api/openMap/encoded', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: formBody
+            })).json();
+        }
+
+        const init = async () => {
+            // Create the map without parameters
+            const map = new Galigeo.Map('ggoMapId', {});
+
+            // Inject the map instance manually instead of using the load method
+            const mapData = await createMapInstance();
+            map.setMapInstance(mapData);
+        }
+
+        init();
+    </script>
+
+</body>
+
+</html>

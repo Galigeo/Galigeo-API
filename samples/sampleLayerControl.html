@@ -21,12 +21,18 @@
       
       await ggoMap.load();
       const layers = await ggoMap.getLayers();
+      $('#toggles').append(`<input type="checkbox" id="all" checked><label for="all">All layers</label><br>`);
       for(let layer of layers) {
         $('#toggles').append(`<input type="checkbox" id="${layer.id}" checked><label for="${layer.id}">${layer.name}</label><br>`);
         $(`#${layer.id}`).change(() => {
           layer.setVisible($(`#${layer.id}`).prop('checked'));
         });
       }
+      $(`#all`).change(() => {
+        for(let layer of layers) {
+          layer.setVisible($(`#all`).prop('checked'));
+        }
+        });
     })();
   </script>
 

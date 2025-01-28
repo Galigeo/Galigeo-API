@@ -73,19 +73,10 @@ class Map extends Listener {
                 mode: "cors",
                 body: `status=200&lang=${navigator.language}&data=${encodeURIComponent(JSON.stringify(this.options))}`
             }).then(res => res.json())
-                .then(json => {
+                .then(async (json) => {
                     if (!json.message) {
-                        this.iframe = this.createIframe(this.element, json);
-                        this.messenger = new Messenger(this.iframe, this.options.timeout);
-                        this.refreshId = json.refreshId;
-                        this.registerEvents();
-                        console.log('API- after fetch json', json);
-                        this.messenger.waitMapIsLoad().then(res => {
-                            console.log('API- Map loaded', json);
-                            this.loaded = true;
-                            this.setMapControlsVisible(false);
-                            resolve(this);
-                        });
+                        await this.setMapInstance(json);
+                        resolve(this);
                     } else {
                         this.showError(json.message, null);
                     }
@@ -97,6 +88,25 @@ class Map extends Listener {
 
         });
     }
+
+
+    /**
+     * Inject the result of the openMap/encoded API into the map. In most cases, this method is called by load() automatically.
+     * @param json Result of the openMap/encoded API
+     * @returns 
+     */
+    async setMapInstance(json: any) {
+        this.iframe = this.createIframe(this.element, json);
+        this.messenger = new Messenger(this.iframe, this.options.timeout);
+        this.refreshId = json.refreshId;
+        this.registerEvents();
+        await this.messenger.waitMapIsLoad();
+        console.log('API- Map loaded', json);
+        this.loaded = true;
+        this.setMapControlsVisible(false);
+        return this;
+    }
+
     /**
      * Update the current map without having to reload it.
      * When this method is used to update the map data, the layers
@@ -391,8 +401,8 @@ class Map extends Listener {
     private createIframe(element: HTMLElement, json: any): HTMLIFrameElement {
         const mapDiv = element;
         let indexPage = 'index.html';
-        if(this.options.devMode) indexPage = 'indexdev.jsp';
-        if(this.options.viewerGL) indexPage = 'indexgl.html';
+        if (this.options.devMode) indexPage = 'indexdev.jsp';
+        if (this.options.viewerGL) indexPage = 'indexgl.html';
 
         // eventually remove the error page
         const errorDiv: HTMLElement = document.getElementById("galigeoError");
@@ -439,7 +449,7 @@ class Map extends Listener {
             iframe.addEventListener('error', function (event) {
                 console.log('Failed to load iframe : ', event);
             });
-            
+
             if (navigator.platform === 'iPhone' || navigator.platform === 'iPad') {
                 // Workaround for iOS : reload the iframe if it's empty
                 setTimeout(() => {

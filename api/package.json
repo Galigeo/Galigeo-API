@@ -1,6 +1,6 @@
 {
   "name": "@galigeo-store/api",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -26,6 +26,7 @@
     "webpack-dev-server": "^4.9.3"
   },
   "dependencies": {
+    "@galigeo-store/api": "file:",
     "node-fetch": "^3.2.6"
   }
 }

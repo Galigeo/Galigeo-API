@@ -14,6 +14,7 @@
 { "title":"Predefined mapper", "url": "sampleMapper.html", "description": "This example shows how to specify a mapper for force the join on specific layer. If you edit the dataset 'Iris from API', you will see that the mapper corresponds to the one specified with the JSON data." },
 { "title":"Update data on the fly", "url": "sampleUpdate.html", "description": "Shows how to update the data without having to reload the map." },
 { "title":"Control the layer visibility", "url": "sampleLayerControl.html", "description": "Control the layer visiblity from the API." },
+{ "title":"Custom REST call", "url": "sampleServerRequest.html", "description": "This example shows to get a map instance from a custom service and use the result in the Javascript API. This can be useful to hide some informations such as the API key." },
 { "title":"Beta - new viewer", "url": "sampleGL.html", "description": "New viewer based on MapLibre GL." },
 { "title":"API Tool", "url": "sampleDataTester.html", "description": "A useful tool to test the API parameters." }
 ]
