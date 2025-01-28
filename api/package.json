@@ -8,7 +8,8 @@
     "build": "webpack",
     "build:dev": "webpack --mode=development",
     "build:lib": "tsc --declaration --emitDeclarationOnly",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "publish": "npm run build:lib && npm publish"
   },
   "keywords": [],
   "author": "",
