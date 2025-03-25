@@ -1,0 +1,63 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="cache-control" content="no-cache">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="assets/js/galigeo-api.js"></script>
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+<title>Street View Demo</title>
+</head>
+
+<body>
+
+  <div>
+    <div>
+      <p>Click Coordinates: <span id="click-coordinates"></span></p>
+    </div>
+  </div>
+  <div id="map-container">
+    <div id="mapId">
+      <button id="streetview-button">
+        <img src="assets/icons/utility-sprite/svg/11039712615_c8fdab69d.png" 
+             alt="Street View Icon" style="width:20px; height:20px; vertical-align:middle; margin-right:5px;">
+        Open Street View
+      </button>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      var map = new Galigeo.Map('mapId', {
+        id: 'streetViewDemo',
+        name: 'Street View Demo',
+        apiKey: 'e1f2db79-1f1f-40ec-9fcd-2de460d35513'
+      });
+
+      map.load().then(() => {
+        let lastCoordinates = null;
+
+        // Add click event listener to the map
+        map.addEventListener('click', (evt) => {
+          lastCoordinates = { lat: evt.lat, lng: evt.lng };
+          $('#click-coordinates').html(`x: ${evt.lng}, y: ${evt.lat}`);
+          $('#streetview-button').show();
+        });
+
+        // Add functionality to the Street View button
+        $('#streetview-button').click(() => {
+          if (lastCoordinates) {
+            const streetViewUrl = `http://maps.google.com/maps?q=${lastCoordinates.lat},${lastCoordinates.lng}`;
+            window.open(streetViewUrl, '_blank');
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>

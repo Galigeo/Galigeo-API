@@ -48,3 +48,27 @@ body {
 .slds-box {
   background-color: var(--green-05);
 }
+
+#streetview-button {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 1000;
+  display: none;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#map-container {
+  position: relative;
+}
+
+#mapId {
+  position: relative;
+  height: 50vh;
+  width: 100%;
+  max-width: 500px;
+}
