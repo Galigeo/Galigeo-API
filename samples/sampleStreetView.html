@@ -23,8 +23,7 @@
     <div id="mapId">
       <button id="streetview-button">
         <img src="assets/icons/utility-sprite/svg/11039712615_c8fdab69d.png" 
-             alt="Street View Icon" style="width:20px; height:20px; vertical-align:middle; margin-right:5px;">
-        Open Street View
+             alt="Street View Icon" style="width:25px; height:25px; vertical-align:middle;">
       </button>
     </div>
   </div>
@@ -38,21 +37,23 @@
       });
 
       map.load().then(() => {
-        let lastCoordinates = null;
+        let streetViewMode = false; 
 
         // Add click event listener to the map
         map.addEventListener('click', (evt) => {
-          lastCoordinates = { lat: evt.lat, lng: evt.lng };
-          $('#click-coordinates').html(`x: ${evt.lng}, y: ${evt.lat}`);
-          $('#streetview-button').show();
+          if (streetViewMode) {
+            const streetViewUrl = `http://maps.google.com/maps?q=${evt.lat},${evt.lng}`;
+            window.open(streetViewUrl, '_blank');
+            streetViewMode = false; 
+          } else {
+            $('#click-coordinates').html(`x: ${evt.lng}, y: ${evt.lat}`);
+          }
         });
 
         // Add functionality to the Street View button
         $('#streetview-button').click(() => {
-          if (lastCoordinates) {
-            const streetViewUrl = `http://maps.google.com/maps?q=${lastCoordinates.lat},${lastCoordinates.lng}`;
-            window.open(streetViewUrl, '_blank');
-          }
+          streetViewMode = true; 
+          $('#streetview-button').hide(); 
         });
       });
     });
