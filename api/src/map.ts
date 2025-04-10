@@ -382,6 +382,22 @@ class Map extends Listener {
     }
 
     /**
+     * Get the list of views available in the map
+     */
+    async getViews(): Promise<any[]> {
+        const views = await this.messenger.postMessage('getViews', null);
+        return views;
+    }
+
+    /**
+     * Toggle the specified view on the map.
+     * @param viewId the id of the view to set
+     */
+    async setView(viewId: number) {
+        await this.messenger.postMessage('setView', {viewId});
+    }
+
+    /**
      * Listen the events received from the messenger then propagate
      */
     private registerEvents() {

@@ -16,6 +16,8 @@
 { "title":"Control the layer visibility", "url": "sampleLayerControl.html", "description": "Control the layer visiblity from the API." },
 { "title":"Custom REST call", "url": "sampleServerRequest.html", "description": "This example shows to get a map instance from a custom service and use the result in the Javascript API. This can be useful to hide some informations such as the API key." },
 { "title":"Beta - new viewer", "url": "sampleGL.html", "description": "New viewer based on MapLibre GL." },
-{ "title":"API Tool", "url": "sampleDataTester.html", "description": "A useful tool to test the API parameters." },
-{ "title":"StreetView", "url": "sampleStreetView.html", "description": "An example that shows how to display a street view." }
+{ "title":"StreetView", "url": "sampleStreetView.html", "description": "Open Google Streetview from the map." },
+{ "title":"View control", "url": "sampleViewControl.html", "description": "Control views from the API." },
+{ "title":"API Tool", "url": "sampleDataTester.html", "description": "A useful tool to test the API parameters." }
+
 ]

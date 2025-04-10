@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script type="text/javascript" src="assets/js/galigeo-api.js"></script>
+  <title>View Control</title>
+</head>
+<body>
+  <p>This example illustrates how to control views from the API
+  to be authenticated.</p>
+  <div id="ggoMapId" style="position:relative; height:400px;width:100%; max-width: 600px;"></div>
+  <div id="buttonsContainer" style="position:relative;margin-top: 10px; display: flex; gap: 10px;"></div>
+  <script type="text/javascript">
+    (async () => {
+      var ggoMap = new Galigeo.Map('ggoMapId',
+        {
+          url: 'https://showroom.galigeo.com/Galigeo-alpha', // only available in alpha
+          name: 'View control',
+          apiKey: 'e1f2db79-1f1f-40ec-9fcd-2de460d35513',
+          profile: 'Designer',
+          showLoginButton: true,
+        });
+      await ggoMap.load();
+      const views = await ggoMap.getViews();
+      const buttonsContainer = document.getElementById('buttonsContainer');
+      for (let view of views) {
+        const button = document.createElement('button');
+        button.textContent = view.docName;
+        button.addEventListener('click', () => {
+          console.log(`Button for view "${view.docName}" clicked!`);
+          ggoMap.setView(view.viewId);
+        });
+        buttonsContainer.appendChild(button);
+      }
+    })();
+  </script>
+
+</body>
+
+</html>
