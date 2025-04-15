@@ -45,6 +45,7 @@
             const streetViewUrl = `http://maps.google.com/maps?q=${evt.lat},${evt.lng}`;
             window.open(streetViewUrl, '_blank');
             streetViewMode = false; 
+            $('#streetview-button').show();
           } else {
             $('#click-coordinates').html(`x: ${evt.lng}, y: ${evt.lat}`);
           }
