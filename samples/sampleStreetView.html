@@ -9,14 +9,22 @@
   <script type="text/javascript" src="assets/js/galigeo-api.js"></script>
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
+  <style>
+    #streetview-button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed; 
+      opacity: 0.6; 
+    }
+  </style>
+
 <title>Street View Demo</title>
 </head>
 
 <body>
 
   <div>
-    <div>
-      <p>Click Coordinates: <span id="click-coordinates"></span></p>
+    <div> 
+      <p><span id="click-coordinates"></span></p>
     </div>
   </div>
   <div id="map-container">
@@ -45,16 +53,15 @@
             const streetViewUrl = `http://maps.google.com/maps?q=${evt.lat},${evt.lng}`;
             window.open(streetViewUrl, '_blank');
             streetViewMode = false; 
-            $('#streetview-button').show();
-          } else {
-            $('#click-coordinates').html(`x: ${evt.lng}, y: ${evt.lat}`);
+            $('#streetview-button').prop('disabled', false); 
+            $('#click-coordinates').html(''); 
           }
         });
 
-        // Add functionality to the Street View button
         $('#streetview-button').click(() => {
           streetViewMode = true; 
-          $('#streetview-button').hide(); 
+          $('#streetview-button').prop('disabled', true); 
+          $('#click-coordinates').html('Cliquez sur la carte pour afficher la Street View'); 
         });
       });
     });
