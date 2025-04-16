@@ -14,10 +14,9 @@
     (async () => {
       var ggoMap = new Galigeo.Map('ggoMapId',
         {
-          url: 'https://showroom.galigeo.com/Galigeo-alpha', // only available in alpha
+          url: 'http://localhost:8080/Galigeo',
           name: 'View control',
           apiKey: 'e1f2db79-1f1f-40ec-9fcd-2de460d35513',
-          profile: 'Designer',
           showLoginButton: true,
         });
       await ggoMap.load();
