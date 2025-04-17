@@ -24,7 +24,7 @@
 
   <div>
     <div> 
-      <p><span id="click-coordinates"></span></p>
+      <p><span id="click-coordinates">&nbsp;</span></p>
     </div>
   </div>
   <div id="map-container">
@@ -54,7 +54,7 @@
             window.open(streetViewUrl, '_blank');
             streetViewMode = false; 
             $('#streetview-button').prop('disabled', false); 
-            $('#click-coordinates').html(''); 
+            $('#click-coordinates').html('&nbsp;'); 
           }
         });
 
