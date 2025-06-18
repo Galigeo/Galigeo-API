@@ -76,6 +76,18 @@ export class MapParameters {
     public user: string;
 
     /**
+     * When true, the map is displayed in a generic viewer mode (optional, default=false).
+     * This option cancel the user profile and the user properties.
+     */
+    public genericViewer: boolean = false;
+
+    /**
+     * When true, the map is displayed in a generic editor mode (optional, default=false).
+     * This option cancel the user profile and the user properties.
+     */
+    public genericEditor: boolean = false;
+
+    /**
      * You can get the api key from the licence page of Galigeo. A valid API
      * key is required to get a map instance.
      */
@@ -123,13 +135,12 @@ export class MapParameters {
      * @ignore
      */
     public listenExternalLinks: boolean;
-    
+
     /**
      * For internal use only
      * @ignore
      */
     public viewerGL: boolean;
-    
 
 
 }
