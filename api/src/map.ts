@@ -20,6 +20,7 @@ class Map extends Listener {
   private iframe: HTMLIFrameElement;
   private messenger: Messenger;
   private loaded: boolean = false;
+  private viewerUrl: string;
 
   /**
    * Creates the main Map and define its parameters.
@@ -35,7 +36,7 @@ class Map extends Listener {
       this.element = document.getElementById(element);
     else this.element = element;
 
-    if (!options.lang) options.lang = navigator.language.split("-")[0];
+    if (!options.lang) options.lang = this.getLanguage();
 
     if (!options.url) options.url = "https://showroom.galigeo.com/Galigeo";
     if (options.id && !options.mapId) options.mapId = options.id; // handle legacy parameter
@@ -66,18 +67,17 @@ class Map extends Listener {
    */
   async load() {
     console.log("Loading Map");
-
     try {
-      const json = await (await fetch(this.options.url + "/api/openMap/encoded", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-        },
-        mode: "cors",
-        body: `status=200&lang=${navigator.language}&data=${encodeURIComponent(
-          JSON.stringify(this.options)
-        )}`,
-      })).json();
+      const json = await (
+        await fetch(this.options.url + "/api/openMap/encoded", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+          },
+          mode: "cors",
+          body: `status=200&lang=${this.getLanguage()}&data=${encodeURIComponent(JSON.stringify(this.options))}`,
+        })
+      ).json();
 
       if (!json.message) {
         await this.setMapInstance(json);
@@ -98,10 +98,10 @@ class Map extends Listener {
    */
   async setMapInstance(json: any) {
     this.iframe = this.createIframe(this.element, json);
-
     this.messenger = new Messenger(this.iframe, this.options.timeout);
     this.refreshId = json.refreshId;
     this.registerEvents();
+
     await this.messenger.waitMapIsLoad();
     console.log("API- Map loaded", json);
     this.loaded = true;
@@ -136,7 +136,13 @@ class Map extends Listener {
             if (!json.message) {
               resolve(json);
             } else {
-              reject(new Error(typeof json.message === "string" ? json.message : JSON.stringify(json)));
+              reject(
+                new Error(
+                  typeof json.message === "string"
+                    ? json.message
+                    : JSON.stringify(json)
+                )
+              );
             }
           })
         )
@@ -233,6 +239,17 @@ class Map extends Listener {
         });
     });
   }
+
+  /** 
+   * Get the URL for the auto print (without any user interaction)
+   * @param {String} template name of the template to use (default=A4 LANDSCAPE)
+   * @returns the URL to open in a new tab or in a popup
+   */
+  getAutoPrintUrl(template: string = 'A4 LANDSCAPE'): string {
+    const printUrl = this.viewerUrl + "&autoPrint=true&template=" + encodeURIComponent(template);
+    return printUrl;
+  }
+
   /**
    * enable navigation like zoom & pan ... when it's disabled
    */
@@ -500,11 +517,11 @@ class Map extends Listener {
     if (this.options.lang) urlOptions += "&lang=" + this.options.lang;
     if (this.options.listenExternalLinks)
       urlOptions += "&listenExternalLinks=" + this.options.listenExternalLinks;
-    if (this.options.showLoginButton)
-      urlOptions += "&showLoginButton=" + this.options.showLoginButton;
+    if (json.showLoginButton)
+      urlOptions += "&showLoginButton=" + json.showLoginButton;
     const serviceUrl = this.options.url + "/" + json.relativeUrlServiceUrl;
     let src = `${this.options.url
-      }/viewer/${indexPage}?${urlOptions}&url=${serviceUrl}&lang=${navigator.language.split("-")[0]
+      }/viewer/${indexPage}?${urlOptions}&url=${serviceUrl}&lang=${this.getLanguage()
       }`;
 
     // sso ?
@@ -516,6 +533,8 @@ class Map extends Listener {
       }
       console.log("sso", src);
     }
+
+    this.viewerUrl = src;
 
     // If redirect=true, then skip iframe creation
     if (this.options.redirect) {
@@ -536,6 +555,7 @@ class Map extends Listener {
       iframe.title = "Galigeo Map";
       iframe.id = "galigeoMap";
       iframe.setAttribute("style", "border: 0px");
+      iframe.setAttribute("sandbox", "allow-scripts allow-same-origin allow-popups allow-forms allow-modals");
       iframe.addEventListener("error", function (event) {
         console.log("Failed to load iframe : ", event);
       });
@@ -562,8 +582,30 @@ class Map extends Listener {
       }
 
       mapDiv.appendChild(iframe);
+
+      this.observeElementResize();
     }
     return iframe;
+  }
+
+
+  public observeElementResize() {
+    if (!this.element || !this.iframe) return;
+    const resizeObserver = new window.ResizeObserver(() => {
+      this.resizeIframeToElement();
+    });
+    resizeObserver.observe(this.element);
+  }
+
+  public resizeIframeToElement() {
+    if (this.iframe && this.element) {
+      // Récupère la taille actuelle de l'élément parent
+      const width = this.element.offsetWidth;
+      const height = this.element.offsetHeight;
+      // Applique la taille à l'iframe
+      this.iframe.style.width = width + "px";
+      this.iframe.style.height = height + "px";
+    }
   }
 
   private fixRelativeUrl(url: string): string {
@@ -575,6 +617,11 @@ class Map extends Listener {
     }
     return url;
   }
+
+  private getLanguage(): string {
+    return navigator.language.split("-")[0];
+  }
 }
+
 
 export default Map;

@@ -10,26 +10,28 @@
     "build:lib": "tsc --declaration --emitDeclarationOnly",
     "watch": "webpack --watch",
     "publish": "npm run build:lib && npm publish",
-    "serve:samples": "npx http-server -p 3000 ../samples"
+    "serve:samples": "npx http-server -p 3000 ../samples",
+    "doc": "npx typedoc --options typedoc.json --readme typedoc.md --out ../samples/doc src/index.ts --excludePrivate --name \"Galigeo API\"",
+    "deploy:doc": "node ./deploy-doc.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.18.6",
-    "@babel/preset-env": "^7.18.6",
-    "babel-loader": "^8.2.5",
+    "@babel/core": "^7.28.4",
+    "@babel/preset-env": "^7.28.3",
+    "babel-loader": "^10.0.0",
+    "ftp-deploy": "^2.4.7",
     "http-server": "^14.1.1",
-    "ts-loader": "^9.3.1",
-    "typedoc": "^0.5.10",
-    "typedoc-webpack-plugin": "^1.1.4",
-    "typescript": "^4.7.4",
-    "webpack": "^5.73.0",
-    "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.9.3"
+    "ts-loader": "^9.5.4",
+    "typedoc": "^0.28.14",
+    "typescript": "^5.9.3",
+    "undici-types": "^7.16.0",
+    "webpack": "^5.102.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
   },
   "dependencies": {
-    "@galigeo-store/api": "file:",
-    "node-fetch": "^3.2.6"
+    "node-fetch": "^3.3.2"
   }
 }

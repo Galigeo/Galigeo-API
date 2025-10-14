@@ -10,14 +10,15 @@
 
 <body>
 	<div class="container">
-		<h5>Click on the location where you want to go</h5>
-		<button class="slds-button" onclick="print()" class="slds-p-left_small">screenShot</button>
-		<button class="slds-button" onclick="print(true)" class="slds-p-left_small">screenShotWithLegend</button>
+		<h5>Select the way you want to print the map</h5>
+		<button class="slds-button" onclick="print()" class="slds-p-left_small">Screenshot</button>
+		<button class="slds-button" onclick="print(true)" class="slds-p-left_small">Screenshot with legend</button>
+		<button class="slds-button" onclick="window.open(ggoMap.getAutoPrintUrl(), '_blank')"
+			class="slds-p-left_small">Print to new tab</button>
 	</div>
 	<div style="display: flex;">
 		<div style="white-space: nowrap;height:400px;width:60%" id="ggoMapId"></div>
-		<div style="white-space: nowrap;height:400px;width:30%; margin-left:5%;" id="printedImg">
-		</div>
+		<div style="white-space: nowrap;height:400px;width:30%; margin-left:5%;" id="printedImg"></div>
 	</div>
 
 
@@ -33,16 +34,16 @@
 				document.getElementById('printedImg').appendChild(myImage)
 			});
 		}
-		$(document).ready(function () {
-			ggoMap = new Galigeo.Map('ggoMapId',
-				{
-					id: 'samplePrint',
-					name: 'Capitals',
-					apiKey: 'e1f2db79-1f1f-40ec-9fcd-2de460d35513'
-				});
-			ggoMap.addDataUrl('assets/data/fr_cities.csv', 'FrCities');
-			ggoMap.load();
-		});
+
+		ggoMap = new Galigeo.Map('ggoMapId',
+			{
+				id: 'samplePrint',
+				name: 'Capitals',
+				apiKey: 'e1f2db79-1f1f-40ec-9fcd-2de460d35513'
+			});
+		ggoMap.addDataUrl('https://api.galigeo.com/showcase/assets/data/fr_cities.csv', 'FrCities');
+		ggoMap.load();
+
 	</script>
 
 </body>
