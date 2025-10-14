@@ -7,16 +7,17 @@
  * @returns The value of the parameter key
  */
 function getUrlParam(key, byDefault) {
-	var params = getUrlParams();
-	var split = params.split('&');
-	for (var j = 0; j < split.length; j++) { var pair=split[j].split('=' ); if (pair.length !==2) continue; if (pair[0]===key) { var result=pair[1]; if (!String.prototype.endsWith) { String.prototype.endsWith=function(suffix) { return this.indexOf(suffix, this.length - suffix.length) !==-1; }; } if (result.endsWith('#!')) result=result.substring(0, result.length - 2); return result; } } return byDefault; } function getUrlParams() { var params=location.search; if (location.hash && location.hash !=="" ) { params=params + location.hash; } if (params.indexOf('?')===0) params=params.substring(1); return params; } 
-  
-  
-  function setBanner() { 
-    let breadcumb = document.title === 'Galigeo API Samples'?'':`<li class="slds-breadcrumb__item">
+  var params = getUrlParams();
+  var split = params.split('&');
+  for (var j = 0; j < split.length; j++) { var pair = split[j].split('='); if (pair.length !== 2) continue; if (pair[0] === key) { var result = pair[1]; if (!String.prototype.endsWith) { String.prototype.endsWith = function (suffix) { return this.indexOf(suffix, this.length - suffix.length) !== -1; }; } if (result.endsWith('#!')) result = result.substring(0, result.length - 2); return result; } } return byDefault;
+} function getUrlParams() { var params = location.search; if (location.hash && location.hash !== "") { params = params + location.hash; } if (params.indexOf('?') === 0) params = params.substring(1); return params; }
+
+
+function setBanner() {
+  let breadcumb = document.title === 'Galigeo API Samples' ? '' : `<li class="slds-breadcrumb__item">
     <a href="${window.location.href}">${document.title}</a>
   </li>`;
-    $('#navBar').html(`
+  $('#navBar').html(`
 <div class="slds-tabs_card">
   <div class="slds-page-header">
     <div class="slds-page-header__row">
@@ -32,7 +33,7 @@ function getUrlParam(key, byDefault) {
               <div class="slds-page-header__name-title">
                 <h1 class="slds-p-left_medium slds-p-top_x_small">
                   <span class="slds-page-header__title slds-truncate" title="Galigeo API">Galigeo API</span>
-                  <span>Version 2.2.1</span>
+                  <span>Version 2.2.2</span>
                 </h1>
               </div>
             </div>

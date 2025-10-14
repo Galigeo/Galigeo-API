@@ -245,7 +245,7 @@ class Map extends Listener {
    * @param {String} template name of the template to use (default=A4 LANDSCAPE)
    * @returns the URL to open in a new tab or in a popup
    */
-  getAutoPrintUrl(template: string = 'A4 LANDSCAPE'): string {
+  getAutoPrintUrl(template: string = 'Format A4 Landscape'): string {
     const printUrl = this.viewerUrl + "&autoPrint=true&template=" + encodeURIComponent(template);
     return printUrl;
   }
