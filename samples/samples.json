@@ -1,23 +1,102 @@
 [
-
-{ "title":"CSV data load", "url": "sampleCSV.html", "description": "Upload a CSV directly to a map. This sample illustrates an easy way to load data to the map a CSV file. The CSV format has many advantages: standard, simple and fast efficient." },
-{ "title":"Dynamic JSON", "url": "sampleJSON.html", "description": "A demo that fetches the major earthquakes and inject and the data dynamically on a map." },
-{ "title":"Go to locations", "url": "sampleMapZoom.html", "description": "Simple example that shows how to control the location of the map." },
-{ "title":"Hide menus", "url": "sampleHideMenus.html", "description": "Commands to show/hide controls on the map" },
-{ "title":"Filter map", "url": "sampleOutFilter.html", "description": "An example that shows how to filter the data on the map from an external component" },
-{ "title":"Map Events", "url": "sampleEvents.html", "description": "An example that shows how to listen events of the map" },
-{ "title":"Select Events", "url": "sampleInfoWindow.html", "description": "An example that shows how to listen selection on layer and show features selected" },
-{ "title":"Basemap Control", "url": "sampleBasemapControl.html", "description": "An example that shows how to change the basemap of the map" },
-{ "title":"Print Control", "url": "samplePrint.html", "description": "An example that shows how to print the map" },
-{ "title":"Create Marker", "url": "createMarker.html", "description": "An example that shows how to Create a marker with svg" },
-{ "title":"Create line/polygon", "url": "createGeoJson.html", "description": "An example that shows how to Create line/polygon" },
-{ "title":"Predefined mapper", "url": "sampleMapper.html", "description": "This example shows how to specify a mapper for force the join on specific layer. If you edit the dataset 'Iris from API', you will see that the mapper corresponds to the one specified with the JSON data." },
-{ "title":"Update data on the fly", "url": "sampleUpdate.html", "description": "Shows how to update the data without having to reload the map." },
-{ "title":"Control the layer visibility", "url": "sampleLayerControl.html", "description": "Control the layer visiblity from the API." },
-{ "title":"Custom REST call", "url": "sampleServerRequest.html", "description": "This example shows to get a map instance from a custom service and use the result in the Javascript API. This can be useful to hide some informations such as the API key." },
-{ "title":"Beta - new viewer", "url": "sampleGL.html", "description": "New viewer based on MapLibre GL." },
-{ "title":"StreetView", "url": "sampleStreetView.html", "description": "Open Google Streetview from the map." },
-{ "title":"View control", "url": "sampleViewControl.html", "description": "Control views from the API." },
-{ "title":"API Tool", "url": "sampleDataTester.html", "description": "A useful tool to test the API parameters." }
-
+  {
+    "title": "Map only",
+    "url": "sampleMap.html",
+    "description": "A simple example of a map integrated in a web page."
+  },
+  {
+    "title": "CSV data load",
+    "url": "sampleCSV.html",
+    "description": "Upload a CSV directly to a map. This sample illustrates an easy way to load data to the map a CSV file. The CSV format has many advantages: standard, simple and fast efficient."
+  },
+  {
+    "title": "Dynamic JSON",
+    "url": "sampleJSON.html",
+    "description": "A demo that fetches the major earthquakes and inject and the data dynamically on a map."
+  },
+  {
+    "title": "Go to locations",
+    "url": "sampleMapZoom.html",
+    "description": "Simple example that shows how to control the location of the map."
+  },
+  {
+    "title": "Hide menus",
+    "url": "sampleHideMenus.html",
+    "description": "Commands to show/hide controls on the map"
+  },
+  {
+    "title": "Filter map",
+    "url": "sampleOutFilter.html",
+    "description": "An example that shows how to filter the data on the map from an external component"
+  },
+  {
+    "title": "Map Events",
+    "url": "sampleEvents.html",
+    "description": "An example that shows how to listen events of the map"
+  },
+  {
+    "title": "Select Events",
+    "url": "sampleInfoWindow.html",
+    "description": "An example that shows how to listen selection on layer and show features selected"
+  },
+  {
+    "title": "Basemap Control",
+    "url": "sampleBasemapControl.html",
+    "description": "An example that shows how to change the basemap of the map"
+  },
+  {
+    "title": "Print Control",
+    "url": "samplePrint.html",
+    "description": "An example that shows how to print the map"
+  },
+  {
+    "title": "Create Marker",
+    "url": "createMarker.html",
+    "description": "An example that shows how to Create a marker with svg"
+  },
+  {
+    "title": "Create line/polygon",
+    "url": "createGeoJson.html",
+    "description": "An example that shows how to Create line/polygon"
+  },
+  {
+    "title": "Predefined mapper",
+    "url": "sampleMapper.html",
+    "description": "This example shows how to specify a mapper for force the join on specific layer. If you edit the dataset 'Iris from API', you will see that the mapper corresponds to the one specified with the JSON data."
+  },
+  {
+    "title": "Update data on the fly",
+    "url": "sampleUpdate.html",
+    "description": "Shows how to update the data without having to reload the map."
+  },
+  {
+    "title": "Control the layer visibility",
+    "url": "sampleLayerControl.html",
+    "description": "Control the layer visiblity from the API."
+  },
+  {
+    "title": "Custom REST call",
+    "url": "sampleServerRequest.html",
+    "description": "This example shows to get a map instance from a custom service and use the result in the Javascript API. This can be useful to hide some informations such as the API key."
+  },
+  {
+    "title": "Beta - new viewer",
+    "url": "sampleGL.html",
+    "description": "New viewer based on MapLibre GL."
+  },
+  {
+    "title": "StreetView",
+    "url": "sampleStreetView.html",
+    "description": "Open Google Streetview from the map."
+  },
+  {
+    "title": "View control",
+    "url": "sampleViewControl.html",
+    "description": "Control views from the API."
+  },
+  {
+    "title": "API Tool",
+    "url": "sampleDataTester.html",
+    "description": "A useful tool to test the API parameters."
+  }
 ]

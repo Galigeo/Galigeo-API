@@ -20,7 +20,6 @@ class Map extends Listener {
   private iframe: HTMLIFrameElement;
   private messenger: Messenger;
   private loaded: boolean = false;
-  private viewerUrl: string;
 
   /**
    * Creates the main Map and define its parameters.
@@ -239,17 +238,6 @@ class Map extends Listener {
         });
     });
   }
-
-  /** 
-   * Get the URL for the auto print (without any user interaction)
-   * @param {String} template name of the template to use (default=A4 LANDSCAPE)
-   * @returns the URL to open in a new tab or in a popup
-   */
-  getAutoPrintUrl(template: string = 'Format A4 Landscape'): string {
-    const printUrl = this.viewerUrl + "&autoPrint=true&template=" + encodeURIComponent(template);
-    return printUrl;
-  }
-
   /**
    * enable navigation like zoom & pan ... when it's disabled
    */
@@ -533,8 +521,6 @@ class Map extends Listener {
       }
       console.log("sso", src);
     }
-
-    this.viewerUrl = src;
 
     // If redirect=true, then skip iframe creation
     if (this.options.redirect) {

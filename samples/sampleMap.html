@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <script type="text/javascript" src="assets/js/galigeo-api.js"></script>
+  <title>Map from CSV</title>
+</head>
+
+<body>
+  <div id="ggoMapId" style="position:absolute; height:70%;width:70%"></div>
+  <script type="text/javascript">
+    var ggoMap = new Galigeo.Map('ggoMapId',
+      {
+        url: 'https://cloud2.galigeo.com/Galigeo-alpha',
+        name: 'Sample Map',
+        apiKey: 'e1f2db79-1f1f-40ec-9fcd-2de460d35513',
+        showLoginButton: true,
+      });
+    ggoMap.load();
+  </script>
+
+</body>
+
+</html>
