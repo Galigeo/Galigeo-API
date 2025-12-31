@@ -53,12 +53,13 @@ export class MapParameters {
    */
   public skipAutoCreateLayer: boolean;
   /**
-   * An array of data that will be loaded
-   * dynamically with map (optional).
+   * Data to be added to the map (optional).
    * Two types of data are supported:
-   * - inline json features
-   * - link to a csv file
+   * - inline json features (data is a json using Esri format)
+   * - link to a csv file (data is a string with the url of the csv file)
    * Please see our sample page for more details how to specify the data
+   * 
+   * The data propert
    */
   public data: any[];
   /**

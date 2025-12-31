@@ -1,0 +1,273 @@
+/**
+ * Galigeo Material Design Theme
+ * Inspired by Material Design with Galigeo colors
+ */
+
+:root {
+  --color-galigeo-green: #2ecc71;
+  --color-galigeo-teal: #27a0ad;
+  --color-galigeo-dark: #1a8a4f;
+  --color-background: #fafafa;
+  --color-background-secondary: #ffffff;
+  --color-text: #212121;
+  --color-text-aside: #707070;
+}
+
+/* Body and background */
+body {
+  background: var(--color-background);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Header */
+.tsd-page-toolbar {
+  background: linear-gradient(135deg, var(--color-galigeo-green) 0%, var(--color-galigeo-teal) 100%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tsd-page-toolbar a {
+  color: white;
+}
+
+/* Container */
+.container {
+  max-width: 1400px;
+}
+
+/* Sidebar */
+.col-sidebar {
+  background: var(--color-background-secondary);
+  border-right: 1px solid #e0e0e0;
+}
+
+/* Navigation */
+.tsd-navigation a {
+  color: var(--color-text);
+  border-radius: 4px;
+  transition: all 0.2s;
+  padding: 8px 12px;
+  margin: 2px 0;
+}
+
+.tsd-navigation a:hover {
+  background: rgba(46, 204, 113, 0.1);
+  color: var(--color-galigeo-dark);
+}
+
+.tsd-navigation .current {
+  background: var(--color-galigeo-green);
+  color: white !important;
+  font-weight: 500;
+}
+
+/* Main content */
+.col-content {
+  background: var(--color-background-secondary);
+}
+
+/* Headers */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: var(--color-galigeo-dark);
+  border-bottom: 2px solid var(--color-galigeo-green);
+  padding-bottom: 1rem;
+}
+
+h2 {
+  font-size: 1.75rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+  margin-top: 2rem;
+}
+
+h3 {
+  font-size: 1.35rem;
+  color: var(--color-galigeo-teal);
+}
+
+/* Links */
+a {
+  color: var(--color-galigeo-teal);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-galigeo-dark);
+  text-decoration: underline;
+}
+
+/* Code blocks */
+code {
+  background: #e8f5e9;
+  border: 1px solid #c8e6c9;
+  border-radius: 3px;
+  padding: 3px 6px;
+  font-size: 0.9em;
+  font-weight: 600;
+  color: #2e7d32;
+  font-family: 'Monaco', 'Courier New', monospace;
+}
+
+/* Pre blocks - Light theme */
+pre {
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+pre code {
+  background: transparent;
+  border: none;
+  color: #2e7d32;
+  padding: 0;
+  font-weight: 400;
+}
+
+/* Pre blocks - Dark theme */
+[data-theme="dark"] pre,
+.dark-mode pre {
+  background: #263238;
+  border-color: #37474f;
+}
+
+[data-theme="dark"] pre code,
+.dark-mode pre code {
+  color: #aed581;
+}
+
+/* Media query for OS dark mode preference */
+@media (prefers-color-scheme: dark) {
+  body:not([data-theme="light"]) pre {
+    background: #263238;
+    border-color: #37474f;
+  }
+
+  body:not([data-theme="light"]) pre code {
+    color: #aed581;
+  }
+}
+
+/* Panels */
+.tsd-panel {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+}
+
+.tsd-panel.tsd-member {
+  border-left: 3px solid var(--color-galigeo-green);
+}
+
+/* Index panel */
+.tsd-index-panel {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Signatures */
+.tsd-signature {
+  background: #f5f5f5;
+  border-left: 3px solid var(--color-galigeo-green);
+  font-family: 'Monaco', 'Courier New', monospace;
+}
+
+/* Kind icons */
+.tsd-kind-icon {
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+}
+
+.tsd-kind-class .tsd-kind-icon {
+  background: var(--color-galigeo-green);
+}
+
+.tsd-kind-interface .tsd-kind-icon {
+  background: var(--color-galigeo-teal);
+}
+
+.tsd-kind-method .tsd-kind-icon,
+.tsd-kind-function .tsd-kind-icon {
+  background: #2196f3;
+}
+
+.tsd-kind-property .tsd-kind-icon {
+  background: #ff9800;
+}
+
+.tsd-kind-constructor .tsd-kind-icon {
+  background: var(--color-galigeo-dark);
+}
+
+/* Tags */
+.tsd-tag {
+  background: var(--color-galigeo-green);
+  color: white;
+  border-radius: 3px;
+  padding: 2px 8px;
+  font-size: 0.85em;
+}
+
+/* Footer */
+.tsd-generator {
+  border-top: 1px solid #e0e0e0;
+  background: var(--color-background);
+  padding: 20px;
+}
+
+/* Search */
+.tsd-widget.search input {
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.tsd-widget.search input:focus {
+  background: white;
+  color: var(--color-text);
+  border-color: white;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-galigeo-green);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-galigeo-dark);
+}
+
+/* Smooth transitions */
+* {
+  transition: background-color 0.2s ease, color 0.2s ease;
+}

@@ -1,1 +1,1 @@
-npx typedoc --options typedoc.json --readme README.md --out ../../samples/doc ../src/index.ts --excludePrivate --name "Galigeo API"
+npx typedoc --options typedoc.json --readme typedoc.md --out ../samples/doc src/index.ts --excludePrivate --name "Galigeo API"

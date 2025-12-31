@@ -1,3 +1,4 @@
 {
-    "visibilityFilters": {}
+    "visibilityFilters": {},
+    "customCss": "./material-custom.css"
 }
