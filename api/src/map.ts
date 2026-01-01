@@ -207,18 +207,18 @@ class Map extends Listener {
   }
   /**
    * Zoom to a specific location using fly method
-   * @param {Number} coordinates x coordinates to zoom in
-   * @param {Number} coordinates y coordinates to zoom in
-   * @param {Number} zoom level used in the zoom
+   * @param x x coordinate to zoom in
+   * @param y y coordinate to zoom in
+   * @param zoom zoom level used in the zoom
    */
   flyTo(x: number, y: number, zoom: number) {
     return this.messenger.postMessage("flyTo", { x, y, zoom });
   }
   /**
    * Zoom to a specific location without animations
-   * @param {Number} coordinates x coordinates to zoom in
-   * @param {Number} coordinates y coordinates to zoom in
-   * @param {Number} zoom level used in the zoom
+   * @param x x coordinate to zoom in
+   * @param y y coordinate to zoom in
+   * @param zoom zoom level used in the zoom
    */
   zoomTo(x: number, y: number, zoom: number) {
     return this.messenger.postMessage("zoomTo", { x, y, zoom });
@@ -379,11 +379,11 @@ class Map extends Listener {
      * var url = encodeURI("data:image/svg+xml," + svgXml).replace('#', '%23');
      * markerLayer = mapGaligeo.addMarker(coordinates, undefined, iconSvgOptions, svgXml);
      *
-     * @param {Number[]} coordinates  [x,y] 
-     * @param {Object | undefined} style 
-     * @param {Object} iconSvgOptions ex: {iconSize: [40, 40]}
-     * @param {String} svgUrl URL of the SVG
-    
+     * @param coordinates coordinates [x,y]
+     * @param style style object or undefined
+     * @param iconSvgOptions icon SVG options, ex: {iconSize: [40, 40]}
+     * @param urlSvg URL of the SVG
+
      * @returns layerLeaflet the marker object leaflet in the map
      */
   addMarker(
@@ -416,7 +416,7 @@ class Map extends Listener {
   /**
    * Remove a layer on the map. This method works on marker/geojson layers created with the API,
    * as well with standard Galigeo layers created from the map itself.
-   * @param {String} Layer
+   * @param layer the layer to remove
    */
   removeLayer(layer: Layer): Promise<string> {
     return new Promise((resolve, reject) => {

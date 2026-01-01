@@ -1,0 +1,461 @@
+/**
+ * Galigeo API Samples - Professional Design
+ */
+
+:root {
+  --color-galigeo-green: #2ecc71;
+  --color-galigeo-teal: #27a0ad;
+  --color-galigeo-dark: #1a8a4f;
+  --color-text: #2c3e50;
+  --color-text-light: #5a6c7d;
+  --color-bg: #f8f9fa;
+  --color-white: #ffffff;
+  --color-border: #e0e6ed;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+/* Header */
+.galigeo-header {
+  background: white;
+  border-bottom: 3px solid var(--color-galigeo-green);
+  padding: 1.5rem 0;
+  margin-bottom: 2rem;
+}
+
+.galigeo-header .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.galigeo-header h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--color-galigeo-dark);
+}
+
+.galigeo-header p {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.95rem;
+  color: var(--color-text-light);
+}
+
+.galigeo-header .breadcrumb {
+  margin-top: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.galigeo-header .breadcrumb a {
+  color: var(--color-galigeo-teal);
+  text-decoration: none;
+}
+
+.galigeo-header .breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.galigeo-header .breadcrumb span {
+  color: var(--color-text-light);
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Cards */
+.sample-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.2s;
+}
+
+.sample-card:hover {
+  border-color: var(--color-galigeo-green);
+}
+
+.sample-card h3 {
+  margin: 0 0 0.25rem 0;
+  color: var(--color-text);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.sample-card p {
+  margin: 0 0 0.75rem 0;
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.sample-card a {
+  color: var(--color-galigeo-teal);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+  font-size: 0.9rem;
+}
+
+.sample-card a:hover {
+  color: var(--color-galigeo-dark);
+}
+
+/* Sample Grid */
+.samples-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: 1px solid transparent;
+  font-size: 0.9rem;
+}
+
+.btn-primary {
+  background: var(--color-galigeo-green);
+  color: white;
+  border-color: var(--color-galigeo-green);
+}
+
+.btn-primary:hover {
+  background: var(--color-galigeo-dark);
+  border-color: var(--color-galigeo-dark);
+}
+
+.btn-outline {
+  background: white;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.btn-outline:hover {
+  border-color: var(--color-galigeo-green);
+  color: var(--color-galigeo-green);
+}
+
+/* Code Block */
+.code-container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  margin-top: 2rem;
+}
+
+.code-header {
+  background: var(--color-bg);
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.code-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.code-content {
+  padding: 0;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.code-content pre {
+  margin: 0;
+  padding: 1.5rem;
+  background: #263238;
+  color: #aed581;
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  overflow-x: auto;
+}
+
+.code-content code {
+  background: transparent;
+  color: inherit;
+}
+
+/* Info Box */
+.info-box {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-galigeo-green);
+  padding: 1rem;
+  border-radius: 4px;
+  margin: 1.5rem 0;
+}
+
+.info-box p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+/* Table Styles */
+.samples-table {
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  margin-top: 2rem;
+}
+
+.samples-table thead {
+  background: linear-gradient(135deg, var(--color-galigeo-green) 0%, var(--color-galigeo-teal) 100%);
+  color: white;
+}
+
+.samples-table th {
+  padding: 1rem 1.5rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+.samples-table td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.samples-table tbody tr {
+  transition: background-color 0.2s;
+}
+
+.samples-table tbody tr:hover {
+  background: var(--color-bg);
+}
+
+.samples-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.samples-table a {
+  color: var(--color-galigeo-teal);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.samples-table a:hover {
+  color: var(--color-galigeo-dark);
+  text-decoration: underline;
+}
+
+/* Badge */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: var(--color-galigeo-green);
+  color: white;
+}
+
+/* Section */
+.section {
+  margin: 2rem 0;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--color-galigeo-green);
+}
+
+/* Footer */
+.footer {
+  margin-top: 4rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+}
+
+.footer a {
+  color: var(--color-galigeo-teal);
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .galigeo-header h1 {
+    font-size: 2rem;
+  }
+
+  .samples-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  .samples-table {
+    font-size: 0.9rem;
+  }
+
+  .samples-table th,
+  .samples-table td {
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Action Buttons Container */
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Compact mode */
+.compact .action-buttons {
+  gap: 0.25rem;
+}
+
+.compact .btn {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+/* Demo and Code Layout */
+.demo-code-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.demo-panel,
+.code-panel {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.panel-header {
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.btn-sm {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+/* Demo Container */
+.demo-container {
+  position: relative;
+  width: 100%;
+  height: 700px;
+  background: white;
+}
+
+.demo-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Code Panel */
+.code-panel .code-content {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.code-panel pre {
+  margin: 0;
+  border-radius: 0;
+  background: #282c34;
+}
+
+.code-panel pre code {
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+/* Highlight.js overrides */
+.code-panel .hljs {
+  background: #282c34;
+  padding: 1.5rem;
+  display: block;
+  overflow-x: auto;
+}

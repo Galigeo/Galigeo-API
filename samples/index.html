@@ -1,93 +1,144 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="cache-control" content="no-cache">
-<link rel="shortcut icon" href="favicon.ico" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/design-system/2.17.5/styles/salesforce-lightning-design-system.min.css">
-<link rel="stylesheet" href="assets/css/style.css"> 
-<script
-  src="https://code.jquery.com/jquery-3.6.0.min.js"
-  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-  crossorigin="anonymous"></script>
-
-<title>Galigeo API Samples</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cache-control" content="no-cache">
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="stylesheet" href="assets/css/samples.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <title>Galigeo API - Samples</title>
 </head>
+
 <body>
-<div id="navBar"></div>
-	<script src="assets/js/common.js"></script>
+    <!-- Header -->
+    <header class="galigeo-header">
+        <div class="container">
+            <h1>Galigeo API Samples</h1>
+            <p>Interactive examples demonstrating API features</p>
+        </div>
+    </header>
 
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Quick Links -->
+        <section class="section" style="margin-top: 1rem;">
+            <div class="action-buttons">
+                <a href="./doc" class="btn btn-primary">
+                    Documentation
+                </a>
+            </div>
+        </section>
 
+        <!-- Samples Grid -->
+        <section class="section">
+            <h2 class="section-title">Sample Gallery</h2>
+            <div class="samples-grid" id="samplesGrid">
+                <!-- Samples will be loaded here dynamically -->
+            </div>
+        </section>
 
-  <div class="container" style="margin-left: 50px">
+        <!-- Samples Table (Alternative View) -->
+        <section class="section" style="display: none;" id="tableView">
+            <h2 class="section-title">All Samples</h2>
+            <table class="samples-table">
+                <thead>
+                    <tr>
+                        <th>Sample</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody id="samplesTable">
+                    <!-- Samples will be loaded here -->
+                </tbody>
+            </table>
+        </section>
+    </main>
 
-    <div class="slds-grid slds-gutters slds-p-top_large">
-		<div class="slds-col">
-      <div class="slds-text-heading_large">Welcome to our test sample page – Discover how easy it is to play with your data</div>
-	  </div>
-    </div>
-    
-	<div class="slds-grid slds-gutters slds-p-top_large">
-		<div class="slds-col">
-      <div class="slds-text-heading_medium">This page illustrates how to use the Galigeo API through various samples. 
-        For more details, look at the <a href="./doc">documentation here</a>.</div>
-	  </div>
-    </div>
-    
-	<div class="slds-grid slds-gutters slds-p-top_large slds-p-left_small">
-	  <div class="slds-col">
-      <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-labelledby="element-with-table-label other-element-with-table-label">
-        <thead>
-          <tr>
-              <th>Sample</th>
-              <th>Description</th>
-          </tr>
-        </thead>
-        <tbody id="samples">
-        </tbody>
-      </table>
-    </div>
-	</div>
-  </div>
-  
-  
-  <script>
-  function resetSamples()
-  {
-	  GaligeoUI.common.confirm("This action will reset all the documents used by the samples. Are you sure you want to continue?", function(){
-	  $.ajax({
-          url: 'reset_samples.jsp',
-          dataType: "json",
-          success: function(result)
-          {
-        	  GaligeoUI.common.alert("Done");
-          }
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>
+                Powered by <a href="https://www.galigeo.com">Galigeo</a> •
+                <a href="./doc">Documentation</a> •
+                <a href="https://github.com/galigeo">GitHub</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        $(document).ready(function () {
+            // Load samples
+            $.ajax({
+                url: "samples.json",
+                dataType: "json",
+                cache: false,
+                success: function (samples) {
+                    renderSamplesGrid(samples);
+                    renderSamplesTable(samples);
+                },
+                error: function () {
+                    console.error("Failed to load samples");
+                }
+            });
         });
-	  });
-  }
-  
-  $( document ).ready(function() {
-	  
-	  setBanner();
-	  //$('.dropdown-trigger').dropdown({ hover: false, belowOrigin: true, constrain_width: false, alignment: 'rg' });
-	  $.ajax({
-        url: "samples.json", 
-        dataType: "json",
-        cache: false,
-        success: function(result)
-        {
-            for(var i in result)
-			{
-				var sample = result[i];
-				var html = "<tr><td><a href=\"sample.html?url="+sample.url+"\" class=\"collection-item\">"+sample.title+"</a></td><td>"+sample.description+"</td></tr>";
-				$('#samples').append(html);
-			}
+
+        function renderSamplesGrid(samples) {
+            const grid = $('#samplesGrid');
+            grid.empty();
+
+            samples.forEach((sample, index) => {
+                const category = getCategoryFromUrl(sample.url);
+                const card = $(`
+                    <div class="sample-card compact">
+                        <h3>${sample.title}</h3>
+                        <p>${sample.description}</p>
+                        <div class="action-buttons">
+                            <a href="sample.html?url=${sample.url}" class="btn btn-primary">
+                                View
+                            </a>
+                            <a href="${sample.url}" class="btn btn-outline" target="_blank">
+                                Demo
+                            </a>
+                        </div>
+                    </div>
+                `);
+                grid.append(card);
+            });
         }
-    });
-  });
 
-  </script>
+        function renderSamplesTable(samples) {
+            const table = $('#samplesTable');
+            table.empty();
 
+            samples.forEach(sample => {
+                const category = getCategoryFromUrl(sample.url);
+                const row = $(`
+                    <tr>
+                        <td><a href="sample.html?url=${sample.url}">${sample.title}</a></td>
+                        <td>${sample.description}</td>
+                        <td>${category ? `<span class="badge">${category}</span>` : '-'}</td>
+                    </tr>
+                `);
+                table.append(row);
+            });
+        }
+
+        function getCategoryFromUrl(url) {
+            if (url.includes('CSV')) return 'Data';
+            if (url.includes('Marker')) return 'Markers';
+            if (url.includes('GeoJson')) return 'GeoJSON';
+            if (url.includes('Layer')) return 'Layers';
+            if (url.includes('Zoom')) return 'Navigation';
+            if (url.includes('Event')) return 'Events';
+            if (url.includes('Print')) return 'Export';
+            if (url.includes('View')) return 'Views';
+            return 'Basic';
+        }
+    </script>
 </body>
+
 </html>

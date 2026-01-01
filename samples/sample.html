@@ -1,80 +1,188 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-   <meta charset="UTF-8">
-   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-   <meta http-equiv="cache-control" content="no-cache">
-   <link rel="shortcut icon" href="../favicon.ico" />
-   <link rel="shortcut icon" href="../../favicon.ico" />
-   <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/design-system/2.17.5/styles/salesforce-lightning-design-system.min.css">
-   <link rel="stylesheet" href="assets/css/style.css">
-   <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-   <title>Galigeo API Sample</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cache-control" content="no-cache">
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="stylesheet" href="assets/css/samples.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <title>Galigeo API Sample</title>
 </head>
 
 <body>
-   <div id="navBar"></div>
-   <script src="assets/js/common.js"></script>
-   <div style="margin-left: 50px">
-      <div class="slds-grid slds-gutters">
-         <div class="slds-col">
-            <div class="slds-text-heading_large" id="title"></div>
-         </div>
-      </div>
-      <div class="slds-grid slds-gutters slds-p-top_medium">
-         <div class="slds-col ">
-            <div class="slds-text-heading_small" id="description"></div>
-         </div>
-      </div>
-      <div class="slds-grid slds-gutters slds-p-top_medium">
-         <div class="slds-col">
-            <button class="slds-button slds-button_neutral" id="demoLink">Open demo</button>
-         </div>
-      </div>
-      <div class="slds-grid slds-gutters slds-p-top_medium">
-         <div class="slds-col">
-            <div class="slds-box">
-               <pre><code class="html" id="code">...</code></pre>
+    <!-- Header -->
+    <header class="galigeo-header">
+        <div class="container">
+            <h1 id="sampleTitle">Sample</h1>
+            <p id="sampleDescription">Loading...</p>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <a href="index.html">Samples</a>
+                <span>/</span>
+                <span id="breadcrumbTitle">Sample</span>
             </div>
-         </div>
-      </div>
-   </div>
-   <script>
-      $(document).ready(function () {
+        </div>
+    </header>
 
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Action Buttons -->
+        <section class="section" style="margin-top: 1rem;">
+            <div class="action-buttons">
+                <button id="openDemoBtn" class="btn btn-primary">
+                    Open in New Tab
+                </button>
+                <a href="index.html" class="btn btn-outline">
+                    Back
+                </a>
+            </div>
+        </section>
 
-         var sample = getUrlParam('url');
+        <!-- Demo and Code Layout -->
+        <section class="section">
+            <div class="demo-code-layout">
+                <!-- Source Code -->
+                <div class="code-panel">
+                    <div class="panel-header">
+                        <h3>Source Code</h3>
+                        <button id="copyCodeBtn2" class="btn btn-outline btn-sm">
+                            Copy
+                        </button>
+                    </div>
+                    <div class="code-content">
+                        <pre><code id="sourceCode">Loading...</code></pre>
+                    </div>
+                </div>
 
-         $.ajax({
-            url: "samples.json",
-            dataType: "json",
-            cache: false,
-            success: function (result) {
-               var meta = undefined;
-               for (var i in result) if (result[i].url.endsWith(sample)) meta = result[i];
-               document.title = meta.title;
-               $('#demoLink').click(evt => { window.location.href = "sampleDemo.html?url=" + meta.url; });
-               $('#title').text(meta.title);
-               $('#description').text(meta.description);
-               setBanner();
-               $.ajax({
-                  url: meta.url,
-                  cache: false,
-                  success: function (content) {
-                     $('#code').text(content);
+                <!-- Live Demo -->
+                <div class="demo-panel">
+                    <div class="panel-header">
+                        <h3>Live Demo</h3>
+                    </div>
+                    <div class="demo-container">
+                        <iframe id="demoFrame" frameborder="0"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-                  }
-               });
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>
+                Powered by <a href="https://www.galigeo.com">Galigeo</a> •
+                <a href="./doc">Documentation</a> •
+                <a href="https://github.com/galigeo">GitHub</a>
+            </p>
+        </div>
+    </footer>
 
+    <script>
+        let currentSampleUrl = '';
+
+        $(document).ready(function () {
+            const urlParam = getUrlParam('url');
+            if (!urlParam) {
+                window.location.href = 'index.html';
+                return;
             }
-         });
-      });
 
-   </script>
-   </main>
+            currentSampleUrl = urlParam;
+            loadSample(urlParam);
+        });
+
+        function loadSample(sampleUrl) {
+            // Load sample metadata
+            $.ajax({
+                url: "samples.json",
+                dataType: "json",
+                cache: false,
+                success: function (samples) {
+                    const sample = samples.find(s => s.url.endsWith(sampleUrl));
+                    if (sample) {
+                        updateSampleInfo(sample);
+                        loadSourceCode(sample.url);
+                    } else {
+                        showError("Sample not found");
+                    }
+                },
+                error: function () {
+                    showError("Failed to load sample information");
+                }
+            });
+        }
+
+        function updateSampleInfo(sample) {
+            document.title = sample.title + ' - Galigeo API';
+            $('#sampleTitle').text(sample.title);
+            $('#sampleDescription').text(sample.description);
+            $('#breadcrumbTitle').text(sample.title);
+
+            // Load demo in iframe
+            $('#demoFrame').attr('src', sample.url);
+
+            // Setup demo button to open in new tab
+            $('#openDemoBtn').click(function () {
+                window.open(sample.url, '_blank');
+            });
+        }
+
+        function loadSourceCode(url) {
+            $.ajax({
+                url: url,
+                cache: false,
+                success: function (content) {
+                    const codeBlock = $('#sourceCode');
+                    codeBlock.text(content);
+                    codeBlock.addClass('language-html');
+                    hljs.highlightElement(codeBlock[0]);
+                    setupCopyButtons(content);
+                },
+                error: function () {
+                    $('#sourceCode').text('Failed to load source code');
+                }
+            });
+        }
+
+        function setupCopyButtons(code) {
+            $('#copyCodeBtn, #copyCodeBtn2').click(function () {
+                copyToClipboard(code);
+                const btn = $(this);
+                const originalText = btn.text();
+                btn.text('✓ Copied!');
+                setTimeout(() => btn.text(originalText), 2000);
+            });
+        }
+
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+
+        function getUrlParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        function showError(message) {
+            $('#sampleTitle').text('Error');
+            $('#sampleDescription').text(message);
+            $('#sourceCode').text(message);
+        }
+    </script>
 </body>
 
 </html>
