@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <script type="text/javascript" src="assets/js/galigeo-api.js"></script>
+  <title>Import / Export map</title>
+  <style>
+    .ie-controls { display: flex; flex-direction: column; gap: 12px; max-width: 600px; margin-top: 10px; }
+    .ie-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .ie-row label { min-width: 150px; }
+    #importResult { white-space: pre-wrap; font-family: monospace; font-size: 12px; margin: 0; }
+  </style>
+</head>
+
+<body>
+  <p>
+    Export a Galigeo map as a <b>.zip</b> archive (configuration + data) and import it back.
+    The same archive can be re-imported on any Galigeo instance.
+    <br><i>Note: the API key must have transport/admin rights, and the url must include the app
+    context path (ex: <code>https://showroom.galigeo.com/Galigeo</code>).</i>
+  </p>
+
+  <div id="ggoMapId" style="position:relative; height:400px; width:100%; max-width:600px;"></div>
+
+  <div class="ie-controls">
+    <div class="ie-row">
+      <label>1. Export displayed map</label>
+      <button id="exportDisplayedBtn">Download this map</button>
+    </div>
+    <div class="ie-row">
+      <label>2. Export saved map by id</label>
+      <input type="text" id="mapIds" placeholder="mapId1,mapId2" size="24" />
+      <button id="exportByIdBtn">Download</button>
+    </div>
+    <div class="ie-row">
+      <label>3. Import a map zip</label>
+      <input type="file" id="importFile" accept=".zip" />
+      <button id="importBtn">Import</button>
+    </div>
+    <pre id="importResult"></pre>
+  </div>
+
+  <script type="text/javascript">
+    (async () => {
+      // Configure your Galigeo instance and API key here.
+      const GALIGEO_URL = 'https://showroom.galigeo.com/Galigeo';
+      const API_KEY = 'e1f2db79-1f1f-40ec-9fcd-2de460d35513';
+
+      const ggoMap = new Galigeo.Map('ggoMapId', {
+        url: GALIGEO_URL,
+        name: 'Import Export',
+        apiKey: API_KEY
+      });
+      ggoMap.addDataUrl('https://api.galigeo.com/showcase/assets/data/fr_cities.csv', 'FrCities');
+      await ggoMap.load();
+
+      // 1. Export the currently displayed map (via the viewer DownloadServer).
+      document.getElementById('exportDisplayedBtn').addEventListener('click', () => {
+        ggoMap.exportMap()
+          .catch(err => alert('Export failed: ' + err.message));
+      });
+
+      // 2. Export saved map(s) by id (standalone function, via the transport service).
+      document.getElementById('exportByIdBtn').addEventListener('click', () => {
+        const ids = document.getElementById('mapIds').value
+          .split(',').map(s => s.trim()).filter(Boolean);
+        if (ids.length === 0) { alert('Please enter at least one map id'); return; }
+        Galigeo.exportMap({ url: GALIGEO_URL, apiKey: API_KEY, mapIds: ids })
+          .catch(err => alert('Export failed: ' + err.message));
+      });
+
+      // 3. Import a map zip and display the result.
+      document.getElementById('importBtn').addEventListener('click', () => {
+        const file = document.getElementById('importFile').files[0];
+        if (!file) { alert('Please select a .zip file'); return; }
+        // Standalone equivalent: Galigeo.importMap({ url, apiKey, file })
+        ggoMap.importMap(file)
+          .then(result => {
+            document.getElementById('importResult').textContent = JSON.stringify(result, null, 2);
+          })
+          .catch(err => alert('Import failed: ' + err.message));
+      });
+    })();
+  </script>
+
+</body>
+
+</html>
