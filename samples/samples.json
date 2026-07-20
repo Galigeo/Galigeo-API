@@ -50,6 +50,11 @@
     "description": "An example that shows how to print the map"
   },
   {
+    "title": "Import / Export map",
+    "url": "sampleImportExport.html",
+    "description": "Export a map as a zip archive (configuration + data) and import it back. Works on the displayed map or on saved maps by id."
+  },
+  {
     "title": "Create Marker",
     "url": "createMarker.html",
     "description": "An example that shows how to Create a marker with svg"

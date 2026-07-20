@@ -3,6 +3,11 @@ import Layer from "./layer";
 import Messenger from "./messenger";
 import Listener from "./listener";
 import { MapParameters, Message, Style } from "./model";
+import {
+  exportMap as exportMapRequest,
+  importMap as importMapRequest,
+  downloadBlob,
+} from "./transport";
 
 /**
  * Map is the root object of the API. To get started, you need
@@ -14,6 +19,14 @@ class Map extends Listener {
    * The refresh ID is used to update the map data.
    */
   public refreshId: string;
+
+  /**
+   * Relative URL of the viewer service for the loaded map
+   * (ex: feature/rest/services/Open_MAP_0/FeatureServer).
+   * Used to export the currently displayed map.
+   * @ignore
+   */
+  private serviceUrl: string;
 
   private readonly element: HTMLElement;
   private readonly options: MapParameters;
@@ -99,6 +112,7 @@ class Map extends Listener {
     this.iframe = this.createIframe(this.element, json);
     this.messenger = new Messenger(this.iframe, this.options.timeout);
     this.refreshId = json.refreshId;
+    this.serviceUrl = json.relativeUrlServiceUrl;
     this.registerEvents();
 
     await this.messenger.waitMapIsLoad();
@@ -463,6 +477,77 @@ class Map extends Listener {
    */
   async setView(viewId: number) {
     await this.messenger.postMessage("setView", { viewId });
+  }
+
+  /**
+   * Export a map as a zip archive (configuration + data).
+   *
+   * Two behaviors depending on the argument:
+   * - without argument: exports the map currently displayed by this instance
+   *   (the map must be loaded). The zip is retrieved from the viewer service.
+   * - with map ids: exports the corresponding saved maps by delegating to the
+   *   standalone {@link exportMap} function (uses the API key of this instance).
+   *
+   * The resulting zip can be re-imported with {@link importMap}.
+   *
+   * @param mapIds optional list of saved map ids to export. When omitted, the
+   *        currently displayed map is exported.
+   * @param download when true (default), the zip is downloaded by the browser.
+   * @returns a Promise resolving to the zip Blob
+   */
+  exportMap(mapIds?: string[], download: boolean = true): Promise<Blob> {
+    // Export saved maps by id through the transport service.
+    if (mapIds && mapIds.length > 0) {
+      return exportMapRequest({
+        url: this.options.url,
+        apiKey: this.options.apiKey,
+        mapIds,
+        download,
+      });
+    }
+
+    // Export the currently displayed map through the viewer service.
+    if (!this.loaded || !this.serviceUrl) {
+      throw new Error("Map not loaded, unable to export the displayed map");
+    }
+    const downloadUrl =
+      this.options.url +
+      "/" +
+      this.serviceUrl.replace("FeatureServer", "DownloadServer");
+
+    return fetch(downloadUrl, { mode: "cors", credentials: "include" })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`Failed to export map (status ${res.status})`);
+        }
+        return res.blob();
+      })
+      .then((blob) => {
+        if (download) {
+          downloadBlob(blob, (this.options.mapId || "map") + ".zip");
+        }
+        return blob;
+      });
+  }
+
+  /**
+   * Import a map zip archive into the Galigeo instance of this map.
+   *
+   * This is a convenience wrapper around the standalone {@link importMap}
+   * function that reuses the url and API key of this instance. The archive
+   * is imported as new map(s) on the server; the currently displayed map is
+   * not modified. To display an imported map, create a new {@link Map} with
+   * the returned map id.
+   *
+   * @param file the map zip archive (ex: from an `<input type="file">`)
+   * @returns a Promise resolving to the list of imported maps
+   */
+  importMap(file: File | Blob): Promise<any[]> {
+    return importMapRequest({
+      url: this.options.url,
+      apiKey: this.options.apiKey,
+      file,
+    });
   }
 
   /**

@@ -4,5 +4,19 @@ import Extent from "./extent"
 import Messenger from "./messenger"
 import Listener from "./listener"
 import {Style, MapParameters} from "./model"
+import { exportMap, importMap, downloadBlob, ExportMapOptions, ImportMapOptions } from "./transport"
 
-export { Map, Layer, Extent, Messenger, Listener, Style, MapParameters }
+export {
+  Map,
+  Layer,
+  Extent,
+  Messenger,
+  Listener,
+  Style,
+  MapParameters,
+  exportMap,
+  importMap,
+  downloadBlob,
+  ExportMapOptions,
+  ImportMapOptions,
+}
